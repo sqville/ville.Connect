@@ -20,8 +20,8 @@
 **Benefits**
 * TBD
 
-**The Big Idea**
-Create a diagraming tool using 100% Qooxdoo code and objects. No SVG or Canvas tags, if at all possible.
+## The Big Idea
+Create a diagramming tool using 100% Qooxdoo code and objects. No SVG or Canvas tags, if at all possible.
 
 **Screen Shots**
 <img src="Screen_Capture_01.PNG" alt="a Network Diagram using ville.connect.Connect and standard Qooxdoo objects (Windows, and Atoms in a Desktop control) ">
@@ -57,3 +57,6 @@ Distributed under the MIT License. See `LICENSE` for more information.
 ## Contact
 
 Chris Eskew - [@SQville](https://twitter.com/SQville) - email: chris.eskew@sqville.com
+
+## Attribution
+Inspired by and learned from this project: [jqSimpleConnect](https://github.com/jfmdev/jqSimpleConnect)
