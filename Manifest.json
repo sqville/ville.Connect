@@ -1,0 +1,36 @@
+{
+ "$schema": "https://qooxdoo.org/schema/Manifest-1-0-0.json",
+  "info" :
+  {
+    "name" : "ville.Connect",
+
+    "summary" : "a Qooxdoo desktop control that connects widgets displayed on a canvas layout",
+    "description" : "",
+
+    "homepage" : "",
+
+    "license" : "MIT license",
+    "authors" : [
+  {
+    "name": "Chris Eskew (sqville)",
+    "email": "chris.eskew@sqville.com"
+  }
+],
+
+    "version" : "v0.1.0"
+  },
+
+  "provides" :
+  {
+    "namespace"   : "ville.connect",
+    "encoding"    : "utf-8",
+    "class"       : "source/class",
+    "resource"    : "source/resource",
+    "translation" : "source/translation"
+  },
+
+  "requires": {
+    "@qooxdoo/framework": "^6.0.0",
+    "@qooxdoo/compiler" : "^1.0.0"
+  }
+}
