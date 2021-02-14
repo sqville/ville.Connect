@@ -18,9 +18,10 @@
 
   "applications": [
     {
-      "class": "ville.connect.demo.Application",
-      "theme": "ville.connect.theme.Theme",
-      "name": "ville.connect"
+      "class": "wax.demo.Application",
+      "theme": "wax.demo.theme.Theme",
+      "name": "waxdemo",
+      "title": "WaxDemo"
     }
   ]
 }
