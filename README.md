@@ -56,7 +56,7 @@ Distributed under the MIT License. See `LICENSE` for more information.
 <!-- CONTACT -->
 ## Contact
 
-Chris Eskew - [@SQville](https://twitter.com/SQville) - email: chris.eskew@sqville.com
+Chris Eskew - [@SQville](https://twitter.com/SQville) - email: sqville@gmail.com
 
 ## Attribution
 Inspired by and learned from this project: [jqSimpleConnect](https://github.com/jfmdev/jqSimpleConnect)
