@@ -127,7 +127,7 @@ qx.Class.define("wax.demo.DiagramData",
                 id : 1,
                 left : 70,
                 top : 70,
-                properties : {},
+                properties : {backgroundColor: "transparent"},
                 options : {
                   content : 'Server',
                   image : "wax/demo/server_01.png"

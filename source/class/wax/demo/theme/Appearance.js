@@ -400,7 +400,7 @@ qx.Theme.define("wax.demo.theme.Appearance",
       //console.log(states); 
       var active = states.active && states.focused && !states.disabled;
        return {
-        backgroundColor: active ? "background" : "transparent",
+        backgroundColor: active ? "transparent" : "transparent",
         decorator: active ? "shape-caption-active" : "shape-caption"
        };
      }
@@ -411,7 +411,7 @@ qx.Theme.define("wax.demo.theme.Appearance",
     style : function(states)
     {
       return {
-        backgroundColor: "background",
+        backgroundColor: "transparent",
         padding: 0
       };
     }

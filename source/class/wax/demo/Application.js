@@ -234,6 +234,7 @@ qx.Class.define("wax.demo.Application",
       // ***********************************************************************************
       var dashboardpage = new qx.ui.container.Composite(new qx.ui.layout.Canvas());
       var overviewpage = new qx.ui.container.Composite(new qx.ui.layout.Canvas());
+      var widgetconnectpage = new qx.ui.container.Composite(new qx.ui.layout.Canvas());
 
       //One connect object for all diagrams
       var villeconnect = new ville.connect.Connect();
@@ -245,6 +246,7 @@ qx.Class.define("wax.demo.Application",
       // STACK - PAGE #1 - Network Diagram
       var wmNetworkdiagram = new qx.ui.window.Manager();
       var desktop_Networkdiagram = new qx.ui.window.Desktop(wmNetworkdiagram);
+      desktop_Networkdiagram.setUserData("diagramtype", "windows");
       var data_Networkdiagram = wax.demo.DiagramData.DIAGRAMS["NetworkDiagram"];
 
       //Shapes for Network Diagram
@@ -283,12 +285,12 @@ qx.Class.define("wax.demo.Application",
           winsh.moveTo(defsh.left, defsh.top);
 
           // get all windows for window listners to leverage
-          var allwins = desktop_Networkdiagram.getWindows();
+          var allnetdiawins = desktop_Networkdiagram.getWindows();
 
           // add move listner to each shape
           winsh.addListener("move", function(e) {
             var arrwins = [];
-            allwins.forEach(function(winobj) {
+            allnetdiawins.forEach(function(winobj) {
               if (winobj.getUserData("shapetype")=="connectline") 
               {
                 if (winobj.getVisibility() == "visible" && (winobj.getUserData("elementAhashcode") == this.toHashCode() || winobj.getUserData("elementBhashcode") == this.toHashCode()))
@@ -303,7 +305,7 @@ qx.Class.define("wax.demo.Application",
           // add resize listner to each shape.
           winsh.addListener("resize", function(e) {
             var arrwins = [];
-            allwins.forEach(function(winobj) {
+            allnetdiawins.forEach(function(winobj) {
               if (winobj.getUserData("shapetype")=="connectline") 
               {
                 if (winobj.getVisibility() == "visible" && (winobj.getUserData("elementAhashcode") == this.toHashCode() || winobj.getUserData("elementBhashcode") == this.toHashCode()))
@@ -326,7 +328,7 @@ qx.Class.define("wax.demo.Application",
 
 
       // draw connectors on appear of the diagram viewer
-      desktop_Networkdiagram.addListener("appear", function(e) {
+      desktop_Networkdiagram.addListenerOnce("appear", function(e) {
         var alldsktpwins = desktop_Networkdiagram.getWindows();
         //desktop_Networkdiagram.getContentElement().enableScrolling();
         //Connections
@@ -351,6 +353,7 @@ qx.Class.define("wax.demo.Application",
       // STACK - PAGE #2 - Basic Flowchart
       var wmBasicflowchart = new qx.ui.window.Manager();
       var desktop_Basicflowchart = new qx.ui.window.Desktop(wmBasicflowchart);
+      desktop_Basicflowchart.setUserData("diagramtype", "windows");
       var data_Basicflowchart = wax.demo.DiagramData.DIAGRAMS["BasicFlowchart"];
 
       //Shapes
@@ -442,8 +445,9 @@ qx.Class.define("wax.demo.Application",
         }
       }
 
+      
       // draw connectors on appear of the diagram viewer
-      desktop_Basicflowchart.addListener("appear", function(e) {
+      desktop_Basicflowchart.addListenerOnce("appear", function(e) {
         
         var alldsktpwins = desktop_Basicflowchart.getWindows();
 
@@ -465,15 +469,144 @@ qx.Class.define("wax.demo.Application",
 
       overviewpage.add(desktop_Basicflowchart);
 
-     
+      // Widget Connect Page
+      // Connecting static widgets together
+      // Code is taken from https://qooxdoo.org/qxl.demobrowser/#layout~ManualLayout.html
+
+      var w1 = new qx.ui.core.Widget().set({
+        backgroundColor: "red"
+      });
+      w1.setUserData("shapeid", 1);
+      w1.setUserBounds(100, 100, 100, 100);
+
+      var w2 = new qx.ui.core.Widget().set({
+        backgroundColor: "blue"
+      });
+      w2.setUserData("shapeid", 2);
+      w2.setUserBounds(380, 100, 100, 100);
+
+      var w3 = new qx.ui.core.Widget().set({
+        backgroundColor: "green"
+      });
+      w3.setUserData("shapeid", 3);
+      w3.setUserBounds(380, 350, 100, 100);
+
+      /*
+      var w4 = new qx.ui.core.Widget().set({
+        backgroundColor: "yellow"
+        padding: 10,
+      });
+      w4.setUserData("shapeid", 4);
+      w4.setUserBounds(130, 380, 100, 100);
+      */
+
+      var container = new qx.ui.container.Composite();
+      container.setUserData("diagramtype", "widgets");
+
+      var wconns = [
+        {
+          elementA : w1,
+          elementB : w2,
+          properties : {
+            backgroundColor : "transparent",
+            padding : 0
+          },
+          options : {
+            anchorA: "horizontal", 
+            anchorB : "horizontal",
+            direction : "AtoB"
+          }
+        },
+        {
+          elementA : w2,
+          elementB : w3,
+          properties : {
+            backgroundColor : "transparent",
+            padding : 0
+          },
+          options : {
+            anchorA: "vertical",
+            anchorB : "vertical",
+            direction : "AtoB"
+          }
+        },
+        {
+          elementA : w3,
+          elementB : w1,
+          properties : {
+            backgroundColor : "transparent",
+            padding : 0
+          },
+          options : {
+            anchorA: "point",
+            anchorB : "point",
+            direction : "AtoB"
+          }
+        }  
+      ]
+      /*
+       
+      
+      
+      
+      {
+          elementA : w3,
+          elementB : w4,
+          properties : {
+            backgroundColor : "yellow",
+            padding : 0
+          },
+          options : {
+            anchorA: "horizontal", 
+            anchorB : "horizontal",
+            direction : "AtoB"
+          }
+        }
+      ];
+      */
+
+      for (var k=0; k<wconns.length; k++)
+      {
+        var defc = wconns[k];
+        villeconnect.connect(defc.elementA, defc.elementB, defc.properties, defc.options, container);
+      }
+      
+      container.add(w1);
+      container.add(w2);
+      container.add(w3);
+      //container.add(w4);
+
+      widgetconnectpage.add(container, { edge: 0 });
+
+      // test - connector widgets
+      /*
+      var w5 = new qx.ui.core.Widget().set({
+        backgroundColor: "gray",
+        decorator: conndec,
+        padding: 2,
+      });
+      */
+
+      /*
+      var w1b = w1.getBounds();
+      var w2b = w2.getBounds();
+      var startx = w1b.left + (w1b.width/2);
+      var starty = w1b.top + (w1b.height/2);
+      var endx = w2b.left - (startx);
+      var endy = w2b.top - (starty);
+      w5.setUserBounds(startx, starty, endx, endy);
+      container.add(w5);
+      */
+
       
  
       // Assemble - THE STACK 
       centerbox.add(dashboardpage);
       centerbox.add(overviewpage);
+      centerbox.add(widgetconnectpage);
 
       // Show the default page
-      centerbox.setSelection([dashboardpage]);
+      centerbox.setSelection([widgetconnectpage]);
 
  
 
@@ -492,8 +625,11 @@ qx.Class.define("wax.demo.Application",
       var tbtnSecondPage = new wax.demo.MenuButton("Basic Flowchart", "wax/demo/ville_Diagram_logo.svg", true);
       westbox.add(tbtnSecondPage);
 
+      var tbtnThirdPage = new wax.demo.MenuButton("Widget Connections", "wax/demo/ville_Diagram_logo.svg", true);
+      westbox.add(tbtnThirdPage);
+
       var westboxbuttongroup = new qx.ui.form.RadioGroup();
-      westboxbuttongroup.add(tbtndashboardpage, tbtnSecondPage);
+      westboxbuttongroup.add(tbtndashboardpage, tbtnSecondPage, tbtnThirdPage);
       
       // CLONE the above controls
       var atmmenuleftnavheader = atmleftnavheader.clone();
@@ -502,16 +638,25 @@ qx.Class.define("wax.demo.Application",
       tbtnmenudashboardpage.getChildControl("icon").set({ scale : true });
       var tbtnmenuSecondPage = tbtnSecondPage.clone();
       tbtnmenuSecondPage.getChildControl("icon").set({ scale : true });
+      var tbtnmenuThirdPage = tbtnThirdPage.clone();
+      tbtnmenuThirdPage.getChildControl("icon").set({ scale : true });
 
       // Add the clones to the Main Menu Popup
       mainmenupopup.add(atmmenuleftnavheader);
       mainmenupopup.add(tbtnmenudashboardpage);
       mainmenupopup.add(tbtnmenuSecondPage);
+      mainmenupopup.add(tbtnmenuThirdPage);
 
 
       // Assign all the clones their own RadioGroup
       var mainmenubuttongroup = new qx.ui.form.RadioGroup();
-      mainmenubuttongroup.add(tbtnmenudashboardpage, tbtnmenuSecondPage);
+      mainmenubuttongroup.add(tbtnmenudashboardpage, tbtnmenuSecondPage, tbtnmenuThirdPage);
+
+      // Set default selections
+      //centerbox.setSelection([widgetconnectpage]);
+      mainmenubuttongroup.setSelection([tbtnmenuThirdPage]);
+      westboxbuttongroup.setSelection([tbtnThirdPage]);
+      atmlogocurrentpage.setLabel("Widget Connections");
       
       //***  CODE for applying popup fading in and out  ***//
       var fadeinleft = {duration: 300, timing: "ease-out", origin: "left top", keyFrames : {
@@ -547,6 +692,14 @@ qx.Class.define("wax.demo.Application",
         }
       }, this);
 
+      tbtnThirdPage.addListener("changeValue", function(e) {
+        if (e.getData()) {
+          centerbox.setSelection([widgetconnectpage]);
+          mainmenubuttongroup.setSelection([tbtnmenuThirdPage]);
+          atmlogocurrentpage.setLabel("Widget Connections");
+        }
+      }, this);
+
       // Popup menu buttons
       tbtnmenudashboardpage.addListener("changeValue", function(e) {
         if (e.getData()) {
@@ -560,9 +713,16 @@ qx.Class.define("wax.demo.Application",
         if (e.getData()) {
           centerbox.setSelection([overviewpage]);
           westboxbuttongroup.setSelection([tbtnSecondPage]);
+          //dashboardpage.setVisibility("excluded");
+          mainmenupopup.hide();
+        }
+      }, this);
 
-          dashboardpage.setVisibility("excluded");
-
+      tbtnmenuThirdPage.addListener("changeValue", function(e) {
+        if (e.getData()) {
+          centerbox.setSelection([widgetconnectpage]);
+          westboxbuttongroup.setSelection([tbtnThirdPage]);
+          //dashboardpage.setVisibility("excluded");
           mainmenupopup.hide();
         }
       }, this);

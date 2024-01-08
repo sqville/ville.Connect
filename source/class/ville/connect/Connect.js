@@ -72,12 +72,28 @@ qx.Class.define("ville.connect.Connect",
 
         //var connection = this._createConnectionObject(elementA, elementB, options);
         var connection = this._createConnectionObject(elementA, elementB, properties, options);
+
+        var wline1;
+        var wline2;
+        var wline3;
         
         // Create line Widgets and add them to the Root
         //var wline1 = this._wline1 = new qx.ui.window.Window().set({backgroundColor: options.color});
-        var wline1 = this._wline1 = new qx.ui.window.Window().set(properties);
-        //wline1.setAnonymous(true);
-        wline1.getChildControl("captionbar").setVisibility("hidden");
+        if (appobj.getUserData("diagramtype") == "windows") {
+          wline1 = this._wline1 = new qx.ui.window.Window().set(properties);
+          wline1.getChildControl("captionbar").setVisibility("hidden");
+          wline2 = this._wline2 = new qx.ui.window.Window().set(properties);
+          wline2.getChildControl("captionbar").setVisibility("hidden");
+          wline3 = this._wline3 = new qx.ui.window.Window().set(properties);
+          wline3.getChildControl("captionbar").setVisibility("hidden");
+          //connection.radius = 12;
+        } else {
+          //wline1 = this._wline1 = new qx.ui.container.Composite(new qx.ui.layout.Canvas()).set(properties);
+          wline1 = this._wline1 = new qx.ui.core.Widget().set(properties);
+          wline2 = this._wline2 = new qx.ui.core.Widget().set(properties);
+          wline3 = this._wline3 = new qx.ui.core.Widget().set(properties);
+        }
+        
         wline1.setUserData("shapetype", "connectline");
         wline1.setUserData("connectid", connection.id);
         wline1.setUserData("segmentid", 1);
@@ -87,9 +103,9 @@ qx.Class.define("ville.connect.Connect",
         wline1.setUserData("elementB", elementB);
         wline1.setUserData("options", options);
         //var wline2 = this._wline2 = new qx.ui.window.Window().set({backgroundColor: options.color, anonymous: true});
-        var wline2 = this._wline2 = new qx.ui.window.Window().set(properties);
+        //var wline2 = this._wline2 = new qx.ui.window.Window().set(properties);
         //wline2.setAnonymous(true);
-        wline2.getChildControl("captionbar").setVisibility("hidden");
+        //wline2.getChildControl("captionbar").setVisibility("hidden");
         wline2.setUserData("shapetype", "connectline");
         wline2.setUserData("connectid", connection.id);
         wline2.setUserData("segmentid", 2);
@@ -99,9 +115,9 @@ qx.Class.define("ville.connect.Connect",
         wline2.setUserData("elementB", elementB);
         wline2.setUserData("options", options);
         //var wline3 = this._wline3 = new qx.ui.window.Window().set({backgroundColor: options.color, anonymous: true});
-        var wline3 = this._wline3 = new qx.ui.window.Window().set(properties);
+        //var wline3 = this._wline3 = new qx.ui.window.Window().set(properties);
        // wline3.setAnonymous(true);
-        wline3.getChildControl("captionbar").setVisibility("hidden");
+        //wline3.getChildControl("captionbar").setVisibility("hidden");
         wline3.setUserData("shapetype", "connectline");
         wline3.setUserData("connectid", connection.id);
         wline3.setUserData("segmentid", 3);
@@ -180,6 +196,23 @@ qx.Class.define("ville.connect.Connect",
           this.repositionConnections(arrlines);
         }, this);
 
+        //test background arrows
+        /**
+         * background:
+linear-gradient(45deg, #92baac 45px, transparent 45px)64px 64px,
+linear-gradient(45deg, #92baac 45px, transparent 45px,transparent 91px, #e1ebbd 91px, #e1ebbd 135px, transparent 135px),
+linear-gradient(-45deg, #92baac 23px, transparent 23px, transparent 68px,#92baac 68px,#92baac 113px,transparent 113px,transparent 158px,#92baac 158px);
+background-color:#e1ebbd;
+background-size: 128px 128px;
+         */
+        /*wline1.getContentElement().setStyles({
+          "background" : "linear-gradient(135deg, #ECEDDC 25%, transparent 25%) -50px 0, linear-gradient(225deg, #ECEDDC 25%, transparent 25%) -50px 0, linear-gradient(315deg, #ECEDDC 25%, transparent 25%), linear-gradient(45deg, #ECEDDC 25%, transparent 25%)",
+          "background-color" : "#EC173A",
+          "background-size" : "10px 10px"
+        });*/
+        //wline1.getContentElement().addClass("chevarrowrt");
+        
+
         appobj.add(wline1);
         appobj.add(wline2);
         appobj.add(wline3); 
@@ -203,12 +236,13 @@ qx.Class.define("ville.connect.Connect",
         // Position end point
         //this._positionEndPoint();
 
-        elementA.setAlwaysOnTop(true);
-        elementB.setAlwaysOnTop(true);
-        
-        wline1.maximize();
-        wline2.maximize();
-        wline3.maximize();
+        if (appobj.getUserData("diagramtype") == "windows") {
+          elementA.setAlwaysOnTop(true);
+          elementB.setAlwaysOnTop(true);
+          wline1.maximize();
+          wline2.maximize();
+          wline3.maximize();
+        }
 
         //direction arrow test
         /*var directionarrow = new qx.ui.popup.Popup(new qx.ui.layout.Grow).set({backgroundColor: properties.backgroundColor, anonymous: true, width: 8, height: 8, placementModeX: "direct", placementModeY: "direct"});
@@ -244,47 +278,50 @@ _positionConnection : function(connection)
   //console.log(connection.elementB.getBounds());
   
   // Calculate the positions of the element's center. 
-  //*** REMOVE LATER the 30 offset for the window captionbar height (+30) ****
+  /*** REMOVE LATER 
+   * 30 offset for the window captionbar height (+30)
+   * hard coded thickness of lines
+  */
 
   var posA = this._posA = connection.elementA.getBounds();
   var pAleft = parseInt(posA.left, 10) + parseInt(posA.width/2, 10);
-  var pAtop = parseInt(posA.top, 10) + parseInt((posA.height+30)/2, 10);
+  //var pAtop = parseInt(posA.top, 10) + parseInt((posA.height+30)/2, 10);
+  var pAtop = parseInt(posA.top, 10) + parseInt((posA.height)/2, 10);
 
   var posB = this._posB = connection.elementB.getBounds();
   var pBleft = parseInt(posB.left, 10) + parseInt(posB.width/2, 10);
-  var pBtop = parseInt(posB.top, 10) + parseInt((posB.height+30)/2, 10);
+  //var pBtop = parseInt(posB.top, 10) + parseInt((posB.height+30)/2, 10);
+  var pBtop = parseInt(posB.top, 10) + parseInt((posB.height)/2, 10);
 
   // Verify if the elements are aligned in a horizontal or vertical line.
   if(pAleft == pBleft || pAtop == pBtop) {
     // Verify if the line must be vertical or horizonal.;
     if(pAleft == pBleft) {
-        // VERTICAL LINE
-        this._positionVerticalLine(this._wline1, pAleft, pAtop, pBleft, pBtop, connection.radius, connection.roundedCorners);
+      // VERTICAL LINE
+      this._positionVerticalLine(this._wline1, pAleft, pAtop, pBleft, pBtop, connection.radius, connection.roundedCorners);
 
-        //direction arrow (UP or DOWN)
-        if (connection.options.direction) {
-          var direction = connection.options.direction;
-          var directionarrow = new qx.ui.popup.Popup(new qx.ui.layout.Grow()).set({anonymous: true, width: 8, height: 8, placementModeX: "direct", placementModeY: "direct"});
-          if (pAtop < pBtop && direction == "AtoB")
-            directionarrow.setDecorator("dark-arrow-down");
-          else if (pAtop < pBtop && direction == "BtoA")
-            directionarrow.setDecorator("dark-arrow-up");
-          else if (pAtop > pBtop && direction == "AtoB")
-            directionarrow.setDecorator("dark-arrow-up");
-          else if (pAtop > pBtop && direction == "BtoA")
-            directionarrow.setDecorator("dark-arrow-down");
-        
-          // if direction = "both" then UPDOWN ARROW
-          // else if pAtop < pBtop and direction = "AtoB" then DOWN ARROW (left-middle with offset)
-          // else if pAtop > pBtop and direction = "AtoB" then UP ARROW
-          // else if pAtop < pBtop and direction = "BtoA" then UP ARROW
-          // else if pAtop > pBtop and direction = "BtoA" then DOWN ARROW
-          directionarrow.setOffsetLeft(-12);
-          directionarrow.setPosition("right-middle");
-          directionarrow.setAutoHide(false);
-          directionarrow.placeToWidget(this._wline1, true);
-          directionarrow.show();
-        }
+      //direction arrow (UP or DOWN)
+      if (connection.options.direction) {
+        var direction = connection.options.direction;
+        /*var directionarrow = new qx.ui.popup.Popup(new qx.ui.layout.Grow()).set({anonymous: true, width: 8, height: 8, placementModeX: "direct", placementModeY: "direct"});
+        if (pAtop < pBtop && direction == "AtoB")
+          directionarrow.setDecorator("dark-arrow-down");
+        else if (pAtop < pBtop && direction == "BtoA")
+          directionarrow.setDecorator("dark-arrow-up");
+        else if (pAtop > pBtop && direction == "AtoB")
+          directionarrow.setDecorator("dark-arrow-up");
+        else if (pAtop > pBtop && direction == "BtoA")
+          directionarrow.setDecorator("dark-arrow-down");
+        */
+
+        this._paintarrowline ("vertical", pAtop, pBtop, direction);
+      
+        //directionarrow.setOffsetLeft(-12);
+        //directionarrow.setPosition("right-middle");
+        //directionarrow.setAutoHide(false);
+        //directionarrow.placeToWidget(this._wline1, true);
+        //directionarrow.show();
+      }
         
       } else {
         // HORIZONTAL LINE
@@ -294,7 +331,7 @@ _positionConnection : function(connection)
         //direction arrow (LEFT or RIGHT)
         if (connection.options.direction) {
           var direction = connection.options.direction;
-          var directionarrow = new qx.ui.popup.Popup(new qx.ui.layout.Grow()).set({anonymous: true, width: 8, height: 8, placementModeX: "direct", placementModeY: "direct"});
+          /*var directionarrow = new qx.ui.popup.Popup(new qx.ui.layout.Grow()).set({anonymous: true, width: 8, height: 8, placementModeX: "direct", placementModeY: "direct"});
           if (pAleft < pBleft && direction == "AtoB")
             directionarrow.setDecorator("dark-arrow-right");
           else if (pAleft < pBleft && direction == "BtoA")
@@ -303,20 +340,46 @@ _positionConnection : function(connection)
             directionarrow.setDecorator("dark-arrow-left");
           else if (pAleft > pBleft && direction == "BtoA")
             directionarrow.setDecorator("dark-arrow-right");
+          */
 
-          directionarrow.resetOffset();
-          directionarrow.setOffsetTop(-12);
-          directionarrow.setPosition("bottom-center");
-          directionarrow.setAutoHide(false);
-          directionarrow.placeToWidget(this._wline1, true);
-          directionarrow.show();
+          this._paintarrowline ("horizontal", pAleft, pBleft, direction);
+
+          //directionarrow.resetOffset();
+          //directionarrow.setOffsetTop(-12);
+          //directionarrow.setPosition("bottom-center");
+          //directionarrow.setAutoHide(false);
+          //directionarrow.placeToWidget(this._wline1, true);
+          //directionarrow.show();
         }
       }
       this._wline2.setUserBounds(pBleft, pBtop, 2, 2);
       this._wline3.setUserBounds(pBleft, pBtop, 2, 2);
-    } else {
+  } else {
+    // Verify point to point (diagonal line)
+    if (connection.anchorA == "point" || connection.anchorB == "point") {
+      //this._positionHorizontalLine(this._wline1, pAleft, pAtop, pBleft, pBtop, connection.radius, connection.roundedCorners);
+      this._positionDiagonalLine(this._wline1, pAleft, pAtop, pBleft, pBtop, connection.radius, connection.roundedCorners);
+
+      if (connection.options.direction) {
+        var direction = connection.options.direction;
+        this._paintarrowline ("horizontal", pAleft, pBleft, direction);
+      }
+
+      // rotate line
+      /*var wid = Math.abs(pAleft-pBleft);
+      var heig = Math.abs(pAtop-pBtop);
+      var diag = Math.sqrt((wid*wid) + (heig*heig));
+      var rad = Math.asin(heig/diag); 
+      var degs = Math.round((rad * 180.0) / Math.PI);
+      this._wline1.getContentElement().setStyles({
+        "transform": "rotate(" + degs + "deg)",
+        "transform-origin": "right"
+      });*/
+      this._wline2.setUserBounds(pBleft, pBtop, 2, 2);
+      this._wline3.setUserBounds(pBleft, pBtop, 2, 2);
+    }
     // Verify if must use two lines or three.
-    if(connection.anchorA != connection.anchorB) {
+    else if(connection.anchorA != connection.anchorB) {
       // Check the anchors of the elements.
       var corner = new Object();
       if(connection.anchorA == 'vertical') {
@@ -327,7 +390,6 @@ _positionConnection : function(connection)
         // Draw lines.
         this._positionVerticalLine(this._wline1, pAleft, pAtop, corner.left, corner.top, connection.radius, connection.roundedCorners);
         this._positionHorizontalLine(this._wline2, pBleft, pBtop, corner.left, corner.top, connection.radius, connection.roundedCorners);
-        
       } else {
         // Find the corner's position.
         corner.left = pBleft;
@@ -337,7 +399,9 @@ _positionConnection : function(connection)
         this._positionVerticalLine(this._wline1, pBleft, pBtop, corner.left, corner.top, connection.radius, connection.roundedCorners);
         this._positionHorizontalLine(this._wline2, pAleft, pAtop, corner.left, corner.top, connection.radius, connection.roundedCorners);
       }
+
       this._wline3.setUserBounds(pBleft, pBtop, 2, 2);
+
       } else {          
           // Declare connection points.
           var corner1 = new Object();
@@ -368,8 +432,35 @@ _positionConnection : function(connection)
               this._positionVerticalLine(this._wline3, corner1.left, corner1.top, corner2.left, corner2.top, connection.radius, connection.roundedCorners);
           }
       }
+      //console.log(connection.anchorA);
   }
+  /*
+  if (connection.options.anchorA == "pointtopoint") {
+    console.log("pointtopoint");
+    this._positionHorizontalLine(this._wline1, pAleft, pAtop, pBleft, pBtop, connection.radius, connection.roundedCorners);
+    if (connection.options.direction) {
+      var direction = connection.options.direction;
+      if (pAleft < pBleft && direction == "AtoB")
+        this._wline1.getContentElement().addClass("chevarrowrt");
+      else if (pAleft < pBleft && direction == "BtoA")
+        this._wline1.getContentElement().addClass("chevarrowlt");
+      else if (pAleft > pBleft && direction == "AtoB")
+        this._wline1.getContentElement().addClass("chevarrowlt");
+      else if (pAleft > pBleft && direction == "BtoA")
+        this._wline1.getContentElement().addClass("chevarrowrt");
 
+        var wid = Math.abs(pAleft-pBleft);
+        var heig = Math.abs(pAtop-pBtop);
+        var d = Math.sqrt((wid*wid) + (heig*heig));
+        var rad = Math.asin(heig/d); 
+        var degs = Math.round((rad * 180.0) / Math.PI);
+        //console.log(degs);
+        this._wline1.getContentElement().setStyles({
+          "transform": "rotate(" + degs + "deg)",
+          "transform-origin": "right"
+        });
+    }
+  }*/
 },
 
     /**
@@ -390,7 +481,7 @@ _positionConnection : function(connection)
     /**
     * Draws a horizontal line, between the two points, by changing the properties of a HTML element.
     *
-    *@param {object} qxElement A Qooxdoo Window object used to represent the line.
+    *@param {object} qxElement A Qooxdoo Widget object used to represent the line.
     *@param {object} point1 An object with the properties 'left' and 'top' representing the position of the first point.
     *@param {object} point2 An object with the properties 'left' and 'top' representing the position of the second point.
     *@param {integer} radius The line's radius.
@@ -401,6 +492,40 @@ _positionConnection : function(connection)
     {
       var halfRadius = parseInt(radius/2, 10);
       qxElement.setUserBounds(((point1left > point2left)? (point2left - halfRadius) : (point1left - halfRadius) ), point1top - halfRadius, ((point1left > point2left)? (point1left - point2left + radius) : (point2left - point1left + radius) ), radius);
+    },
+
+    _positionDiagonalLine : function(qxElement, point1left, point1top, point2left, point2top, radius, roundedCorners) 
+    {
+      var halfRadius = parseInt(radius/2, 10);
+      var posL = (point1left > point2left)? (point2left - halfRadius) : (point1left - halfRadius);
+      var posT = point1top - halfRadius;
+      var linewidth = Math.abs(point1left - point2left + radius); //(point1left > point2left)? (point1left - point2left + radius) : (point2left - point1left + radius);
+      console.log (linewidth);
+      // rotate line
+      var wid = Math.abs(point1left-point2left);
+      var heig = Math.abs(point1top-point2top);
+      var diag = Math.round(Math.sqrt((wid*wid) + (heig*heig)));
+      var rad = Math.asin(heig/diag); 
+      var degs = Math.round((rad * 180.0) / Math.PI);
+
+      //degs = 0;
+
+      var adjust = (diag - linewidth);
+      
+      linewidth = diag;
+
+      posL = posL - adjust;
+      posT = posT + halfRadius;
+      
+      console.log(diag);
+      console.log(degs);
+      
+      qxElement.setUserBounds(posL, posT, linewidth, radius);
+
+      qxElement.getContentElement().setStyles({
+        "transform": "rotate(" + degs + "deg)",
+        "transform-origin": "right"
+      });
     },
 
     _positionEndPoint : function()
@@ -524,12 +649,39 @@ _positionConnection : function(connection)
       connection.elementB = elementB;
       connection.color = (properties != null && properties.backgroundColor != null)? properties.backgroundColor + '' : '#808080';
       //connection.radius = (options != null && options.radius != null && !isNaN(options.radius))? parseInt(options.radius, 10) : 2;
-      connection.radius = 3;
-      connection.anchorA = (options != null && options.anchorA != null && (options.anchorA == 'vertical' || options.anchorA == 'horizontal'))? options.anchorA : 'horizontal';
-      connection.anchorB = (options != null && options.anchorB != null && (options.anchorB == 'vertical' || options.anchorB == 'horizontal'))? options.anchorB : 'horizontal';
+      connection.radius = 12; //default and changed at any point
+      //connection.anchorA = (options != null && options.anchorA != null && (options.anchorA == 'vertical' || options.anchorA == 'horizontal'))? options.anchorA : 'horizontal';
+      //connection.anchorB = (options != null && options.anchorB != null && (options.anchorB == 'vertical' || options.anchorB == 'horizontal'))? options.anchorB : 'horizontal';
+      connection.anchorA = options.anchorA;
+      connection.anchorB = options.anchorB;
       connection.options = options;
       connection.roundedCorners = true;
       return connection;
+    },
+
+    _paintarrowline : function(position, pA, pB, direction)
+    {
+      //console.log("connid: " + this._wline1.getUserData("connectid") + " position: " + position + " pA:" + pA + " pB: " + pB + " direction: " + direction);
+      if (position == "vertical") {
+        if (pA < pB && direction == "AtoB") 
+          this._wline1.getContentElement().addClass("chevarrowdown");
+        else if (pA < pB && direction == "BtoA")
+          this._wline1.getContentElement().addClass("chevarrowup");
+        else if (pA > pB && direction == "AtoB")
+          this._wline1.getContentElement().addClass("chevarrowup");
+        else if (pA > pB && direction == "BtoA")
+          this._wline1.getContentElement().addClass("chevarrowdown");
+      } else {
+        if (pA < pB && direction == "AtoB")
+          this._wline1.getContentElement().addClass("chevarrowrt");
+        else if (pA < pB && direction == "BtoA")
+          this._wline1.getContentElement().addClass("chevarrowlt");
+        else if (pA > pB && direction == "AtoB")
+          this._wline1.getContentElement().addClass("chevarrowlt");
+        else if (pA > pB && direction == "BtoA")
+          this._wline1.getContentElement().addClass("chevarrowrt");
+      }
+      
     }
   }
 });
