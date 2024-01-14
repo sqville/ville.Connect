@@ -6,7 +6,7 @@ qx.Class.define("wax.demo.DiagramData",
   {
     DIAGRAMS : {
       BasicFlowchart : {
-        "shapes" : [
+        "elements" : [
           {
             id : 1,
             left : 400,
@@ -122,7 +122,7 @@ qx.Class.define("wax.demo.DiagramData",
         ]
       },
       NetworkDiagram : {
-            "shapes" : [
+            "elements" : [
               {
                 id : 1,
                 left : 70,
@@ -217,16 +217,22 @@ qx.Class.define("wax.demo.DiagramData",
                 {
                   elementA : 1,
                   elementB : 2,
-                  properties : {backgroundColor : "gray"},
+                  properties : {
+                    backgroundColor : "gray",
+                    decorator : "roundedcorners-light"
+                  },
                   options : {
-                    anchorA: "horizontal", 
-                    anchorB : "vertical"
+                    anchorA: "point", 
+                    anchorB : "point"
                   }
                 },
                 {
                   elementA : 3,
                   elementB : 2,
-                  properties : {backgroundColor : "gray"},
+                  properties : {
+                    backgroundColor : "gray",
+                    decorator : "roundedcorners-light"
+                  },
                   options : {
                     anchorA: "horizontal", 
                     anchorB : "vertical"

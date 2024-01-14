@@ -8,10 +8,35 @@
 
 ************************************************************************ */
 
+/**
+ * @asset(ville/connect/baseline-expand_more-24px.svg)
+ * @asset(ville/connect/baseline-expand_less-24px.svg)
+ */
+
 qx.Theme.define("ville.connect.Decoration",
 {
   decorations :
   {
+    "chevron-down" :
+    {      
+      style :
+      {
+        backgroundImage: "wax/demo/info-24px.svg",
+        backgroundRepeat: "repeat",
+        backgroundPositionX: "middle",
+        backgroundPositionY: "center",
+        backgroundColor : "green"
+      }
+    },
+
+    "roundedcorners-light" :
+    {      
+      style :
+      {
+        radius : 50
+      }
+    },
+    
     "arrow-right" :
     {      
       style :

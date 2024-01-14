@@ -365,11 +365,11 @@ qx.Theme.define("wax.demo.theme.Appearance",
 
     /*
     ---------------------------------------------------------------------------
-      DIAGRAM - SHAPES
+      DIAGRAM - elementS
     ---------------------------------------------------------------------------
     */
 
-   "shape" :
+   "element" :
    {
      style : function(states)
      {
@@ -377,13 +377,13 @@ qx.Theme.define("wax.demo.theme.Appearance",
       return {
          backgroundColor: "transparent",
          contentPadding: 0,
-         decorator : states.active && states.focused ? "shape-active" : "shape",
+         decorator : states.active && states.focused ? "element-active" : "element",
          icon : states.active && states.focused ? "wax/demo/mouse_drag.svg" : undefined
        };
      }
    },
 
-   "shape/icon" :
+   "element/icon" :
    {
      style : function(states)
      {
@@ -393,7 +393,7 @@ qx.Theme.define("wax.demo.theme.Appearance",
      }
    },
 
-   "shape/captionbar" :
+   "element/captionbar" :
    {
      style : function(states)
      {
@@ -401,12 +401,12 @@ qx.Theme.define("wax.demo.theme.Appearance",
       var active = states.active && states.focused && !states.disabled;
        return {
         backgroundColor: active ? "transparent" : "transparent",
-        decorator: active ? "shape-caption-active" : "shape-caption"
+        decorator: active ? "element-caption-active" : "element-caption"
        };
      }
    },
 
-   "shape/pane" :
+   "element/pane" :
    {
     style : function(states)
     {

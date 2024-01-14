@@ -200,7 +200,7 @@ qx.Theme.define("wax.demo.theme.Decoration",
     ---------------------------------------------------------------------------
     */
 
-   "shape" :
+   "element" :
    {
      style :
      {
@@ -211,7 +211,7 @@ qx.Theme.define("wax.demo.theme.Decoration",
      }
    },
 
-   "shape-active" :
+   "element-active" :
    {
      style :
      {
@@ -222,7 +222,7 @@ qx.Theme.define("wax.demo.theme.Decoration",
      }
    },
 
-   "shape-caption" : {
+   "element-caption" : {
      style :
      {
        radius: 0,
@@ -231,7 +231,7 @@ qx.Theme.define("wax.demo.theme.Decoration",
      }
    },
 
-   "shape-caption-active" : {
+   "element-caption-active" : {
      style :
      {
        radius: [3, 3, 0, 0],

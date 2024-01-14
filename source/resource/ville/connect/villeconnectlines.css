@@ -1,0 +1,98 @@
+:root {
+  --rl: #000000 0 15px, transparent 0 20px;
+  --ud: #000000 0 15px, transparent 0 20px;
+}
+
+/*  https://css-pattern.com/ and https://css-loaders.com/ */
+
+.chevrondown {
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Cpath d='M8 13.1l-8-8 2.1-2.2 5.9 5.9 5.9-5.9 2.1 2.2z'/%3E%3C/svg%3E");
+}
+
+.newchevupdn {
+  --s: 20px; /* control the size */
+  --c:#403B33;
+  
+  --g:,var(--c) 25%,#0000 0;
+  background:
+    conic-gradient(from  45deg at 75% 75%var(--g)),
+    conic-gradient(from 135deg at 25% 75%var(--g)),
+    conic-gradient(from -45deg at 75% 25%var(--g)),
+    conic-gradient(from 225deg at 25% 25%var(--g)),
+    repeating-conic-gradient(from -45deg,var(--c) 0 45deg,#E3AD40 0 50%);
+  background-size: var(--s) var(--s);
+}
+
+.chevarrowrt {
+  background: 
+    repeating-linear-gradient(-135deg,var(--rl)) right top,
+    repeating-linear-gradient(-45deg,var(--rl)) right bottom;
+  background-size:  100% 50%;
+  background-repeat: no-repeat;
+  /*animation: l4 10s infinite linear;*/
+}
+@keyframes l4 {
+    100% {background-position:top left,bottom left}
+}
+
+.chevarrowlt {
+  background: 
+    repeating-linear-gradient(135deg,var(--rl)) left top,
+    repeating-linear-gradient(45deg,var(--rl)) left bottom;
+  background-size:  100% 50%;
+  background-repeat: no-repeat;
+  /*animation: l6 10s infinite linear;*/
+}
+@keyframes l6 {
+    100% {background-position:top right,bottom right}
+}
+
+.chevarrowdown {
+  background: 
+    repeating-linear-gradient(135deg,var(--ud)) bottom right,
+    repeating-linear-gradient(45deg,var(--ud)) bottom left;
+  background-size:  50% 100%;
+  background-repeat: no-repeat;
+  /*animation: l5 10s infinite linear;*/
+}
+@keyframes l5 {
+    100% {background-position:left top,right top}
+}
+
+.chevarrowup {
+  /*height: calc(80px / cos(45deg));*/
+  /*width: 14px;*/
+  background: 
+    repeating-linear-gradient(-135deg,var(--ud)) top left,
+    repeating-linear-gradient(-45deg,var(--ud)) top right;
+  background-size:  50% 100%;
+  background-repeat: no-repeat;
+  /*animation: l5 10s infinite linear;*/
+}
+@keyframes l5 {
+    100% {background-position:left top,right top}
+}
+
+.chevronsvgdown {
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Cpath d='M8 13.1l-8-8 2.1-2.2 5.9 5.9 5.9-5.9 2.1 2.2z'/%3E%3C/svg%3E");
+  height: 10px;
+  width: 10px;
+  background-repeat: repeat-x;
+}
+
+.chevronsvgright {
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Cpath d='M7.7 4.26a.75.75 0 1 1 1.1-1.02l4 4.25c.27.29.27.73 0 1.02l-4 4.25a.75.75 0 1 1-1.1-1.02L11.23 8 7.7 4.26Zm-4 0a.75.75 0 1 1 1.1-1.02l4 4.25c.27.29.27.73 0 1.02l-4 4.25a.75.75 0 1 1-1.1-1.02L7.23 8 3.7 4.26Z'/%3E%3C/svg%3E");
+  height: 10px;
+  width: 10px;
+  background-repeat: repeat-x;
+}
+
+.newchevdown {
+  background: linear-gradient(20deg, white 30%, red 30%, red 70%, white 70%), linear-gradient(-20deg, white 30%, red 30%, red 70%, white 70%);
+  background-size:50% 100%, 50% 100%;
+  background-repeat: no-repeat, no-repeat;
+  background-position: 0% -22px, 100% -22px;
+}
+
+  
+  

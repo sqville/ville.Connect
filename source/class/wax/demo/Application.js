@@ -249,11 +249,11 @@ qx.Class.define("wax.demo.Application",
       desktop_Networkdiagram.setUserData("diagramtype", "windows");
       var data_Networkdiagram = wax.demo.DiagramData.DIAGRAMS["NetworkDiagram"];
 
-      //Shapes for Network Diagram
-      if (data_Networkdiagram.shapes != undefined) {
-        for (var j=0; j<data_Networkdiagram.shapes.length; j++)
+      //elements for Network Diagram
+      if (data_Networkdiagram.elements != undefined) {
+        for (var j=0; j<data_Networkdiagram.elements.length; j++)
         {
-          var defsh = data_Networkdiagram.shapes[j];
+          var defsh = data_Networkdiagram.elements[j];
           var winsh = new qx.ui.window.Window();
           winsh.set({
             showMaximize : false,
@@ -267,7 +267,7 @@ qx.Class.define("wax.demo.Application",
           winsh.setLayout(new qx.ui.layout.Grow());
           var winshcb = winsh.getChildControl("captionbar");
           winshcb.set({cursor:"move", minHeight: 30});
-          winsh.setAppearance("shape");
+          winsh.setAppearance("element");
 
           winsh.addListener("activate", function(){
             winshcb.setVisibility("visible");
@@ -281,17 +281,17 @@ qx.Class.define("wax.demo.Application",
           lblatom.getChildControl('label').set({textAlign:"center"});
           
           winsh.add(lblatom);
-          winsh.setUserData("shapeid", defsh.id);
+          winsh.setUserData("elementid", defsh.id);
           winsh.moveTo(defsh.left, defsh.top);
 
           // get all windows for window listners to leverage
           var allnetdiawins = desktop_Networkdiagram.getWindows();
 
-          // add move listner to each shape
+          // add move listner to each element
           winsh.addListener("move", function(e) {
             var arrwins = [];
             allnetdiawins.forEach(function(winobj) {
-              if (winobj.getUserData("shapetype")=="connectline") 
+              if (winobj.getUserData("elementtype")=="connectline") 
               {
                 if (winobj.getVisibility() == "visible" && (winobj.getUserData("elementAhashcode") == this.toHashCode() || winobj.getUserData("elementBhashcode") == this.toHashCode()))
                 {
@@ -302,11 +302,11 @@ qx.Class.define("wax.demo.Application",
             villeconnect.repositionConnections(arrwins);
           });
 
-          // add resize listner to each shape.
+          // add resize listner to each element.
           winsh.addListener("resize", function(e) {
             var arrwins = [];
             allnetdiawins.forEach(function(winobj) {
-              if (winobj.getUserData("shapetype")=="connectline") 
+              if (winobj.getUserData("elementtype")=="connectline") 
               {
                 if (winobj.getVisibility() == "visible" && (winobj.getUserData("elementAhashcode") == this.toHashCode() || winobj.getUserData("elementBhashcode") == this.toHashCode()))
                 {
@@ -337,10 +337,10 @@ qx.Class.define("wax.demo.Application",
           {
             var defc = data_Networkdiagram.connections[k];
             var eleA = alldsktpwins.find(function(elA) { 
-              return elA.getUserData("shapeid") == defc.elementA;
+              return elA.getUserData("elementid") == defc.elementA;
             });
             var eleB = alldsktpwins.find(function(elB) {
-              return elB.getUserData("shapeid") == defc.elementB;
+              return elB.getUserData("elementid") == defc.elementB;
             });
             villeconnect.connect(eleA, eleB, defc.properties, defc.options, desktop_Networkdiagram);
           }
@@ -356,11 +356,11 @@ qx.Class.define("wax.demo.Application",
       desktop_Basicflowchart.setUserData("diagramtype", "windows");
       var data_Basicflowchart = wax.demo.DiagramData.DIAGRAMS["BasicFlowchart"];
 
-      //Shapes
-      if (data_Basicflowchart.shapes != undefined) {
-        for (var j=0; j<data_Basicflowchart.shapes.length; j++)
+      //elements
+      if (data_Basicflowchart.elements != undefined) {
+        for (var j=0; j<data_Basicflowchart.elements.length; j++)
         {
-          var defsh = data_Basicflowchart.shapes[j];
+          var defsh = data_Basicflowchart.elements[j];
           var winsh = new qx.ui.window.Window();
           winsh.set({
             showMaximize : false,
@@ -374,7 +374,7 @@ qx.Class.define("wax.demo.Application",
           winsh.setLayout(new qx.ui.layout.Grow());
           var winshcb = winsh.getChildControl("captionbar");
           winshcb.set({cursor:"move", minHeight: 30});
-          winsh.setAppearance("shape");
+          winsh.setAppearance("element");
 
           winsh.addListener("activate", function(){
             winshcb.setVisibility("visible");
@@ -386,33 +386,33 @@ qx.Class.define("wax.demo.Application",
           var lblatom = new qx.ui.basic.Atom(defsh.options.content);  
           lblatom.set({anonymous: true, backgroundColor: "transparent", rich:true, center:true, padding:4, allowGrowX:true, allowGrowY:true});
           lblatom.getChildControl('label').set({textAlign:"center"});
-          var shape = new qx.ui.core.Widget().set({
+          var element = new qx.ui.core.Widget().set({
             backgroundColor: "transparent",
             decorator: defsh.options.shape
           });
-          if (defsh.options.shape == "diamond"){
+          if (defsh.options.element == "diamond"){
             //winsh.add(iconlabel);
             winsh.setLayout(new qx.ui.layout.Canvas());
             winsh.set({width: 120, height: 146});
-            shape.getContentElement().setStyles({"transform" : "rotate(45deg)"});
-            winsh.add(shape, {top: "15%", left: "15%", bottom: "15%", right: "15%"});
+            element.getContentElement().setStyles({"transform" : "rotate(45deg)"});
+            winsh.add(element, {top: "15%", left: "15%", bottom: "15%", right: "15%"});
             winsh.add(lblatom, {width: "100%", height: "100%"});
           } else {
-            winsh.add(shape);
+            winsh.add(element);
             winsh.add(lblatom);
           }
               
-          winsh.setUserData("shapeid", defsh.id);
+          winsh.setUserData("elementid", defsh.id);
           winsh.moveTo(defsh.left, defsh.top);
 
           // get all windows for window listners to leverage
           var allwins = desktop_Basicflowchart.getWindows();
 
-          // add move listner to each shape
+          // add move listner to each element
           winsh.addListener("move", function(e) {
             var arrwins = [];
             allwins.forEach(function(winobj) {
-              if (winobj.getUserData("shapetype")=="connectline") 
+              if (winobj.getUserData("elementtype")=="connectline") 
               {
                 if (winobj.getVisibility() == "visible" && (winobj.getUserData("elementAhashcode") == this.toHashCode() || winobj.getUserData("elementBhashcode") == this.toHashCode()))
                 {
@@ -423,11 +423,11 @@ qx.Class.define("wax.demo.Application",
             villeconnect.repositionConnections(arrwins);
           });
 
-          // add resize listner to each shape.
+          // add resize listner to each element.
           winsh.addListener("resize", function(e) {
             var arrwins = [];
             allwins.forEach(function(winobj) {
-              if (winobj.getUserData("shapetype")=="connectline") 
+              if (winobj.getUserData("elementtype")=="connectline") 
               {
                 if (winobj.getVisibility() == "visible" && (winobj.getUserData("elementAhashcode") == this.toHashCode() || winobj.getUserData("elementBhashcode") == this.toHashCode()))
                 {
@@ -457,10 +457,10 @@ qx.Class.define("wax.demo.Application",
           {
             var defc = data_Basicflowchart.connections[k];
             var eleA = alldsktpwins.find(function(elA) { 
-              return elA.getUserData("shapeid") == defc.elementA;
+              return elA.getUserData("elementid") == defc.elementA;
             });
             var eleB = alldsktpwins.find(function(elB) {
-              return elB.getUserData("shapeid") == defc.elementB;
+              return elB.getUserData("elementid") == defc.elementB;
             });
             villeconnect.connect(eleA, eleB, defc.properties, defc.options, desktop_Basicflowchart);
           }
@@ -473,32 +473,39 @@ qx.Class.define("wax.demo.Application",
       // Connecting static widgets together
       // Code is taken from https://qooxdoo.org/qxl.demobrowser/#layout~ManualLayout.html
 
-      var w1 = new qx.ui.core.Widget().set({
-        backgroundColor: "red"
+      var wborder = new qx.ui.decoration.Decorator().set({
+        width: 3,
+        style: "solid",
+        color: "black",
       });
-      w1.setUserData("shapeid", 1);
+
+      var w1 = new qx.ui.core.Widget().set({
+        backgroundColor: "transparent",
+        decorator: wborder
+      });
+      w1.setUserData("elementid", 1);
       w1.setUserBounds(100, 100, 100, 100);
 
       var w2 = new qx.ui.core.Widget().set({
-        backgroundColor: "blue"
+        backgroundColor: "blue",
+        decorator: wborder
       });
-      w2.setUserData("shapeid", 2);
-      w2.setUserBounds(380, 100, 100, 100);
+      w2.setUserData("elementid", 2);
+      w2.setUserBounds(460, 100, 100, 100);
 
       var w3 = new qx.ui.core.Widget().set({
-        backgroundColor: "green"
+        backgroundColor: "transparent",
+        decorator: wborder
       });
-      w3.setUserData("shapeid", 3);
+      w3.setUserData("elementid", 3);
       w3.setUserBounds(380, 350, 100, 100);
 
-      /*
       var w4 = new qx.ui.core.Widget().set({
-        backgroundColor: "yellow"
-        padding: 10,
+        backgroundColor: "transparent",
+        decorator: wborder
       });
-      w4.setUserData("shapeid", 4);
-      w4.setUserBounds(130, 380, 100, 100);
-      */
+      w4.setUserData("elementid", 4);
+      w4.setUserBounds(680, 200, 130, 151);
 
       var container = new qx.ui.container.Composite();
       container.setUserData("diagramtype", "widgets");
@@ -509,7 +516,8 @@ qx.Class.define("wax.demo.Application",
           elementB : w2,
           properties : {
             backgroundColor : "transparent",
-            padding : 0
+            padding : 0,
+            decorator : "roundedcorners-light"
           },
           options : {
             anchorA: "horizontal", 
@@ -521,8 +529,9 @@ qx.Class.define("wax.demo.Application",
           elementA : w2,
           elementB : w3,
           properties : {
-            backgroundColor : "transparent",
-            padding : 0
+            backgroundColor : "gray",
+            padding : 0,
+            decorator : "roundedcorners-light"
           },
           options : {
             anchorA: "vertical",
@@ -535,14 +544,29 @@ qx.Class.define("wax.demo.Application",
           elementB : w1,
           properties : {
             backgroundColor : "transparent",
-            padding : 0
+            padding : 0,
+            decorator : "roundedcorners-light"
           },
           options : {
             anchorA: "point",
             anchorB : "point",
             direction : "AtoB"
           }
-        }  
+        },
+        {
+          elementA : w3,
+          elementB : w4,
+          properties : {
+            backgroundColor : "transparent",
+            padding : 0,
+            decorator : "roundedcorners-light"
+          },
+          options : {
+            anchorA: "point", 
+            anchorB : "point",
+            direction : "AtoB"
+          }
+        }
       ]
       /*
        
@@ -574,7 +598,7 @@ qx.Class.define("wax.demo.Application",
       container.add(w1);
       container.add(w2);
       container.add(w3);
-      //container.add(w4);
+      container.add(w4);
 
       widgetconnectpage.add(container, { edge: 0 });
 
