@@ -49,7 +49,7 @@
 
 .chevarrowdown {
   background: 
-    repeating-linear-gradient(135deg,var(--ud)) bottom right,
+    repeating-linear-gradient(-45deg,var(--ud)) bottom right,
     repeating-linear-gradient(45deg,var(--ud)) bottom left;
   background-size:  50% 100%;
   background-repeat: no-repeat;
@@ -60,10 +60,8 @@
 }
 
 .chevarrowup {
-  /*height: calc(80px / cos(45deg));*/
-  /*width: 14px;*/
   background: 
-    repeating-linear-gradient(-135deg,var(--ud)) top left,
+    repeating-linear-gradient(45deg,var(--ud)) top left,
     repeating-linear-gradient(-45deg,var(--ud)) top right;
   background-size:  50% 100%;
   background-repeat: no-repeat;

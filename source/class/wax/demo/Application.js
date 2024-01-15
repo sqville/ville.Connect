@@ -239,7 +239,8 @@ qx.Class.define("wax.demo.Application",
       //One connect object for all diagrams
       var villeconnect = new ville.connect.Connect();
 
-      //Be sure to include ville.Connet's Decoration entries for the arrows
+      //Be sure to include ville.Connet's Appearance and Decoration entries
+      qx.Theme.include(qx.theme.manager.Appearance.getInstance().getTheme(), ville.connect.Appearance);
       qx.Theme.include(qx.theme.manager.Decoration.getInstance().getTheme(), ville.connect.Decoration);
       
 
@@ -483,6 +484,8 @@ qx.Class.define("wax.demo.Application",
         backgroundColor: "transparent",
         decorator: wborder
       });
+      //var w1 = new qx.ui.form.Button("This is a Button");
+
       w1.setUserData("elementid", 1);
       w1.setUserBounds(100, 100, 100, 100);
 
@@ -515,9 +518,7 @@ qx.Class.define("wax.demo.Application",
           elementA : w1,
           elementB : w2,
           properties : {
-            backgroundColor : "transparent",
-            padding : 0,
-            decorator : "roundedcorners-light"
+            appearance : "connector",
           },
           options : {
             anchorA: "horizontal", 
@@ -529,9 +530,7 @@ qx.Class.define("wax.demo.Application",
           elementA : w2,
           elementB : w3,
           properties : {
-            backgroundColor : "gray",
-            padding : 0,
-            decorator : "roundedcorners-light"
+            appearance : "connector",
           },
           options : {
             anchorA: "vertical",
@@ -543,9 +542,7 @@ qx.Class.define("wax.demo.Application",
           elementA : w3,
           elementB : w1,
           properties : {
-            backgroundColor : "transparent",
-            padding : 0,
-            decorator : "roundedcorners-light"
+            appearance : "connector",
           },
           options : {
             anchorA: "point",
@@ -557,9 +554,7 @@ qx.Class.define("wax.demo.Application",
           elementA : w3,
           elementB : w4,
           properties : {
-            backgroundColor : "transparent",
-            padding : 0,
-            decorator : "roundedcorners-light"
+            appearance : "connector",
           },
           options : {
             anchorA: "point", 
@@ -567,27 +562,8 @@ qx.Class.define("wax.demo.Application",
             direction : "AtoB"
           }
         }
-      ]
-      /*
-       
-      
-      
-      
-      {
-          elementA : w3,
-          elementB : w4,
-          properties : {
-            backgroundColor : "yellow",
-            padding : 0
-          },
-          options : {
-            anchorA: "horizontal", 
-            anchorB : "horizontal",
-            direction : "AtoB"
-          }
-        }
       ];
-      */
+      
 
       for (var k=0; k<wconns.length; k++)
       {

@@ -667,7 +667,7 @@ _positionConnection : function(connection)
       //console.log("connid: " + this._wline1.getUserData("connectid") + " position: " + position + " pA:" + pA + " pB: " + pB + " direction: " + direction);
       if (position == "vertical") {
         if (pA < pB && direction == "AtoB") 
-          element.getContentElement().addClass("chevrondown");
+          element.getContentElement().addClass("chevarrowdown");
         else if (pA < pB && direction == "BtoA")
           element.getContentElement().addClass("chevarrowup");
         else if (pA > pB && direction == "AtoB")

@@ -365,7 +365,7 @@ qx.Theme.define("wax.demo.theme.Appearance",
 
     /*
     ---------------------------------------------------------------------------
-      DIAGRAM - elementS
+      DIAGRAM - qx.ui.window.Window based elements
     ---------------------------------------------------------------------------
     */
 
