@@ -1,9 +1,26 @@
 :root {
-  --rl: #000000 0 15px, transparent 0 20px;
-  --ud: #000000 0 15px, transparent 0 20px;
+  --rl: #000 0 15px, transparent 0 20px;
+  --ud: #000 0 15px, transparent 0 20px;
 }
 
 /*  https://css-pattern.com/ and https://css-loaders.com/ */
+/* HTML: <div class="loader"></div> */
+.loader {
+  width: calc(80px / cos(45deg));
+  height: 14px;
+  --c: #000 0 15px,#0000 0 20px;
+  background: 
+    repeating-linear-gradient(135deg,var(--c)) left top,
+    repeating-linear-gradient( 45deg,var(--c)) left bottom;
+  background-size:  200% 50%;
+  background-repeat: no-repeat;
+  animation: l14 2s infinite linear;
+}
+@keyframes l14 {
+    100% {background-position:top right,bottom right}
+}
+
+
 
 .chevrondown {
   background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Cpath d='M8 13.1l-8-8 2.1-2.2 5.9 5.9 5.9-5.9 2.1 2.2z'/%3E%3C/svg%3E");
@@ -27,23 +44,23 @@
   background: 
     repeating-linear-gradient(-135deg,var(--rl)) right top,
     repeating-linear-gradient(-45deg,var(--rl)) right bottom;
-  background-size:  100% 50%;
+  background-size:  150% 50%;
   background-repeat: no-repeat;
-  /*animation: l4 10s infinite linear;*/
+  /*animation: l4 3s infinite linear;*/
 }
 @keyframes l4 {
-    100% {background-position:top left,bottom left}
+    100% {background-position:top left, bottom left}
 }
 
 .chevarrowlt {
   background: 
     repeating-linear-gradient(135deg,var(--rl)) left top,
     repeating-linear-gradient(45deg,var(--rl)) left bottom;
-  background-size:  100% 50%;
+  background-size: 200% 50%;
   background-repeat: no-repeat;
-  /*animation: l6 10s infinite linear;*/
+  /*animation: l5 3s infinite linear;*/
 }
-@keyframes l6 {
+@keyframes l5 {
     100% {background-position:top right,bottom right}
 }
 
@@ -51,12 +68,12 @@
   background: 
     repeating-linear-gradient(-45deg,var(--ud)) bottom right,
     repeating-linear-gradient(45deg,var(--ud)) bottom left;
-  background-size:  50% 100%;
+  background-size:  50% 200%;
   background-repeat: no-repeat;
-  /*animation: l5 10s infinite linear;*/
+  /*animation: l6 3s infinite linear;*/
 }
-@keyframes l5 {
-    100% {background-position:left top,right top}
+@keyframes l6 {
+    100% {background-position:right top,left top}
 }
 
 .chevarrowup {
@@ -65,9 +82,9 @@
     repeating-linear-gradient(-45deg,var(--ud)) top right;
   background-size:  50% 100%;
   background-repeat: no-repeat;
-  /*animation: l5 10s infinite linear;*/
+  /*animation: l7 3s infinite linear;*/
 }
-@keyframes l5 {
+@keyframes l7 {
     100% {background-position:left top,right top}
 }
 

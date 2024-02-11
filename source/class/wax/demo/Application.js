@@ -133,14 +133,6 @@ qx.Class.define("wax.demo.Application",
       winAboutWax.getLayout().set({spacing: 20});
       winAboutWax.set({caption: "About Wax", contentPadding: 0, status: "Github repo coming soon"});
       var txtaboutwax = "Wax aims to be a rapid application development and prototyping tool/system. There's a spectrum of rapid-app-dev tools (or low-code tools) - Outsystems, Appian and Ionic on the high-end, Foundation, Gatsbyjs and SemanticUI on the other. Wax is currently not yet on this spectrum, but it does have an approach and supporting assets to begin the process of becoming a highly effective and useful app-dev/app-prototyping asset.<br><br><br>";
-      txtaboutwax += "<span style='font-size: 16px;'>THE APPROACH (so far):</span><br><br>";
-      txtaboutwax += "<b>Build Qooxdoo skeletons (and lots of them) that function on multiple devices or use case scenarios.</b> A typical use case - After meeting with the client and gathering initial requirements, the prototype developer generates an application using a skeleton (chosen from a long list of skeletons) that best meets the initial requirements. Just like website templates found on the web, Qooxdoo skeletons would encompass enough functionality to help produce a high fidelity prototype in a matter of a few days. There is the potential that a skeleton could also include mock data (json) and non-Qooxdoo scripts to set up a cloud backend (not yet proven out). Skeletons could even include non-Qooxdoo templates for native mobile frameworks such as React Native, Flutter and Felgo (easy to do since skeleton templates are just static files with mustache-like tags).<br><br>";
-      txtaboutwax += "<b>Cut and paste components from a well-stocked and possibly specially-tailored demo browser application.</b> Just as we do today, we cut and paste code from examples into our apps. Properly constructed skeletons and documented demos could facilitate the rapid integration of components into any application (not yet proven out). Wax skeletons, and resulting applications would be divided out logically into three areas: Scaffolding, Wiring and Appearance. Scaffolding includes object creation, placement and initial configuration. Wiring involves application flow (mostly via event listener creation and assignment). Appearance is simple look and feel via theming and animations. Skeletons would include an appropriate amount of Appearance and animation code, but when the goal is to rapidly produce a high fidelity prototype Scaffolding and Wiring would be the top focus.<br><br>";
-      txtaboutwax += "<b>Use other frameworks for native mobile applications, and sync changes made in the main Qooxdoo app with the produced (from a skeleton) native mobile framework project.</b> Converting Qooxdoo produced code to React Native code, for example, is relatively easy. Object hierarchy is taken from getObjectRegistry method of the Application (taken from Inspector application). UI objects and their properties can be easily mapped and organized (proven out to a small degree). The difficult part is how to best get the changes to (and from) the native mobile project. Using qooxdoo compiler would be ideal, but the compiler does not have access to the apps object hierarchy. The approach Wax would take is to mimic the manual means of producing code. The manual means goes something like this: Include InspectorModel.js file in a project. Add a control (Button) to execute the reading of the ObjectRegistry and translation to the target framework. Write the translation to the console (or a TextArea object). Cut and paste resulting code to the other project.  A more automated approach would be to include an Electronjs project/app in the skeleton for the user to run at any given time. Electronjs would then sync the resulting translation to the target native mobile project. This Electronjs, automated approach has not yet been proven out.<br><br><br>";
-      txtaboutwax += "<span style='font-size: 16px;'>CONCLUSION:</span><br><br>";
-      txtaboutwax += "Is Wax, or even the concept of Wax, a worthwhile endeavor? Can the needed productivity gains be met in order to call itself a rapid app-dev tool? Is the noted approach the right way forward? It completely leaves out any type of changes being made, or needed, to qooxdoo compiler. Red flag, or just using the simplest approach is the best approach, approach? This is all a head-scratcher for sure. Too many unknowns without enough time. Welcome to software solution development :-)<br><br><br>";
-      txtaboutwax += "<span style='font-size: 16px;'>SPECIAL NOTE:</span><br><br>";
-      txtaboutwax += "Skeletons and the demo browser are not new concepts to Qooxdoo. These features have been around since the beginning. The purpose of this writeup is to convey good-intent, thoughts and ideas on how to improve peoples work lives, and not meant to be critical or take credit for anything in anyway. The past and current qooxdoo core team have done, and are doing, phenomenal work. My thanks go out to them for making me look better than I really am - Cheers.";
       //var aboutbox = new qx.ui.container.Composite(new qx.ui.layout.VBox(10));
       var aboutscroll = new qx.ui.container.Scroll().set({ allowStretchY: true, padding: 0, margin: 0, contentPadding: [0,24,0,24]});
       var waxatom = new qx.ui.basic.Atom(txtaboutwax,"wax/demo/ville_Wax.png").set({rich: true, iconPosition: "top", gap: 30, paddingTop: 30});
@@ -247,7 +239,7 @@ qx.Class.define("wax.demo.Application",
       // STACK - PAGE #1 - Network Diagram
       var wmNetworkdiagram = new qx.ui.window.Manager();
       var desktop_Networkdiagram = new qx.ui.window.Desktop(wmNetworkdiagram);
-      desktop_Networkdiagram.setUserData("diagramtype", "windows");
+      desktop_Networkdiagram.setUserData("diagramtype", "widgets");
       var data_Networkdiagram = wax.demo.DiagramData.DIAGRAMS["NetworkDiagram"];
 
       //elements for Network Diagram
@@ -286,7 +278,7 @@ qx.Class.define("wax.demo.Application",
           winsh.moveTo(defsh.left, defsh.top);
 
           // get all windows for window listners to leverage
-          var allnetdiawins = desktop_Networkdiagram.getWindows();
+          var allnetdiawins = desktop_Networkdiagram.getChildren(); //desktop_Networkdiagram.getWindows();
 
           // add move listner to each element
           winsh.addListener("move", function(e) {
@@ -391,7 +383,7 @@ qx.Class.define("wax.demo.Application",
             backgroundColor: "transparent",
             decorator: defsh.options.shape
           });
-          if (defsh.options.element == "diamond"){
+          if (defsh.options.shape == "diamond"){
             //winsh.add(iconlabel);
             winsh.setLayout(new qx.ui.layout.Canvas());
             winsh.set({width: 120, height: 146});
@@ -480,38 +472,42 @@ qx.Class.define("wax.demo.Application",
         color: "black",
       });
 
-      var w1 = new qx.ui.core.Widget().set({
+      /*var w1 = new qx.ui.core.Widget().set({
         backgroundColor: "transparent",
         decorator: wborder
-      });
-      //var w1 = new qx.ui.form.Button("This is a Button");
+      });*/
+      var w1 = new qx.ui.form.Button("This is a Button");
 
       w1.setUserData("elementid", 1);
-      w1.setUserBounds(100, 100, 100, 100);
+      //w1.setUserBounds(100, 100, 100, 100);
 
       var w2 = new qx.ui.core.Widget().set({
         backgroundColor: "blue",
         decorator: wborder
       });
-      w2.setUserData("elementid", 2);
-      w2.setUserBounds(460, 100, 100, 100);
+      //w2.setUserBounds(460, 100, 100, 100);
 
       var w3 = new qx.ui.core.Widget().set({
         backgroundColor: "transparent",
         decorator: wborder
       });
       w3.setUserData("elementid", 3);
-      w3.setUserBounds(380, 350, 100, 100);
+      //w3.setUserBounds(380, 350, 100, 100);
 
       var w4 = new qx.ui.core.Widget().set({
         backgroundColor: "transparent",
         decorator: wborder
       });
       w4.setUserData("elementid", 4);
-      w4.setUserBounds(680, 200, 130, 151);
+      //w4.setUserBounds(680, 200, 130, 151);
 
-      var container = new qx.ui.container.Composite();
+      var container = new qx.ui.container.Composite(new qx.ui.layout.Canvas());
       container.setUserData("diagramtype", "widgets");
+
+      container.add(w1, { left: 100, top: 100 });
+      container.add(w2, { left: 460, top: 100 });
+      container.add(w3, { left: 380, top: 350 });
+      container.add(w4, { left: 680, top: 200 });
 
       var wconns = [
         {
@@ -521,9 +517,12 @@ qx.Class.define("wax.demo.Application",
             appearance : "connector",
           },
           options : {
-            anchorA: "horizontal", 
+            anchorA: "horizontal",  
+            anchorAposition: "",
             anchorB : "horizontal",
-            direction : "AtoB"
+            anchorBposition: "",
+            strokeWidth: 8,
+            frontback: "front"
           }
         },
         {
@@ -531,11 +530,13 @@ qx.Class.define("wax.demo.Application",
           elementB : w3,
           properties : {
             appearance : "connector",
+            backgroundColor : "transparent"
           },
           options : {
             anchorA: "vertical",
             anchorB : "vertical",
-            direction : "AtoB"
+            direction : "AtoB",
+            strokeWidth: 6
           }
         },
         {
@@ -543,6 +544,7 @@ qx.Class.define("wax.demo.Application",
           elementB : w1,
           properties : {
             appearance : "connector",
+            backgroundColor : "transparent"
           },
           options : {
             anchorA: "point",
@@ -555,6 +557,7 @@ qx.Class.define("wax.demo.Application",
           elementB : w4,
           properties : {
             appearance : "connector",
+            backgroundColor : "transparent"
           },
           options : {
             anchorA: "point", 
@@ -563,42 +566,39 @@ qx.Class.define("wax.demo.Application",
           }
         }
       ];
+
+      // draw connectors on appear of the diagram viewer
+      container.addListenerOnce("appear", function(e) {
+        
+        for (var k=0; k<wconns.length; k++)
+        {
+          var defc = wconns[k];
+          villeconnect.connect(defc.elementA, defc.elementB, defc.properties, defc.options, container);
+        }
+      });
       
 
+      /** 
+       * This is for widgets with UserBounds set at design time 
+       * 
       for (var k=0; k<wconns.length; k++)
       {
         var defc = wconns[k];
         villeconnect.connect(defc.elementA, defc.elementB, defc.properties, defc.options, container);
       }
-      
+
       container.add(w1);
       container.add(w2);
       container.add(w3);
       container.add(w4);
+      */
+
+
+      
+
 
       widgetconnectpage.add(container, { edge: 0 });
 
-      // test - connector widgets
-      /*
-      var w5 = new qx.ui.core.Widget().set({
-        backgroundColor: "gray",
-        decorator: conndec,
-        padding: 2,
-      });
-      */
-
-      /*
-      var w1b = w1.getBounds();
-      var w2b = w2.getBounds();
-      var startx = w1b.left + (w1b.width/2);
-      var starty = w1b.top + (w1b.height/2);
-      var endx = w2b.left - (startx);
-      var endy = w2b.top - (starty);
-      w5.setUserBounds(startx, starty, endx, endy);
-      container.add(w5);
-      */
-
-      
  
       // Assemble - THE STACK 
       centerbox.add(dashboardpage);

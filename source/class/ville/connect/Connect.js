@@ -70,7 +70,6 @@ qx.Class.define("ville.connect.Connect",
           return null;
         }
 
-        //var connection = this._createConnectionObject(elementA, elementB, options);
         var connection = this._createConnectionObject(elementA, elementB, properties, options);
 
         var wline1;
@@ -78,7 +77,6 @@ qx.Class.define("ville.connect.Connect",
         var wline3;
         
         // Create line Widgets and add them to the Root
-        //var wline1 = this._wline1 = new qx.ui.window.Window().set({backgroundColor: options.color});
         if (appobj.getUserData("diagramtype") == "windows") {
           wline1 = this._wline1 = new qx.ui.window.Window().set(properties);
           wline1.getChildControl("captionbar").setVisibility("hidden");
@@ -86,14 +84,12 @@ qx.Class.define("ville.connect.Connect",
           wline2.getChildControl("captionbar").setVisibility("hidden");
           wline3 = this._wline3 = new qx.ui.window.Window().set(properties);
           wline3.getChildControl("captionbar").setVisibility("hidden");
-          //connection.radius = 12;
         } else {
-          //wline1 = this._wline1 = new qx.ui.container.Composite(new qx.ui.layout.Canvas()).set(properties);
           wline1 = this._wline1 = new qx.ui.core.Widget().set(properties);
           wline2 = this._wline2 = new qx.ui.core.Widget().set(properties);
           wline3 = this._wline3 = new qx.ui.core.Widget().set(properties);
         }
-        
+        // wline1
         wline1.setUserData("elementtype", "connectline");
         wline1.setUserData("connectid", connection.id);
         wline1.setUserData("segmentid", 1);
@@ -102,10 +98,7 @@ qx.Class.define("ville.connect.Connect",
         wline1.setUserData("elementA", elementA);
         wline1.setUserData("elementB", elementB);
         wline1.setUserData("options", options);
-        //var wline2 = this._wline2 = new qx.ui.window.Window().set({backgroundColor: options.color, anonymous: true});
-        //var wline2 = this._wline2 = new qx.ui.window.Window().set(properties);
-        //wline2.setAnonymous(true);
-        //wline2.getChildControl("captionbar").setVisibility("hidden");
+        // wline2
         wline2.setUserData("elementtype", "connectline");
         wline2.setUserData("connectid", connection.id);
         wline2.setUserData("segmentid", 2);
@@ -114,10 +107,7 @@ qx.Class.define("ville.connect.Connect",
         wline2.setUserData("elementA", elementA);
         wline2.setUserData("elementB", elementB);
         wline2.setUserData("options", options);
-        //var wline3 = this._wline3 = new qx.ui.window.Window().set({backgroundColor: options.color, anonymous: true});
-        //var wline3 = this._wline3 = new qx.ui.window.Window().set(properties);
-       // wline3.setAnonymous(true);
-        //wline3.getChildControl("captionbar").setVisibility("hidden");
+        // wline3
         wline3.setUserData("elementtype", "connectline");
         wline3.setUserData("connectid", connection.id);
         wline3.setUserData("segmentid", 3);
@@ -149,8 +139,6 @@ qx.Class.define("ville.connect.Connect",
         var vvimg = new qx.ui.basic.Image("ville/connect/vertical-vertical-16.png").set({anonymous : true, marginLeft : 3});
         vv._add(vvimg, {column:2});
         var pp = new qx.ui.menu.RadioButton("point-point");
-        //var vvimg = new qx.ui.basic.Image("ville/connect/vertical-vertical-16.png").set({anonymous : true, marginLeft : 3});
-        //vv._add(vvimg, {column:2});
         var extendconn = new qx.ui.menu.Button("Extend connector");
 
         menu.add(hh);
@@ -158,8 +146,8 @@ qx.Class.define("ville.connect.Connect",
         menu.add(vh);
         menu.add(vv);
         menu.add(pp);
-        menu.addSeparator();
-        menu.add(extendconn);
+        //menu.addSeparator();
+        //menu.add(extendconn);
 
         menu.setSpacingX(15);
         
@@ -171,7 +159,6 @@ qx.Class.define("ville.connect.Connect",
         switch (conntype) {
           case "horizontal-horizontal" :
             hh.setValue(true);
-            //hh.setFont("bold");
             break;
           case "horizontal-vertical" :
             hv.setValue(true);
@@ -193,50 +180,31 @@ qx.Class.define("ville.connect.Connect",
         conntypegroup.addListener("changeSelection", function (e){
           var wline = e.getData()[0].getLayoutParent().getOpener();
           var arroptions = e.getData()[0].getLabel().split("-");
-          var newoptions = {
-            anchorA: arroptions[0], 
-            anchorB : arroptions[1]
-          }
+          var newoptions = options;
+          newoptions.anchorA = arroptions[0];
+          newoptions.anchorB = arroptions[1];
+          
           wline.setUserData("options", newoptions);
-          //console.log(wline.getUserData("wline1").getUserData("segmentid"));
           var arrlines = [wline.getUserData("wline1"), wline.getUserData("wline2"), wline];
           this.repositionConnections(arrlines);
         }, this);
-
-        //test background arrows
-        /**
-         * background:
-linear-gradient(45deg, #92baac 45px, transparent 45px)64px 64px,
-linear-gradient(45deg, #92baac 45px, transparent 45px,transparent 91px, #e1ebbd 91px, #e1ebbd 135px, transparent 135px),
-linear-gradient(-45deg, #92baac 23px, transparent 23px, transparent 68px,#92baac 68px,#92baac 113px,transparent 113px,transparent 158px,#92baac 158px);
-background-color:#e1ebbd;
-background-size: 128px 128px;
-         */
-        /*wline1.getContentElement().setStyles({
-          "background" : "linear-gradient(135deg, #ECEDDC 25%, transparent 25%) -50px 0, linear-gradient(225deg, #ECEDDC 25%, transparent 25%) -50px 0, linear-gradient(315deg, #ECEDDC 25%, transparent 25%), linear-gradient(45deg, #ECEDDC 25%, transparent 25%)",
-          "background-color" : "#EC173A",
-          "background-size" : "10px 10px"
-        });*/
-        //wline1.getContentElement().addClass("chevarrowrt");
-        
 
         appobj.add(wline1);
         appobj.add(wline2);
         appobj.add(wline3); 
 
         if (options != null && options.endShape != null && options.endShape != "none") {
-            // Create line end shape and add it to the diagram
-            //var wendarrow = this._wendarrow = new qx.ui.popup.Popup(new qx.ui.layout.Grow).set({backgroundColor: options.color, anonymous: true, width: 8, height: 8, placementModeX: "direct", placementModeY: "direct"});
-            var wendarrow = this._wendarrow = new qx.ui.popup.Popup(new qx.ui.layout.Grow).set({backgroundColor: properties.backgroundColor, anonymous: true, width: 8, height: 8, placementModeX: "direct", placementModeY: "direct"});
-            wendarrow.setUserData("elementtype", "connectline-endarrow");
-            wendarrow.setUserData("connectid", connection.id);
-            wendarrow.setUserData("elementB", elementB);
-            wendarrow.setAutoHide(false);
-            wendarrow.placeToWidget(elementB, true);
-            wendarrow.show();
+          // Create line end shape and add it to the diagram
+          //var wendarrow = this._wendarrow = new qx.ui.popup.Popup(new qx.ui.layout.Grow).set({backgroundColor: options.color, anonymous: true, width: 8, height: 8, placementModeX: "direct", placementModeY: "direct"});
+          var wendarrow = this._wendarrow = new qx.ui.popup.Popup(new qx.ui.layout.Grow).set({backgroundColor: properties.backgroundColor, anonymous: true, width: 8, height: 8, placementModeX: "direct", placementModeY: "direct"});
+          wendarrow.setUserData("elementtype", "connectline-endarrow");
+          wendarrow.setUserData("connectid", connection.id);
+          wendarrow.setUserData("elementB", elementB);
+          wendarrow.setAutoHide(false);
+          wendarrow.placeToWidget(elementB, true);
+          wendarrow.show();
         }
         
-
         // Position connection.
         this._positionConnection(connection);
 
@@ -249,27 +217,11 @@ background-size: 128px 128px;
           wline1.maximize();
           wline2.maximize();
           wline3.maximize();
+        } else if (connection.frontback == "back") {
+          wline1.setZIndex(9);
+          wline2.setZIndex(9);
+          wline3.setZIndex(9);
         }
-
-        //direction arrow test
-        /*var directionarrow = new qx.ui.popup.Popup(new qx.ui.layout.Grow).set({backgroundColor: properties.backgroundColor, anonymous: true, width: 8, height: 8, placementModeX: "direct", placementModeY: "direct"});
-        directionarrow.setDecorator("dark-arrow-right");
-        //this._wendarrow.setOffsetLeft(-3);
-        directionarrow.setPosition("left-middle");
-        directionarrow.setAutoHide(false);
-        directionarrow.placeToWidget(wline1, true);
-        directionarrow.show();*/
-
-        //wline1.setBackgroundColor("red");
-        //wline2.setBackgroundColor("blue");
-        //wline3.setBackgroundColor("green");
-
-        //var arrowimage = new qx.ui.basic.Image("ville/connect/arrow_right.svg");
-        //wline3.getContentElement().setStyles({"overflowX": "visible", "overflowY": "visible"});
-        //wline3.getChildControl("pane").getContentElement().setStyles({"overflowX": "visible", "overflowY": "visible"});
-        //arrowimage.getContentElement().setStyles({"overflowX": "visible", "overflowY": "visible"});
-        //wline3.setLayout(new qx.ui.layout.VBox());
-        //wline3.add(arrowimage);
 
         // Return result.
         return connection.id;
@@ -288,6 +240,13 @@ _positionConnection : function(connection)
   /*** REMOVE LATER 
    * 30 offset for the window captionbar height (+30)
    * hard coded thickness of lines
+  */
+
+  /* default - center
+  center-top, center-bottom, 
+  left-top, left-middle, left-bottom, 
+  right-top, right-middle, right-bottom
+  offsetLeft, offsetTop
   */
 
   var posA = this._posA = connection.elementA.getBounds();
@@ -652,7 +611,20 @@ _positionConnection : function(connection)
       connection.elementB = elementB;
       connection.color = (properties != null && properties.backgroundColor != null)? properties.backgroundColor + '' : '#808080';
       //connection.radius = (options != null && options.radius != null && !isNaN(options.radius))? parseInt(options.radius, 10) : 2;
-      connection.radius = 12; //default and changed at any point
+      // default values
+      connection.radius = 12;
+      connection.frontback = "back";
+      connection.anchorAposition = "center";
+      connection.anchorBposition = "center";
+      if (options.strokeWidth)
+        connection.radius = options.strokeWidth;      
+      if (options.frontback)
+        connection.frontback = options.frontback;
+      if (options.anchorApostion)
+        connection.anchorAposition = options.anchorApostion;
+      if (options.anchorBpostion)
+        connection.anchorBposition = options.anchorBpostion;
+        
       //connection.anchorA = (options != null && options.anchorA != null && (options.anchorA == 'vertical' || options.anchorA == 'horizontal'))? options.anchorA : 'horizontal';
       //connection.anchorB = (options != null && options.anchorB != null && (options.anchorB == 'vertical' || options.anchorB == 'horizontal'))? options.anchorB : 'horizontal';
       connection.anchorA = options.anchorA;
