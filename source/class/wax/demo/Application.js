@@ -518,9 +518,9 @@ qx.Class.define("wax.demo.Application",
           },
           options : {
             anchorA: "horizontal",  
-            anchorAposition: "",
+            anchorAposition: "center-top",
             anchorB : "horizontal",
-            anchorBposition: "",
+            anchorBposition: "center",
             strokeWidth: 8,
             frontback: "front"
           }

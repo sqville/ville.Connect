@@ -250,14 +250,50 @@ _positionConnection : function(connection)
   */
 
   var posA = this._posA = connection.elementA.getBounds();
-  var pAleft = parseInt(posA.left, 10) + parseInt(posA.width/2, 10);
-  //var pAtop = parseInt(posA.top, 10) + parseInt((posA.height+30)/2, 10);
-  var pAtop = parseInt(posA.top, 10) + parseInt((posA.height)/2, 10);
-
   var posB = this._posB = connection.elementB.getBounds();
-  var pBleft = parseInt(posB.left, 10) + parseInt(posB.width/2, 10);
-  //var pBtop = parseInt(posB.top, 10) + parseInt((posB.height+30)/2, 10);
-  var pBtop = parseInt(posB.top, 10) + parseInt((posB.height)/2, 10);
+  var pAleft, pBleft, pAtop, pBtop;
+  console.log(connection.anchorAposition);
+
+  switch (connection.anchorAposition) {
+    case "center-top" :
+      pAleft = parseInt(posA.left, 10) + parseInt(posA.width/2, 10);
+      pAtop = parseInt(posA.top, 10);
+      break;
+    case "center-bottom" :
+      pAleft = parseInt(posA.left, 10) + parseInt(posA.width/2, 10);
+      pAtop = parseInt(posA.top, 10) + parseInt((posA.height), 10);
+      break;
+    case "left-top" :
+      pAleft = parseInt(posA.left, 10);
+      pAtop = parseInt(posA.top, 10);
+      break;
+    case "left-middle" :
+      pAleft = parseInt(posA.left, 10);
+      pAtop = parseInt(posA.top, 10) + parseInt((posA.height)/2, 10);
+      break;
+    default :
+      pAleft = parseInt(posA.left, 10) + parseInt(posA.width/2, 10);
+      pAtop = parseInt(posA.top, 10) + parseInt((posA.height)/2, 10);
+  }
+
+  switch (connection.anchorBposition) {
+    case "horizontal-horizontal" :
+      pBleft = parseInt(posB.left, 10) + parseInt(posB.width/2, 10);
+      pBtop = parseInt(posB.top, 10) + parseInt((posB.height)/2, 10);
+      break;
+    case "horizontal-vertical" :
+      //hv.setValue(true);
+      break;
+    case "vertical-horizontal" :
+      //vh.setValue(true);
+      break;
+    case "vertical-vertical" :
+      //vv.setValue(true);
+      break;
+    default :
+      pBleft = parseInt(posB.left, 10) + parseInt(posB.width/2, 10);
+      pBtop = parseInt(posB.top, 10) + parseInt((posB.height)/2, 10);
+  }
 
   // Verify if the elements are aligned in a horizontal or vertical line.
   if(pAleft == pBleft || pAtop == pBtop) {
@@ -620,10 +656,10 @@ _positionConnection : function(connection)
         connection.radius = options.strokeWidth;      
       if (options.frontback)
         connection.frontback = options.frontback;
-      if (options.anchorApostion)
-        connection.anchorAposition = options.anchorApostion;
-      if (options.anchorBpostion)
-        connection.anchorBposition = options.anchorBpostion;
+      if (options.anchorAposition)
+        connection.anchorAposition = options.anchorAposition;
+      if (options.anchorBposition)
+        connection.anchorBposition = options.anchorBposition;
         
       //connection.anchorA = (options != null && options.anchorA != null && (options.anchorA == 'vertical' || options.anchorA == 'horizontal'))? options.anchorA : 'horizontal';
       //connection.anchorB = (options != null && options.anchorB != null && (options.anchorB == 'vertical' || options.anchorB == 'horizontal'))? options.anchorB : 'horizontal';
