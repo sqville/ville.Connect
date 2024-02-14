@@ -521,6 +521,10 @@ qx.Class.define("wax.demo.Application",
             anchorAposition: "center-top",
             anchorB : "horizontal",
             anchorBposition: "center",
+            anchorAoffsetTop: 10,
+            anchorAoffsetLeft: 10,
+            anchorBoffsetTop: 10,
+            anchorBoffsetLeft: 10,
             strokeWidth: 8,
             frontback: "front"
           }
@@ -533,10 +537,10 @@ qx.Class.define("wax.demo.Application",
             backgroundColor : "transparent"
           },
           options : {
-            anchorA: "vertical",
-            anchorB : "vertical",
+            anchorA: "point",
+            anchorB : "point",
             direction : "AtoB",
-            strokeWidth: 6
+            strokeWidth: 12
           }
         },
         {

@@ -1,34 +1,19 @@
 :root {
-  --rl: #000 0 15px, transparent 0 20px;
+  --rl: #000 0 18px, transparent 0 20px;
   --ud: #000 0 15px, transparent 0 20px;
+  --vboth: transparent 0 3px, #000 0 22px;
 }
 
 /*  https://css-pattern.com/ and https://css-loaders.com/ */
 /* HTML: <div class="loader"></div> */
-.loader {
-  width: calc(80px / cos(45deg));
-  height: 14px;
-  --c: #000 0 15px,#0000 0 20px;
-  background: 
-    repeating-linear-gradient(135deg,var(--c)) left top,
-    repeating-linear-gradient( 45deg,var(--c)) left bottom;
-  background-size:  200% 50%;
-  background-repeat: no-repeat;
-  animation: l14 2s infinite linear;
-}
-@keyframes l14 {
-    100% {background-position:top right,bottom right}
-}
-
-
 
 .chevrondown {
   background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Cpath d='M8 13.1l-8-8 2.1-2.2 5.9 5.9 5.9-5.9 2.1 2.2z'/%3E%3C/svg%3E");
 }
 
 .newchevupdn {
-  --s: 20px; /* control the size */
-  --c:#403B33;
+  --s: 12px; /* control the size */
+  --c: #000;
   
   --g:,var(--c) 25%,#0000 0;
   background:
@@ -36,8 +21,18 @@
     conic-gradient(from 135deg at 25% 75%var(--g)),
     conic-gradient(from -45deg at 75% 25%var(--g)),
     conic-gradient(from 225deg at 25% 25%var(--g)),
-    repeating-conic-gradient(from -45deg,var(--c) 0 45deg,#E3AD40 0 50%);
+    repeating-conic-gradient(from -45deg,var(--c) 0 45deg,transparent 0 50%);
   background-size: var(--s) var(--s);
+}
+
+.chevarrowhorzboth {
+  background: 
+    repeating-linear-gradient(-135deg,var(--vboth)) right top,
+    repeating-linear-gradient(-45deg,var(--vboth)) right bottom,
+    repeating-linear-gradient(135deg,var(--vboth)) left top,
+    repeating-linear-gradient(45deg,var(--vboth)) left bottom;
+  background-size:  150% 50%;
+  background-repeat: no-repeat;
 }
 
 .chevarrowrt {
@@ -56,7 +51,7 @@
   background: 
     repeating-linear-gradient(135deg,var(--rl)) left top,
     repeating-linear-gradient(45deg,var(--rl)) left bottom;
-  background-size: 200% 50%;
+  background-size: 150% 50%;
   background-repeat: no-repeat;
   /*animation: l5 3s infinite linear;*/
 }
@@ -68,7 +63,7 @@
   background: 
     repeating-linear-gradient(-45deg,var(--ud)) bottom right,
     repeating-linear-gradient(45deg,var(--ud)) bottom left;
-  background-size:  50% 200%;
+  background-size:  50% 150%;
   background-repeat: no-repeat;
   /*animation: l6 3s infinite linear;*/
 }
@@ -78,9 +73,9 @@
 
 .chevarrowup {
   background: 
-    repeating-linear-gradient(45deg,var(--ud)) top left,
-    repeating-linear-gradient(-45deg,var(--ud)) top right;
-  background-size:  50% 100%;
+    repeating-linear-gradient(-45deg,var(--ud)) top left,
+    repeating-linear-gradient(45deg,var(--ud)) top right;
+  background-size:  50% 150%;
   background-repeat: no-repeat;
   /*animation: l7 3s infinite linear;*/
 }

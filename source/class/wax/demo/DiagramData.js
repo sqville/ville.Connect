@@ -75,7 +75,10 @@ qx.Class.define("wax.demo.DiagramData",
             properties : {backgroundColor : "gray"},
             options : {
               anchorA: "vertical", 
-              anchorB : "vertical",
+              anchorB : "vertical", 
+              anchorAposition: "center-bottom",
+              anchorBposition: "center",
+              anchorBoffsetTop: 10,
               direction : "AtoB"
             }
           },

@@ -252,7 +252,6 @@ _positionConnection : function(connection)
   var posA = this._posA = connection.elementA.getBounds();
   var posB = this._posB = connection.elementB.getBounds();
   var pAleft, pBleft, pAtop, pBtop;
-  console.log(connection.anchorAposition);
 
   switch (connection.anchorAposition) {
     case "center-top" :
@@ -271,29 +270,70 @@ _positionConnection : function(connection)
       pAleft = parseInt(posA.left, 10);
       pAtop = parseInt(posA.top, 10) + parseInt((posA.height)/2, 10);
       break;
+    case "left-bottom" :
+      pAleft = parseInt(posA.left, 10);
+      pAtop = parseInt(posA.top, 10) + parseInt((posA.height), 10);
+      break;
+    case "right-top" :
+      pAleft = parseInt(posA.left, 10) + parseInt(posA.width, 10);
+      pAtop = parseInt(posA.top, 10);
+      break;
+    case "right-middle" :
+      pAleft = parseInt(posA.left, 10) + parseInt(posA.width, 10);
+      pAtop = parseInt(posA.top, 10) + parseInt((posA.height)/2, 10);
+      break;
+    case "right-bottom" :
+      pAleft = parseInt(posA.left, 10) + parseInt(posA.width, 10);
+      pAtop = parseInt(posA.top, 10) + parseInt((posA.height), 10);
+      break;
     default :
       pAleft = parseInt(posA.left, 10) + parseInt(posA.width/2, 10);
       pAtop = parseInt(posA.top, 10) + parseInt((posA.height)/2, 10);
   }
 
   switch (connection.anchorBposition) {
-    case "horizontal-horizontal" :
+    case "center-top" :
       pBleft = parseInt(posB.left, 10) + parseInt(posB.width/2, 10);
+      pBtop = parseInt(posB.top, 10);
+      break;
+    case "center-bottom" :
+      pBleft = parseInt(posB.left, 10) + parseInt(posB.width/2, 10);
+      pBtop = parseInt(posB.top, 10) + parseInt((posB.height), 10);
+      break;
+    case "left-top" :
+      pBleft = parseInt(posB.left, 10);
+      pBtop = parseInt(posB.top, 10);
+      break;
+    case "left-middle" :
+      pBleft = parseInt(posB.left, 10);
       pBtop = parseInt(posB.top, 10) + parseInt((posB.height)/2, 10);
       break;
-    case "horizontal-vertical" :
-      //hv.setValue(true);
+    case "left-bottom" :
+      pBleft = parseInt(posB.left, 10);
+      pBtop = parseInt(posB.top, 10) + parseInt((posB.height), 10);
       break;
-    case "vertical-horizontal" :
-      //vh.setValue(true);
+    case "right-top" :
+      pBleft = parseInt(posB.left, 10) + parseInt(posB.width, 10);
+      pBtop = parseInt(posB.top, 10);
       break;
-    case "vertical-vertical" :
-      //vv.setValue(true);
+    case "right-middle" :
+      pBleft = parseInt(posB.left, 10) + parseInt(posB.width, 10);
+      pBtop = parseInt(posB.top, 10) + parseInt((posB.height)/2, 10);
+      break;
+    case "right-bottom" :
+      pBleft = parseInt(posB.left, 10) + parseInt(posB.width, 10);
+      pBtop = parseInt(posB.top, 10) + parseInt((posB.height), 10);
       break;
     default :
       pBleft = parseInt(posB.left, 10) + parseInt(posB.width/2, 10);
       pBtop = parseInt(posB.top, 10) + parseInt((posB.height)/2, 10);
   }
+
+  // apply any offsets
+  pAleft = pAleft + parseInt(connection.anchorAoffsetLeft, 10);
+  pAtop = pAtop + parseInt(connection.anchorAoffsetTop, 10);
+  pBleft = pBleft + parseInt(connection.anchorBoffsetLeft, 10);
+  pBtop = pBtop + parseInt(connection.anchorBoffsetTop, 10);
 
   // Verify if the elements are aligned in a horizontal or vertical line.
   if(pAleft == pBleft || pAtop == pBtop) {
@@ -630,7 +670,7 @@ _positionConnection : function(connection)
 
         //set up connection
         var conn = this._createConnectionObject(arrlines[i].getUserData("elementA"), arrlines[i].getUserData("elementB"), null, arrlines[i].getUserData("options"));
-
+        
         // Position connection.
         this._positionConnection(conn);
         //this._wendarrow = this._wline3.getUserData("endarrow");
@@ -652,6 +692,10 @@ _positionConnection : function(connection)
       connection.frontback = "back";
       connection.anchorAposition = "center";
       connection.anchorBposition = "center";
+      connection.anchorAoffsetTop = 0;
+      connection.anchorAoffsetLeft = 0;
+      connection.anchorBoffsetTop = 0;
+      connection.anchorBoffsetLeft = 0;
       if (options.strokeWidth)
         connection.radius = options.strokeWidth;      
       if (options.frontback)
@@ -660,6 +704,14 @@ _positionConnection : function(connection)
         connection.anchorAposition = options.anchorAposition;
       if (options.anchorBposition)
         connection.anchorBposition = options.anchorBposition;
+      if (options.anchorAoffsetTop)
+        connection.anchorAoffsetTop = options.anchorAoffsetTop;
+      if (options.anchorAoffsetLeft)
+        connection.anchorAoffsetLeft = options.anchorAoffsetLeft;
+      if (options.anchorBoffsetTop)
+        connection.anchorBoffsetTop = options.anchorBoffsetTop;
+      if (options.anchorBoffsetLeft)
+        connection.anchorBoffsetLeft = options.anchorBoffsetLeft;
         
       //connection.anchorA = (options != null && options.anchorA != null && (options.anchorA == 'vertical' || options.anchorA == 'horizontal'))? options.anchorA : 'horizontal';
       //connection.anchorB = (options != null && options.anchorB != null && (options.anchorB == 'vertical' || options.anchorB == 'horizontal'))? options.anchorB : 'horizontal';
@@ -672,7 +724,8 @@ _positionConnection : function(connection)
 
     _paintarrowline : function(element, position, pA, pB, direction)
     {
-      //console.log("connid: " + this._wline1.getUserData("connectid") + " position: " + position + " pA:" + pA + " pB: " + pB + " direction: " + direction);
+      //console.log("connid: " + element.getUserData("connectid") + " position: " + position + " pA:" + pA + " pB: " + pB + " direction: " + direction);
+      element.getContentElement().removeAllClasses();
       if (position == "vertical") {
         if (pA < pB && direction == "AtoB") 
           element.getContentElement().addClass("chevarrowdown");
@@ -682,6 +735,8 @@ _positionConnection : function(connection)
           element.getContentElement().addClass("chevarrowup");
         else if (pA > pB && direction == "BtoA")
           element.getContentElement().addClass("chevarrowdown");
+        else if (direction == "both")
+          element.getContentElement().addClass("chevarrowvertboth");
       } else {
         if (pA < pB && direction == "AtoB")
           element.getContentElement().addClass("chevarrowrt");
@@ -691,6 +746,8 @@ _positionConnection : function(connection)
           element.getContentElement().addClass("chevarrowlt");
         else if (pA > pB && direction == "BtoA")
           element.getContentElement().addClass("chevarrowrt");
+        else if (direction == "both")
+          element.getContentElement().addClass("chevarrowhorzboth");
       }
       
     },
