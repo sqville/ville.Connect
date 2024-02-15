@@ -139,15 +139,38 @@ qx.Class.define("ville.connect.Connect",
         var vvimg = new qx.ui.basic.Image("ville/connect/vertical-vertical-16.png").set({anonymous : true, marginLeft : 3});
         vv._add(vvimg, {column:2});
         var pp = new qx.ui.menu.RadioButton("point-point");
-        var extendconn = new qx.ui.menu.Button("Extend connector");
+        var ppimg = new qx.ui.basic.Image("ville/connect/point-point-16.png").set({anonymous : true, marginLeft : 3});
+        pp._add(ppimg, {column:2});
+
+        var AnchorApositionmenu = new qx.ui.menu.Menu;
+        var aApcentertop = new qx.ui.menu.RadioButton("center-top");
+        var aApcenter = new qx.ui.menu.RadioButton("center");
+        var aApcenterbottom = new qx.ui.menu.RadioButton("center-bottom");
+        var aAplefttop = new qx.ui.menu.RadioButton("left-top");
+        var aApleftmiddle = new qx.ui.menu.RadioButton("left-middle");
+        var aApleftbottom = new qx.ui.menu.RadioButton("left-bottom");
+        var aAprighttop = new qx.ui.menu.RadioButton("right-top");
+        var aAprightmiddle = new qx.ui.menu.RadioButton("right-middle");
+        var aAprightbottom = new qx.ui.menu.RadioButton("right-bottom");
+        AnchorApositionmenu.add(aApcentertop);
+        AnchorApositionmenu.add(aApcenter);
+        AnchorApositionmenu.add(aApcenterbottom);
+        AnchorApositionmenu.add(aAplefttop);
+        AnchorApositionmenu.add(aApleftmiddle);
+        AnchorApositionmenu.add(aApleftbottom);
+        AnchorApositionmenu.add(aAprighttop);
+        AnchorApositionmenu.add(aAprightmiddle);
+        AnchorApositionmenu.add(aAprightbottom);
+
+        var anchorApositionbutton = new qx.ui.menu.Button("Anchor A Position", null, null, AnchorApositionmenu);
 
         menu.add(hh);
         menu.add(hv);
         menu.add(vh);
         menu.add(vv);
         menu.add(pp);
-        //menu.addSeparator();
-        //menu.add(extendconn);
+        menu.addSeparator();
+        menu.add(anchorApositionbutton);
 
         menu.setSpacingX(15);
         
@@ -188,6 +211,9 @@ qx.Class.define("ville.connect.Connect",
           var arrlines = [wline.getUserData("wline1"), wline.getUserData("wline2"), wline];
           this.repositionConnections(arrlines);
         }, this);
+
+        var anchorApositiongroup = new qx.ui.form.RadioGroup();
+        anchorApositiongroup.add(aApcentertop, aApcenter, aApcenterbottom, aAplefttop, aApleftmiddle, aApleftbottom, aAprighttop, aAprightmiddle, aAprightbottom);
 
         appobj.add(wline1);
         appobj.add(wline2);
