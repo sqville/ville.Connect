@@ -390,6 +390,7 @@ qx.Class.define("wax.demo.Application",
             element.getContentElement().setStyles({"transform" : "rotate(45deg)"});
             winsh.add(element, {top: "15%", left: "15%", bottom: "15%", right: "15%"});
             winsh.add(lblatom, {width: "100%", height: "100%"});
+            winsh.setUserData("shape", "diamond");
           } else {
             winsh.add(element);
             winsh.add(lblatom);
@@ -430,7 +431,6 @@ qx.Class.define("wax.demo.Application",
             }, this);
             villeconnect.repositionConnections(arrwins);
           });
-
 
           desktop_Basicflowchart.add(winsh);
           winsh.open();
