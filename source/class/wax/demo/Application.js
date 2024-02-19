@@ -380,7 +380,7 @@ qx.Class.define("wax.demo.Application",
           lblatom.set({anonymous: true, backgroundColor: "transparent", rich:true, center:true, padding:4, allowGrowX:true, allowGrowY:true});
           lblatom.getChildControl('label').set({textAlign:"center"});
           var element = new qx.ui.core.Widget().set({
-            backgroundColor: "transparent",
+            backgroundColor: "#fff",
             decorator: defsh.options.shape
           });
           if (defsh.options.shape == "diamond"){
@@ -525,8 +525,7 @@ qx.Class.define("wax.demo.Application",
             anchorAoffsetLeft: 10,
             anchorBoffsetTop: 10,
             anchorBoffsetLeft: 10,
-            strokeWidth: 8,
-            frontback: "front"
+            strokeWidth: 8
           }
         },
         {

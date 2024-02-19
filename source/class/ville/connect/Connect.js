@@ -124,53 +124,89 @@ qx.Class.define("ville.connect.Connect",
         wline3.setUserData("wline1", wline1);
         wline3.setUserData("wline2", wline2);
 
+        
+        var linestyles = ["horizontal-horizontal", "horizontal-vertical", "vertical-horizontal", "vertical-vertical", "point-point"];
         var menu = new qx.ui.menu.Menu;
+        var conntypegroup = new qx.ui.form.RadioGroup();
+        for (var j=0; j<linestyles.length; j++)
+        {
+          var linestyle = new qx.ui.menu.RadioButton(linestyles[j]);
+          var conntype = connection.anchorA + "-" + connection.anchorB;
+          if (linestyles[j] == conntype){
+            linestyle.setValue(true);
+          }
+          menu.add(linestyle);
+          conntypegroup.add(linestyle);
+        }
 
-        var hh = new qx.ui.menu.RadioButton("horizontal-horizontal");
-        var hhimg = new qx.ui.basic.Image("ville/connect/horizontal-horizontal-16.png").set({anonymous : true, marginLeft : 3});
-        hh._add(hhimg, {column:2});
-        var hv = new qx.ui.menu.RadioButton("horizontal-vertical");
-        var hvimg = new qx.ui.basic.Image("ville/connect/horizontal-vertical-16.png").set({anonymous : true, marginLeft : 3});
-        hv._add(hvimg, {column:2});
-        var vh = new qx.ui.menu.RadioButton("vertical-horizontal");
-        var vhimg = new qx.ui.basic.Image("ville/connect/vertical-horizontal-16.png").set({anonymous : true, marginLeft : 3});
-        vh._add(vhimg, {column:2});
-        var vv = new qx.ui.menu.RadioButton("vertical-vertical");
-        var vvimg = new qx.ui.basic.Image("ville/connect/vertical-vertical-16.png").set({anonymous : true, marginLeft : 3});
-        vv._add(vvimg, {column:2});
-        var pp = new qx.ui.menu.RadioButton("point-point");
-        var ppimg = new qx.ui.basic.Image("ville/connect/point-point-16.png").set({anonymous : true, marginLeft : 3});
-        pp._add(ppimg, {column:2});
+        var anchorpositions = ["center-top", "center", "center-bottom", "left-top", "left-middle", "left-bottom", "right-top", "right-middle", "right-bottom"];
+        var anchorApositionmenu = new qx.ui.menu.Menu;
+        var anchorApositiongroup = new qx.ui.form.RadioGroup();
+        for (var j=0; j<anchorpositions.length; j++)
+        {
+          var anchApos = new qx.ui.menu.RadioButton(anchorpositions[j]);
+          if (anchorpositions[j] == connection.anchorAposition){
+            anchApos.setValue(true);
+          }
+          anchorApositionmenu.add(anchApos);
+          anchorApositiongroup.add(anchApos);
+        }
+        var anchorApositionbutton = new qx.ui.menu.Button("anchor A position", null, null, anchorApositionmenu);
 
-        var AnchorApositionmenu = new qx.ui.menu.Menu;
-        var aApcentertop = new qx.ui.menu.RadioButton("center-top");
-        var aApcenter = new qx.ui.menu.RadioButton("center");
-        var aApcenterbottom = new qx.ui.menu.RadioButton("center-bottom");
-        var aAplefttop = new qx.ui.menu.RadioButton("left-top");
-        var aApleftmiddle = new qx.ui.menu.RadioButton("left-middle");
-        var aApleftbottom = new qx.ui.menu.RadioButton("left-bottom");
-        var aAprighttop = new qx.ui.menu.RadioButton("right-top");
-        var aAprightmiddle = new qx.ui.menu.RadioButton("right-middle");
-        var aAprightbottom = new qx.ui.menu.RadioButton("right-bottom");
-        AnchorApositionmenu.add(aApcentertop);
-        AnchorApositionmenu.add(aApcenter);
-        AnchorApositionmenu.add(aApcenterbottom);
-        AnchorApositionmenu.add(aAplefttop);
-        AnchorApositionmenu.add(aApleftmiddle);
-        AnchorApositionmenu.add(aApleftbottom);
-        AnchorApositionmenu.add(aAprighttop);
-        AnchorApositionmenu.add(aAprightmiddle);
-        AnchorApositionmenu.add(aAprightbottom);
+        var anchorBpositionmenu = new qx.ui.menu.Menu;
+        var anchorBpositiongroup = new qx.ui.form.RadioGroup();
+        for (var j=0; j<anchorpositions.length; j++)
+        {
+          var anchBpos = new qx.ui.menu.RadioButton(anchorpositions[j]);
+          if (anchorpositions[j] == connection.anchorBposition){
+            anchBpos.setValue(true);
+          }
+          anchorBpositionmenu.add(anchBpos);
+          anchorBpositiongroup.add(anchBpos);
+        }
+        var anchorBpositionbutton = new qx.ui.menu.Button("anchor B position", null, null, anchorBpositionmenu);
 
-        var anchorApositionbutton = new qx.ui.menu.Button("Anchor A Position", null, null, AnchorApositionmenu);
+        var directions = ["none", "AtoB", "BtoA", "both"];
+        var directionnmenu = new qx.ui.menu.Menu;
+        var directiongroup = new qx.ui.form.RadioGroup();
+        for (var j=0; j<directions.length; j++)
+        {
+          var direct = new qx.ui.menu.RadioButton(directions[j]);
+          if (directions[j] == connection.direction)
+            direct.setValue(true);
+          directionnmenu.add(direct);
+          directiongroup.add(direct);
+        }
+        var directionmenubutton = new qx.ui.menu.Button("direction", null, null, directionnmenu);
 
-        menu.add(hh);
-        menu.add(hv);
-        menu.add(vh);
-        menu.add(vv);
-        menu.add(pp);
+        
+        var ordermenubuttonback = new qx.ui.menu.Button("send back", null, null);
+        ordermenubuttonback.addListener("click", function (){
+          var wlined = this.getLayoutParent().getOpener();
+          var newzi = wlined.getZIndex() - 1;
+          wlined.getUserData("wline1").setZIndex(newzi);
+          wlined.getUserData("wline2").setZIndex(newzi);
+          wlined.setZIndex(newzi);
+        });
+
+        var ordermenubuttonforward = new qx.ui.menu.Button("send forward", null, null);
+        ordermenubuttonforward.addListener("click", function (){
+          var wlined = this.getLayoutParent().getOpener();
+          var newzi = wlined.getZIndex() + 1;
+          wlined.getUserData("wline1").setZIndex(newzi);
+          wlined.getUserData("wline2").setZIndex(newzi);
+          wlined.setZIndex(newzi);
+        });
+        
+        
+        
+        menu.addSeparator();
+        menu.add(directionmenubutton);
         menu.addSeparator();
         menu.add(anchorApositionbutton);
+        menu.add(anchorBpositionbutton);
+        menu.add(ordermenubuttonback);
+        menu.add(ordermenubuttonforward);
 
         menu.setSpacingX(15);
         
@@ -178,42 +214,48 @@ qx.Class.define("ville.connect.Connect",
         wline2.setContextMenu(menu);
         wline3.setContextMenu(menu);
 
-        var conntype = options.anchorA + "-" + options.anchorB;
-        switch (conntype) {
-          case "horizontal-horizontal" :
-            hh.setValue(true);
-            break;
-          case "horizontal-vertical" :
-            hv.setValue(true);
-            break;
-          case "vertical-horizontal" :
-            vh.setValue(true);
-            break;
-          case "vertical-vertical" :
-            vv.setValue(true);
-            break;
-          case "point-point" :
-            pp.setValue(true);
-        }
-
-        // Configure and fill radio group
-        var conntypegroup = new qx.ui.form.RadioGroup();
-        conntypegroup.add(hh, hv, vh, vv, pp);
-
         conntypegroup.addListener("changeSelection", function (e){
           var wline = e.getData()[0].getLayoutParent().getOpener();
           var arroptions = e.getData()[0].getLabel().split("-");
           var newoptions = options;
           newoptions.anchorA = arroptions[0];
           newoptions.anchorB = arroptions[1];
-          
           wline.setUserData("options", newoptions);
           var arrlines = [wline.getUserData("wline1"), wline.getUserData("wline2"), wline];
           this.repositionConnections(arrlines);
         }, this);
 
-        var anchorApositiongroup = new qx.ui.form.RadioGroup();
-        anchorApositiongroup.add(aApcentertop, aApcenter, aApcenterbottom, aAplefttop, aApleftmiddle, aApleftbottom, aAprighttop, aAprightmiddle, aAprightbottom);
+        directiongroup.addListener("changeSelection", function (e){
+          var wlined = e.getData()[0].getLayoutParent().getOpener().getLayoutParent().getOpener();
+          var newdirection = e.getData()[0].getLabel();
+          var newoptionsd = options;
+          newoptionsd.direction = newdirection;
+          wlined.setUserData("options", newoptionsd);
+          var arrlinesd = [wlined.getUserData("wline1"), wlined.getUserData("wline2"), wlined];
+          this.repositionConnections(arrlinesd);
+        }, this);
+
+        anchorApositiongroup.addListener("changeSelection", function (e){
+          var wlined = e.getData()[0].getLayoutParent().getOpener().getLayoutParent().getOpener();
+          var newaApos = e.getData()[0].getLabel();
+          var newoptionsaAp = options;
+          newoptionsaAp.anchorAposition = newaApos;
+          wlined.setUserData("options", newoptionsaAp);
+          var arrlinesd = [wlined.getUserData("wline1"), wlined.getUserData("wline2"), wlined];
+          this.repositionConnections(arrlinesd);
+        }, this);
+
+        anchorBpositiongroup.addListener("changeSelection", function (e){
+          var wlined = e.getData()[0].getLayoutParent().getOpener().getLayoutParent().getOpener();
+          var newaBpos = e.getData()[0].getLabel();
+          var newoptionsaBp = options;
+          newoptionsaBp.anchorBposition = newaBpos;
+          wlined.setUserData("options", newoptionsaBp);
+          var arrlinesd = [wlined.getUserData("wline1"), wlined.getUserData("wline2"), wlined];
+          this.repositionConnections(arrlinesd);
+        }, this);  
+
+
 
         appobj.add(wline1);
         appobj.add(wline2);
@@ -243,10 +285,6 @@ qx.Class.define("ville.connect.Connect",
           wline1.maximize();
           wline2.maximize();
           wline3.maximize();
-        } else if (connection.frontback == "back") {
-          wline1.setZIndex(9);
-          wline2.setZIndex(9);
-          wline3.setZIndex(9);
         }
 
         // Return result.
@@ -715,17 +753,15 @@ _positionConnection : function(connection)
       //connection.radius = (options != null && options.radius != null && !isNaN(options.radius))? parseInt(options.radius, 10) : 2;
       // default values
       connection.radius = 12;
-      connection.frontback = "back";
       connection.anchorAposition = "center";
       connection.anchorBposition = "center";
       connection.anchorAoffsetTop = 0;
       connection.anchorAoffsetLeft = 0;
       connection.anchorBoffsetTop = 0;
       connection.anchorBoffsetLeft = 0;
+      connection.direction = "none";
       if (options.strokeWidth)
         connection.radius = options.strokeWidth;      
-      if (options.frontback)
-        connection.frontback = options.frontback;
       if (options.anchorAposition)
         connection.anchorAposition = options.anchorAposition;
       if (options.anchorBposition)
@@ -738,9 +774,9 @@ _positionConnection : function(connection)
         connection.anchorBoffsetTop = options.anchorBoffsetTop;
       if (options.anchorBoffsetLeft)
         connection.anchorBoffsetLeft = options.anchorBoffsetLeft;
+      if (options.direction)
+        connection.direction = options.direction;
         
-      //connection.anchorA = (options != null && options.anchorA != null && (options.anchorA == 'vertical' || options.anchorA == 'horizontal'))? options.anchorA : 'horizontal';
-      //connection.anchorB = (options != null && options.anchorB != null && (options.anchorB == 'vertical' || options.anchorB == 'horizontal'))? options.anchorB : 'horizontal';
       connection.anchorA = options.anchorA;
       connection.anchorB = options.anchorB;
       connection.options = options;
