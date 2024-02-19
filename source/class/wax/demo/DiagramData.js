@@ -9,8 +9,8 @@ qx.Class.define("wax.demo.DiagramData",
         "elements" : [
           {
             id : 1,
-            left : 400,
-            top : 50,
+            left : 300,
+            top : 10,
             properties : {},
             options : {
               content : 'Start',
@@ -19,8 +19,8 @@ qx.Class.define("wax.demo.DiagramData",
           },
           {
             id : 2,
-            left : 400,
-            top : 200,
+            left : 300,
+            top : 110,
             properties : {},
             options : {
               content : 'Step 1',
@@ -29,8 +29,8 @@ qx.Class.define("wax.demo.DiagramData",
           },
           {
             id : 3,
-            left : 393,
-            top : 355,
+            left : 293,
+            top : 240,
             properties : {},
             options : {
               content : 'Decision',
@@ -39,8 +39,8 @@ qx.Class.define("wax.demo.DiagramData",
           },
           {
             id : 4,
-            left : 600,
-            top : 385,
+            left : 500,
+            top : 270,
             properties : {},
             options : {
               content : 'Step 2',
@@ -49,8 +49,8 @@ qx.Class.define("wax.demo.DiagramData",
           },
           {
             id : 5,
-            left : 400,
-            top : 550,
+            left : 300,
+            top : 430,
             properties : {},
             options : {
               content : 'End',
