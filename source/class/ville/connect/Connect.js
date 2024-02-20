@@ -198,8 +198,6 @@ qx.Class.define("ville.connect.Connect",
           wlined.setZIndex(newzi);
         });
         
-        
-        
         menu.addSeparator();
         menu.add(directionmenubutton);
         menu.addSeparator();

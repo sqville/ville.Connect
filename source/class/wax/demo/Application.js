@@ -572,7 +572,6 @@ qx.Class.define("wax.demo.Application",
 
       // draw connectors on appear of the diagram viewer
       container.addListenerOnce("appear", function(e) {
-        
         for (var k=0; k<wconns.length; k++)
         {
           var defc = wconns[k];
@@ -580,7 +579,6 @@ qx.Class.define("wax.demo.Application",
         }
       });
       
-
       /** 
        * This is for widgets with UserBounds set at design time 
        * 
@@ -596,12 +594,7 @@ qx.Class.define("wax.demo.Application",
       container.add(w4);
       */
 
-
-      
-
-
       widgetconnectpage.add(container, { edge: 0 });
-
  
       // Assemble - THE STACK 
       centerbox.add(dashboardpage);
