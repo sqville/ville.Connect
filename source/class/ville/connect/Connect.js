@@ -406,8 +406,8 @@ _positionConnection : function(connection)
       this._positionVerticalLine(this._wline1, pAleft, pAtop, pBleft, pBtop, connection.radius, connection.roundedCorners);
 
       //direction arrow (UP or DOWN)
-      if (connection.options.direction) {
-        var direction = connection.options.direction;
+      if (connection.direction) {
+        var direction = connection.direction;
         /*var directionarrow = new qx.ui.popup.Popup(new qx.ui.layout.Grow()).set({anonymous: true, width: 8, height: 8, placementModeX: "direct", placementModeY: "direct"});
         if (pAtop < pBtop && direction == "AtoB")
           directionarrow.setDecorator("dark-arrow-down");
@@ -434,8 +434,8 @@ _positionConnection : function(connection)
         this._positionHorizontalLine(this._wline1, pAleft, pAtop, pBleft, pBtop, connection.radius, connection.roundedCorners);
 
         //direction arrow (LEFT or RIGHT)
-        if (connection.options.direction) {
-          var direction = connection.options.direction;
+        if (connection.direction) {
+          var direction = connection.direction;
           /*var directionarrow = new qx.ui.popup.Popup(new qx.ui.layout.Grow()).set({anonymous: true, width: 8, height: 8, placementModeX: "direct", placementModeY: "direct"});
           if (pAleft < pBleft && direction == "AtoB")
             directionarrow.setDecorator("dark-arrow-right");
@@ -465,8 +465,8 @@ _positionConnection : function(connection)
       //this._positionHorizontalLine(this._wline1, pAleft, pAtop, pBleft, pBtop, connection.radius, connection.roundedCorners);
       this._positionDiagonalLine(this._wline1, pAleft, pAtop, pBleft, pBtop, connection.radius, connection.roundedCorners);
 
-      if (connection.options.direction) {
-        var direction = connection.options.direction;
+      if (connection.direction) {
+        var direction = connection.direction;
         this._paintarrowline (this._wline1, "horizontal", pAleft, pBleft, direction);
       }
 
@@ -487,8 +487,8 @@ _positionConnection : function(connection)
         // Draw lines.
         this._positionVerticalLine(this._wline1, pAleft, pAtop, corner.left, corner.top, connection.radius, connection.roundedCorners);
         this._positionHorizontalLine(this._wline2, pBleft, pBtop, corner.left, corner.top, connection.radius, connection.roundedCorners);
-        if (connection.options.direction) {
-          var direction = connection.options.direction;
+        if (connection.direction) {
+          var direction = connection.direction;
           this._paintarrowline (this._wline1, "vertical", pAtop, pBtop, direction);
           this._paintarrowline (this._wline2, "horizontal", pAleft, pBleft, direction);
         }
@@ -521,8 +521,8 @@ _positionConnection : function(connection)
               this._positionVerticalLine(this._wline1, pAleft, pAtop, corner1.left, corner1.top, connection.radius, connection.roundedCorners);
               this._positionVerticalLine(this._wline2, pBleft, pBtop, corner2.left, corner2.top, connection.radius, connection.roundedCorners);
               this._positionHorizontalLine(this._wline3, corner1.left, corner1.top, corner2.left, corner2.top, connection.radius, connection.roundedCorners);
-              if (connection.options.direction) {
-                var direction = connection.options.direction;
+              if (connection.direction) {
+                var direction = connection.direction;
                 this._paintarrowline (this._wline1, "vertical", pAtop, pBtop, direction);
                 this._paintarrowline (this._wline2, "vertical", pAtop, pBtop, direction);
                 this._paintarrowline (this._wline3, "horizontal", pAleft, pBleft, direction);
@@ -784,7 +784,6 @@ _positionConnection : function(connection)
 
     _paintarrowline : function(element, position, pA, pB, direction)
     {
-      //console.log("connid: " + element.getUserData("connectid") + " position: " + position + " pA:" + pA + " pB: " + pB + " direction: " + direction);
       element.getContentElement().removeAllClasses();
       if (position == "vertical") {
         if (pA < pB && direction == "AtoB") 

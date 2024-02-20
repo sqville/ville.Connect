@@ -40,7 +40,7 @@ qx.Class.define("wax.demo.DiagramData",
           {
             id : 4,
             left : 500,
-            top : 270,
+            top : 290,
             properties : {},
             options : {
               content : 'Step 2',
@@ -72,7 +72,7 @@ qx.Class.define("wax.demo.DiagramData",
           {
             elementA : 1,
             elementB : 2,
-            properties : {backgroundColor : "gray"},
+            properties : {backgroundColor : "transparent"},
             options : {
               anchorA: "vertical", 
               anchorB : "vertical", 
@@ -85,7 +85,7 @@ qx.Class.define("wax.demo.DiagramData",
           {
             elementA : 2,
             elementB : 3,
-            properties : {backgroundColor : "gray"},
+            properties : {backgroundColor : "transparent"},
             options : {
               anchorA: "vertical", 
               anchorB : "vertical",
@@ -105,7 +105,7 @@ qx.Class.define("wax.demo.DiagramData",
           {
             elementA : 4,
             elementB : 2,
-            properties : {backgroundColor : "gray"},
+            properties : {backgroundColor : "transparent"},
             options : {
               anchorA: "vertical", 
               anchorB : "horizontal",
@@ -115,7 +115,7 @@ qx.Class.define("wax.demo.DiagramData",
           {
             elementA : 3,
             elementB : 5,
-            properties : {backgroundColor : "gray"},
+            properties : {backgroundColor : "transparent"},
             options : {
               anchorA: "vertical", 
               anchorB : "vertical",
@@ -128,8 +128,8 @@ qx.Class.define("wax.demo.DiagramData",
             "elements" : [
               {
                 id : 1,
-                left : 70,
-                top : 70,
+                left : 10,
+                top : 40,
                 properties : {backgroundColor: "transparent"},
                 options : {
                   content : 'Server',
@@ -138,8 +138,8 @@ qx.Class.define("wax.demo.DiagramData",
               },            
               {
                 id : 2,
-                left : 200,
-                top : 250,
+                left : 150,
+                top : 200,
                 properties : {},
                 options : {
                   content : "6 Port Switch",
@@ -148,8 +148,8 @@ qx.Class.define("wax.demo.DiagramData",
               },
               {
                 id : 3,
-                left : 400,
-                top : 70,
+                left : 300,
+                top : 50,
                 properties : {},
                 options : {
                   content : "Router",
@@ -158,8 +158,8 @@ qx.Class.define("wax.demo.DiagramData",
               },
               {
                 id : 4,
-                left : 690,
-                top : 100,
+                left : 500,
+                top : 50,
                 properties : {},
                 options : {
                   content : "ISP",
@@ -168,7 +168,7 @@ qx.Class.define("wax.demo.DiagramData",
               },
               {
                 id : 5,
-                left : 950,
+                left : 700,
                 top : 70,
                 properties : {},
                 options : {
@@ -178,8 +178,8 @@ qx.Class.define("wax.demo.DiagramData",
               },
               {
                 id : 6,
-                left : 70,
-                top : 470,
+                left : 50,
+                top : 370,
                 properties : {},
                 options : {
                   content : "Printer",
@@ -188,8 +188,8 @@ qx.Class.define("wax.demo.DiagramData",
               },
               {
                 id : 7,
-                left : 320,
-                top : 470,
+                left : 270,
+                top : 370,
                 properties : {},
                 options : {
                   content : "Workstation",
@@ -198,8 +198,8 @@ qx.Class.define("wax.demo.DiagramData",
               },
               {
                 id : 8,
-                left : 570,
-                top : 470,
+                left : 520,
+                top : 370,
                 properties : {},
                 options : {
                   content : "Workstation",
@@ -225,8 +225,8 @@ qx.Class.define("wax.demo.DiagramData",
                     decorator : "roundedcorners-light"
                   },
                   options : {
-                    anchorA: "point", 
-                    anchorB : "point"
+                    anchorA: "vertical", 
+                    anchorB : "horizontal"
                   }
                 },
                 {

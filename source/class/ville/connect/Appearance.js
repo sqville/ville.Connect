@@ -21,7 +21,8 @@ qx.Theme.define("ville.connect.Appearance",
       return {
         backgroundColor : "gray",
         padding : 0,
-        decorator : "connector-blank"
+        decorator : "connector-blank",
+        zIndex: 9
        };
      }
    }

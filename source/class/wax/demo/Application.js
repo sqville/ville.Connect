@@ -525,7 +525,8 @@ qx.Class.define("wax.demo.Application",
             anchorAoffsetLeft: 10,
             anchorBoffsetTop: 10,
             anchorBoffsetLeft: 10,
-            strokeWidth: 8
+            strokeWidth: 8,
+            direction : "AtoB"
           }
         },
         {
