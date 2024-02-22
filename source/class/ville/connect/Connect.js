@@ -179,7 +179,6 @@ qx.Class.define("ville.connect.Connect",
         }
         var directionmenubutton = new qx.ui.menu.Button("direction", null, null, directionnmenu);
 
-        
         var ordermenubuttonback = new qx.ui.menu.Button("send back", null, null);
         ordermenubuttonback.addListener("click", function (){
           var wlined = this.getLayoutParent().getOpener();
@@ -197,6 +196,11 @@ qx.Class.define("ville.connect.Connect",
           wlined.getUserData("wline2").setZIndex(newzi);
           wlined.setZIndex(newzi);
         });
+
+        var moremenubutton = new qx.ui.menu.Button("more", null, null);
+        moremenubutton.addListener("click", function (){
+          console.log("more button clicked");
+        });
         
         menu.addSeparator();
         menu.add(directionmenubutton);
@@ -205,7 +209,9 @@ qx.Class.define("ville.connect.Connect",
         menu.add(anchorBpositionbutton);
         menu.add(ordermenubuttonback);
         menu.add(ordermenubuttonforward);
-
+        menu.addSeparator();
+        menu.add(moremenubutton);
+        
         menu.setSpacingX(15);
         
         wline1.setContextMenu(menu);
@@ -252,8 +258,6 @@ qx.Class.define("ville.connect.Connect",
           var arrlinesd = [wlined.getUserData("wline1"), wlined.getUserData("wline2"), wlined];
           this.repositionConnections(arrlinesd);
         }, this);  
-
-
 
         appobj.add(wline1);
         appobj.add(wline2);
@@ -402,12 +406,10 @@ _positionConnection : function(connection)
     // Verify if the line must be vertical or horizonal
     if(pAleft == pBleft) {
       // VERTICAL LINE
-      //console.log("vert over diag");
       this._positionVerticalLine(this._wline1, pAleft, pAtop, pBleft, pBtop, connection.radius, connection.roundedCorners);
 
       //direction arrow (UP or DOWN)
       if (connection.direction) {
-        var direction = connection.direction;
         /*var directionarrow = new qx.ui.popup.Popup(new qx.ui.layout.Grow()).set({anonymous: true, width: 8, height: 8, placementModeX: "direct", placementModeY: "direct"});
         if (pAtop < pBtop && direction == "AtoB")
           directionarrow.setDecorator("dark-arrow-down");
@@ -419,7 +421,7 @@ _positionConnection : function(connection)
           directionarrow.setDecorator("dark-arrow-down");
         */
 
-        this._paintarrowline (this._wline1, "vertical", pAtop, pBtop, direction);
+        this._paintarrowline (this._wline1, "vertical", pAtop, pBtop, connection.direction);
       
         //directionarrow.setOffsetLeft(-12);
         //directionarrow.setPosition("right-middle");
@@ -435,7 +437,6 @@ _positionConnection : function(connection)
 
         //direction arrow (LEFT or RIGHT)
         if (connection.direction) {
-          var direction = connection.direction;
           /*var directionarrow = new qx.ui.popup.Popup(new qx.ui.layout.Grow()).set({anonymous: true, width: 8, height: 8, placementModeX: "direct", placementModeY: "direct"});
           if (pAleft < pBleft && direction == "AtoB")
             directionarrow.setDecorator("dark-arrow-right");
@@ -447,7 +448,7 @@ _positionConnection : function(connection)
             directionarrow.setDecorator("dark-arrow-right");
           */
 
-          this._paintarrowline (this._wline1, "horizontal", pAleft, pBleft, direction);
+          this._paintarrowline (this._wline1, "horizontal", pAleft, pBleft, connection.direction);
 
           //directionarrow.resetOffset();
           //directionarrow.setOffsetTop(-12);
@@ -466,14 +467,11 @@ _positionConnection : function(connection)
       this._positionDiagonalLine(this._wline1, pAleft, pAtop, pBleft, pBtop, connection.radius, connection.roundedCorners);
 
       if (connection.direction) {
-        var direction = connection.direction;
-        this._paintarrowline (this._wline1, "horizontal", pAleft, pBleft, direction);
+        this._paintarrowline (this._wline1, "horizontal", pAleft, pBleft, connection.direction);
       }
 
       this._wline2.setUserBounds(pAleft, pAtop, 2, 2);
-      //this._wline2.setBackgroundColor("yellow");
       this._wline3.setUserBounds(pBleft, pBtop, 2, 2);
-      //this._wline3.setBackgroundColor("orange");
     }
     // Verify if must use two lines or three.
     else if(connection.anchorA != connection.anchorB) {
@@ -488,9 +486,8 @@ _positionConnection : function(connection)
         this._positionVerticalLine(this._wline1, pAleft, pAtop, corner.left, corner.top, connection.radius, connection.roundedCorners);
         this._positionHorizontalLine(this._wline2, pBleft, pBtop, corner.left, corner.top, connection.radius, connection.roundedCorners);
         if (connection.direction) {
-          var direction = connection.direction;
-          this._paintarrowline (this._wline1, "vertical", pAtop, pBtop, direction);
-          this._paintarrowline (this._wline2, "horizontal", pAleft, pBleft, direction);
+          this._paintarrowline (this._wline1, "vertical", pAtop, pBtop, connection.direction);
+          this._paintarrowline (this._wline2, "horizontal", pAleft, pBleft, connection.direction);
         }
       } else {
         // Find the corner's position.
@@ -500,6 +497,11 @@ _positionConnection : function(connection)
         // Draw lines.
         this._positionVerticalLine(this._wline1, pBleft, pBtop, corner.left, corner.top, connection.radius, connection.roundedCorners);
         this._positionHorizontalLine(this._wline2, pAleft, pAtop, corner.left, corner.top, connection.radius, connection.roundedCorners);
+
+        if (connection.direction) {
+          this._paintarrowline (this._wline1, "vertical", pAtop, pBtop, connection.direction);
+          this._paintarrowline (this._wline2, "horizontal", pAleft, pBleft, connection.direction);
+        }
       }
 
       this._wline3.setUserBounds(pBleft, pBtop, 2, 2);
@@ -521,11 +523,11 @@ _positionConnection : function(connection)
               this._positionVerticalLine(this._wline1, pAleft, pAtop, corner1.left, corner1.top, connection.radius, connection.roundedCorners);
               this._positionVerticalLine(this._wline2, pBleft, pBtop, corner2.left, corner2.top, connection.radius, connection.roundedCorners);
               this._positionHorizontalLine(this._wline3, corner1.left, corner1.top, corner2.left, corner2.top, connection.radius, connection.roundedCorners);
+              
               if (connection.direction) {
-                var direction = connection.direction;
-                this._paintarrowline (this._wline1, "vertical", pAtop, pBtop, direction);
-                this._paintarrowline (this._wline2, "vertical", pAtop, pBtop, direction);
-                this._paintarrowline (this._wline3, "horizontal", pAleft, pBleft, direction);
+                this._paintarrowline (this._wline1, "vertical", pAtop, pBtop, connection.direction);
+                this._paintarrowline (this._wline2, "vertical", pAtop, pBtop, connection.direction);
+                this._paintarrowline (this._wline3, "horizontal", pAleft, pBleft, connection.direction);
               }
           } else {
               // Middle's line must be vertical.
@@ -538,6 +540,12 @@ _positionConnection : function(connection)
               this._positionHorizontalLine(this._wline1, pAleft, pAtop, corner1.left, corner1.top, connection.radius, connection.roundedCorners);
               this._positionHorizontalLine(this._wline2, pBleft, pBtop, corner2.left, corner2.top, connection.radius, connection.roundedCorners);
               this._positionVerticalLine(this._wline3, corner1.left, corner1.top, corner2.left, corner2.top, connection.radius, connection.roundedCorners);
+
+              if (connection.direction) {
+                this._paintarrowline (this._wline1, "horizontal", pAtop, pBtop, connection.direction);
+                this._paintarrowline (this._wline2, "horizontal", pAtop, pBtop, connection.direction);
+                this._paintarrowline (this._wline3, "vertical", pAleft, pBleft, connection.direction);
+              }
           }
       }
       //console.log(connection.anchorA);
