@@ -1,10 +1,10 @@
 /* ************************************************************************
 
-   Copyright: 2021 sqville
+   Copyright: 2024 sqville
 
    License: MIT
 
-   Authors: Chris Eskew (sqville) chris.eskew@sqville.com
+   Authors: Chris Eskew (sqville) sqville@gmail.com
 
    Skeleton: wax-editor-right-to-left
 
@@ -119,7 +119,8 @@ qx.Class.define("wax.demo.Application",
       var profilemenubutton = new qx.ui.toolbar.MenuButton("ProfileMenu", roundacct).set({show: "icon", showArrow: false});
       
       // Main Menu Popup (VBox)
-      var mainmenupopup = new qx.ui.popup.Popup().set({allowGrowY: true, padding: 10});
+      //var mainmenupopup = new qx.ui.popup.Popup().set({allowGrowY: true, padding: 10});
+      var mainmenupopup = new qx.ui.popup.Popup().set({allowStretchX: true, allowStretchY: true, padding: 10});
       mainmenupopup.setLayout(new qx.ui.layout.VBox(0));
 
       // Profile and Settings Menu and Menu Buttons
@@ -171,6 +172,7 @@ qx.Class.define("wax.demo.Application",
         if (qx.core.Environment.get("browser.name") != "edge"){
           this._blocker.blockContent(mainmenubtnbutton.getZIndex());
         }
+        mainmenupopup.setHeight(parseInt(this.getRoot().getContentElement().getStyle("height")));
         mainmenupopup.show();
       }, this);
       mainmenupopup.addListener("disappear", function(e)
@@ -182,7 +184,7 @@ qx.Class.define("wax.demo.Application",
       scrollwest.add(westbox);
       scroll.add(centerbox);
       appcompdock.add(northhbox, {edge:"north"});
-      appcompdock.add(scrollwest, {edge:"west"});
+      //appcompdock.add(scrollwest, {edge:"west"});
       appcompdock.add(centerbox, {edge:"center"});
       approot.add(appcompdock, {edge: 0});
       profilemenu.add(aboutmenubutton1);
@@ -203,18 +205,29 @@ qx.Class.define("wax.demo.Application",
 
       appcompdock.add(southbox, {edge: "south"});
 
+      //scrollwest.setVisibility("hidden"); 
+      mainmenupart.setVisibility("visible");
+      atmlogocurrentpage.setVisibility("visible");
+
       // *** END of Base Scaffolding ********************************************************
 
       // Add some simple ease in animation to the app's blocker
-      var fadeinb = {duration: 300, timing: "ease", keyFrames : {
+      var fadeinb = {duration: 300, timing: "ease-out", keyFrames : {
         0: {opacity: 0},
-        100: {opacity: .08}
+        100: {opacity: .07}
         }};
 
       this._blocker.addListener("blocked", function(e) {
         var domtable;
         if (domtable = this._blocker.getBlockerElement().getDomElement()) {
           qx.bom.element.Animation.animate(domtable, fadeinb);
+        }
+      }, this);
+
+      this._blocker.addListener("unblocked", function(e) {
+        var domtable;
+        if (domtable = this._blocker.getBlockerElement().getDomElement()) {
+          qx.bom.element.Animation.animateReverse(domtable, fadeinb);
         }
       }, this);
 
@@ -613,16 +626,16 @@ qx.Class.define("wax.demo.Application",
       // Create Menu Buttons that will navigate the user through THE STACK Pages 
       // >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
       // Populate westBox with content
-      var atmleftnavheader = new qx.ui.basic.Atom("Diagram Editor", "wax/demo/ville_Diagram_logo.png").set({appearance: "header-atom", anonymous: true, focusable: false, selectable: false });
+      var atmleftnavheader = new qx.ui.basic.Atom("ville.Diagram", "wax/demo/ville_Diagram_logo.png").set({appearance: "header-atom", anonymous: true, focusable: false, selectable: false });
       atmleftnavheader.getChildControl("icon").set({ scale : true });
       westbox.add(atmleftnavheader);
-      var tbtndashboardpage = new wax.demo.MenuButton("Network Diagram", "wax/demo/ville_Diagram_logo.svg", true );
+      var tbtndashboardpage = new wax.demo.MenuButton("Network Diagram");
       westbox.add(tbtndashboardpage);
 
-      var tbtnSecondPage = new wax.demo.MenuButton("Basic Flowchart", "wax/demo/ville_Diagram_logo.svg", true);
+      var tbtnSecondPage = new wax.demo.MenuButton("Basic Flowchart");
       westbox.add(tbtnSecondPage);
 
-      var tbtnThirdPage = new wax.demo.MenuButton("Widget Connections", "wax/demo/ville_Diagram_logo.svg", true);
+      var tbtnThirdPage = new wax.demo.MenuButton("Widget Connections");
       westbox.add(tbtnThirdPage);
 
       var westboxbuttongroup = new qx.ui.form.RadioGroup();
@@ -735,7 +748,7 @@ qx.Class.define("wax.demo.Application",
       // =======  MediaQuery code  ========== 
       // ====================================
 
-      var mq1 = new qx.bom.MediaQuery("screen and (min-width: 1024px)");
+      /*var mq1 = new qx.bom.MediaQuery("screen and (min-width: 1024px)");
 
       mq1.on("change", function(e){
         if(mq1.isMatching() && this.getDemoMode()=="desktop"){
@@ -778,6 +791,7 @@ qx.Class.define("wax.demo.Application",
 
       if (mq2.isMatching()) {}
       else {}
+      */
 
     },
 
