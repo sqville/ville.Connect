@@ -49,6 +49,8 @@ qx.Class.define("wax.demo.Application",
     _northBox : null,
     
     _westBox : null,
+
+    _eastBox : null,
     
     /**
      * This method contains the initial application code and gets called 
@@ -89,16 +91,20 @@ qx.Class.define("wax.demo.Application",
       // Dock's West section (VBox)
       var westbox = this._westBox = new qx.ui.container.Composite(new qx.ui.layout.VBox(0)).set({backgroundColor: "white", padding: [10,0,10,0], decorator : "leftside"});
 
+      // Dock's East section (VBox)
+      var eastbox = this._eastBox = new qx.ui.container.Composite(new qx.ui.layout.VBox(0)).set({backgroundColor: "white", padding: [10,0,10,0]});
+
       // Dock's Center section (Stack) === THE STACK ===
       var centerbox = new qx.ui.container.Stack().set({backgroundColor: "white", padding: 0});
 
-      // phone/phonegap
-      //if (qx.core.Environment.get("phonegap")) {
+      // Mobile view only
       var southbox = new qx.ui.container.Composite(new qx.ui.layout.HBox(4)).set({alignY: "middle", padding: [0,4,0,4], decorator: "bottombar"});
-      //}
 
       // West Scroll area to fit all menu items
       var scrollwest = new qx.ui.container.Scroll().set({scrollbarX: "off", minWidth: 230, padding: 0, margin: 0, contentPadding: [0,0,0,0]});
+
+      // East Scroll area to fit all menu items
+      var scrolleast = new qx.ui.container.Scroll().set({scrollbarX: "off", minWidth: 230, padding: 0, margin: 0, contentPadding: [0,0,0,0]});
 
       // Center Scroll area to fit all content
       var scroll = new qx.ui.container.Scroll().set({padding: 0, margin: 0, contentPadding: [0,0,0,0]});
@@ -132,8 +138,8 @@ qx.Class.define("wax.demo.Application",
       var winAboutWax = this.__createDetailWindow();
 
       winAboutWax.getLayout().set({spacing: 20});
-      winAboutWax.set({caption: "About Wax", contentPadding: 0, status: "Github repo coming soon"});
-      var txtaboutwax = "Wax aims to be a rapid application development and prototyping tool/system. There's a spectrum of rapid-app-dev tools (or low-code tools) - Outsystems, Appian and Ionic on the high-end, Foundation, Gatsbyjs and SemanticUI on the other. Wax is currently not yet on this spectrum, but it does have an approach and supporting assets to begin the process of becoming a highly effective and useful app-dev/app-prototyping asset.<br><br><br>";
+      winAboutWax.set({caption: "About ville.Connect", contentPadding: 0});
+      var txtaboutwax = "About text goes here";
       //var aboutbox = new qx.ui.container.Composite(new qx.ui.layout.VBox(10));
       var aboutscroll = new qx.ui.container.Scroll().set({ allowStretchY: true, padding: 0, margin: 0, contentPadding: [0,24,0,24]});
       var waxatom = new qx.ui.basic.Atom(txtaboutwax,"wax/demo/ville_Wax.png").set({rich: true, iconPosition: "top", gap: 30, paddingTop: 30});
@@ -182,6 +188,7 @@ qx.Class.define("wax.demo.Application",
 
       // Assemble all base pieces  
       scrollwest.add(westbox);
+      scrolleast.add(eastbox);
       scroll.add(centerbox);
       appcompdock.add(northhbox, {edge:"north"});
       //appcompdock.add(scrollwest, {edge:"west"});
