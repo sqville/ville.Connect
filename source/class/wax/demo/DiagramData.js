@@ -226,7 +226,9 @@ qx.Class.define("wax.demo.DiagramData",
                   },
                   options : {
                     anchorA: "vertical", 
-                    anchorB : "horizontal"
+                    anchorB : "horizontal",
+                    anchorAposition: "center-bottom",
+                    anchorBposition: "left-middle"
                   }
                 },
                 {
@@ -238,7 +240,8 @@ qx.Class.define("wax.demo.DiagramData",
                   },
                   options : {
                     anchorA: "horizontal", 
-                    anchorB : "vertical"
+                    anchorB : "vertical",
+                    anchorAposition: "left-middle"
                   }
                 },
                 {
@@ -247,7 +250,9 @@ qx.Class.define("wax.demo.DiagramData",
                   properties : {backgroundColor : "gray"},
                   options : {
                     anchorA: "horizontal", 
-                    anchorB : "horizontal"
+                    anchorB : "horizontal",
+                    anchorAposition: "right-middle",
+                    anchorBposition: "left-middle"
                   }
                 },
                 {
@@ -256,7 +261,9 @@ qx.Class.define("wax.demo.DiagramData",
                   properties : {backgroundColor : "gray"},
                   options : {
                     anchorA: "horizontal", 
-                    anchorB : "horizontal"
+                    anchorB : "horizontal",
+                    anchorAposition: "right-middle",
+                    anchorBposition: "left-middle"
                   }
                 },
                 {

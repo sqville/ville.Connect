@@ -623,7 +623,7 @@ qx.Class.define("wax.demo.Application",
       centerbox.add(widgetconnectpage);
 
       // Show the default page
-      centerbox.setSelection([widgetconnectpage]);
+      centerbox.setSelection([dashboardpage]);
 
  
 
@@ -671,9 +671,9 @@ qx.Class.define("wax.demo.Application",
 
       // Set default selections
       //centerbox.setSelection([widgetconnectpage]);
-      mainmenubuttongroup.setSelection([tbtnmenuThirdPage]);
-      westboxbuttongroup.setSelection([tbtnThirdPage]);
-      atmlogocurrentpage.setLabel("Widget Connections");
+      mainmenubuttongroup.setSelection([tbtnmenudashboardpage]);
+      westboxbuttongroup.setSelection([tbtndashboardpage]);
+      atmlogocurrentpage.setLabel("Network Diagram");
       
       //***  CODE for applying popup fading in and out  ***//
       var fadeinleft = {duration: 300, timing: "ease-out", origin: "left top", keyFrames : {
