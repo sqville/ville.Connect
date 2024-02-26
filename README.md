@@ -10,8 +10,37 @@ Create a diagram/workflow/mindmap, tool/widget/capability using 100% Qooxdoo cod
 ## Demos
 
 [Demo](https://sqville.github.io/ville.Connect/published/)
-* Right click any connector to edit the object
+* Right click any connector to edit it's properties
 * Move or resize connected widgets to see the connection dyanmically adjust (only enabled for first two examples. The third example are static ui widgets.)
+
+<!-- Defining a connection -->
+## Define a connection object
+
+Example of two ui objects connected by a single connector:
+```javascript
+"connections" : [
+  {
+    elementA : widget1,
+    elementB : widget2,
+    properties : {
+      backgroundColor : "gray",
+      decorator : "corners-rounded"
+    },
+    options : {
+      anchorA: "horizontal",  
+      anchorAposition: "center-top",
+      anchorB : "horizontal",
+      anchorBposition: "center",
+      anchorAoffsetTop: 10,
+      anchorAoffsetLeft: 10,
+      anchorBoffsetTop: 10,
+      anchorBoffsetLeft: 10,
+      strokeWidth: 8,
+      direction : "AtoB"
+    }
+  }
+]
+```
 
 <!-- ROADMAP -->
 ## Roadmap
