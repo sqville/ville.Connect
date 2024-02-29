@@ -542,6 +542,7 @@ _positionConnection : function(connection)
               this._positionVerticalLine(this._wline3, corner1.left, corner1.top, corner2.left, corner2.top, connection.radius, connection.roundedCorners);
 
               if (connection.direction) {
+                console.log(connection.direction);
                 this._paintarrowline (this._wline1, "horizontal", pAtop, pBtop, connection.direction);
                 this._paintarrowline (this._wline2, "horizontal", pAtop, pBtop, connection.direction);
                 this._paintarrowline (this._wline3, "vertical", pAleft, pBleft, connection.direction);
@@ -796,9 +797,9 @@ _positionConnection : function(connection)
       if (position == "vertical") {
         if (pA < pB && direction == "AtoB") 
           element.getContentElement().addClass("chevarrowdown");
-        else if (pA < pB && direction == "BtoA")
-          element.getContentElement().addClass("chevarrowup");
         else if (pA > pB && direction == "AtoB")
+          element.getContentElement().addClass("chevarrowup");
+        else if (pA < pB && direction == "BtoA")
           element.getContentElement().addClass("chevarrowup");
         else if (pA > pB && direction == "BtoA")
           element.getContentElement().addClass("chevarrowdown");
@@ -807,9 +808,9 @@ _positionConnection : function(connection)
       } else {
         if (pA < pB && direction == "AtoB")
           element.getContentElement().addClass("chevarrowrt");
-        else if (pA < pB && direction == "BtoA")
-          element.getContentElement().addClass("chevarrowlt");
         else if (pA > pB && direction == "AtoB")
+          element.getContentElement().addClass("chevarrowlt");
+        else if (pA < pB && direction == "BtoA")
           element.getContentElement().addClass("chevarrowlt");
         else if (pA > pB && direction == "BtoA")
           element.getContentElement().addClass("chevarrowrt");

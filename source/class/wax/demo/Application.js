@@ -131,19 +131,19 @@ qx.Class.define("wax.demo.Application",
 
       // Profile and Settings Menu and Menu Buttons
       var profilemenu = new qx.ui.menu.Menu().set({spacingX: 12});
-      var aboutmenubutton1 = new qx.ui.menu.Button("About Wax", "wax/demo/info-24px.svg").set({padding: 10});
+      var aboutmenubutton1 = new qx.ui.menu.Button("About Connect", "wax/demo/info-24px.svg").set({padding: 10});
       aboutmenubutton1.getChildControl("icon").set({ width: 24, height: 24 });
 
       //create About Wax popup window
       var winAboutWax = this.__createDetailWindow();
 
       winAboutWax.getLayout().set({spacing: 20});
-      winAboutWax.set({caption: "About ville.Connect", contentPadding: 0});
-      var txtaboutwax = "About text goes here";
+      winAboutWax.set({ width: 430, height: 460, contentPadding: 0});
+      var txtaboutwax = 'Project Github page: <a target="_blank" href="https://github.com/sqville/ville.Connect">https://github.com/sqville/ville.Connect</a>';
       //var aboutbox = new qx.ui.container.Composite(new qx.ui.layout.VBox(10));
       var aboutscroll = new qx.ui.container.Scroll().set({ allowStretchY: true, padding: 0, margin: 0, contentPadding: [0,24,0,24]});
-      var waxatom = new qx.ui.basic.Atom(txtaboutwax,"wax/demo/ville_Wax.png").set({rich: true, iconPosition: "top", gap: 30, paddingTop: 30});
-      waxatom.getChildControl("icon").set({scale: true, width: 300, height: 106});
+      var waxatom = new qx.ui.basic.Atom(txtaboutwax,"wax/demo/ville_Connect.png").set({rich: true, iconPosition: "top", gap: 30, paddingTop: 30});
+      //waxatom.getChildControl("icon").set({scale: true, width: 300, height: 106});
       waxatom.getChildControl("label").set({wrap: true});
       aboutscroll.add(waxatom);
 
@@ -166,7 +166,7 @@ qx.Class.define("wax.demo.Application",
 
       aboutmenubutton1.addListener("execute", function(e) {
         winAboutWax.restore();
-        winAboutWax.maximize();
+        //winAboutWax.maximize();
         winAboutWax.center();
         winAboutWax.show();
       }, this);
@@ -366,7 +366,8 @@ qx.Class.define("wax.demo.Application",
       // STACK - PAGE #2 - Basic Flowchart
       var wmBasicflowchart = new qx.ui.window.Manager();
       var desktop_Basicflowchart = new qx.ui.window.Desktop(wmBasicflowchart);
-      desktop_Basicflowchart.setUserData("diagramtype", "windows");
+      //desktop_Basicflowchart.setUserData("diagramtype", "windows");
+      desktop_Basicflowchart.setUserData("diagramtype", "widgets");
       var data_Basicflowchart = wax.demo.DiagramData.DIAGRAMS["BasicFlowchart"];
 
       //elements
@@ -420,7 +421,8 @@ qx.Class.define("wax.demo.Application",
           winsh.moveTo(defsh.left, defsh.top);
 
           // get all windows for window listners to leverage
-          var allwins = desktop_Basicflowchart.getWindows();
+          //var allwins = desktop_Basicflowchart.getWindows();
+          var allwins = desktop_Basicflowchart.getChildren();
 
           // add move listner to each element
           winsh.addListener("move", function(e) {
@@ -806,10 +808,9 @@ qx.Class.define("wax.demo.Application",
     __createDetailWindow : function()
     {
       // Create the Window
-      var win = new qx.ui.window.Window("Detail Window").set({ appearance: "wax-window", allowMaximize : true, allowMinimize : false, modal: true, movable: true });
+      var win = new qx.ui.window.Window().set({ appearance: "wax-window", allowMaximize : true, allowMinimize : false, modal: true, movable: true });
       win.setLayout(new qx.ui.layout.VBox(4));
       win.setShowStatusbar(true);
-      win.setStatus("Generic Message"); 
       win.getChildControl("title").set({padding: [10,0,0,10]});
 
       return win;
