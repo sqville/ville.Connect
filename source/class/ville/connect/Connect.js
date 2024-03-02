@@ -543,9 +543,9 @@ _positionConnection : function(connection)
 
               if (connection.direction) {
                 console.log(connection.direction);
-                this._paintarrowline (this._wline1, "horizontal", pAtop, pBtop, connection.direction);
-                this._paintarrowline (this._wline2, "horizontal", pAtop, pBtop, connection.direction);
-                this._paintarrowline (this._wline3, "vertical", pAleft, pBleft, connection.direction);
+                this._paintarrowline (this._wline1, "horizontal", pAleft, pBleft, connection.direction);
+                this._paintarrowline (this._wline2, "horizontal", pAleft, pBleft, connection.direction);
+                this._paintarrowline (this._wline3, "vertical", pAtop, pBtop, connection.direction);
               }
           }
       }
