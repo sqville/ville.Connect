@@ -19,9 +19,9 @@ qx.Theme.define("ville.connect.Appearance",
     style : function(states)
      {
       return {
-        backgroundColor : "gray",
+        backgroundColor : "transparent",
         padding : 0,
-        decorator : "connector-blank",
+        decorator : "connector-dashed",
         zIndex: 9
        };
      }

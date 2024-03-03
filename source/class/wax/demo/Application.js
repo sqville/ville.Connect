@@ -306,7 +306,7 @@ qx.Class.define("wax.demo.Application",
             allnetdiawins.forEach(function(winobj) {
               if (winobj.getUserData("elementtype")=="connectline") 
               {
-                if (winobj.getVisibility() == "visible" && (winobj.getUserData("elementAhashcode") == this.toHashCode() || winobj.getUserData("elementBhashcode") == this.toHashCode()))
+                if (winobj.getUserData("elementAhashcode") == this.toHashCode() || winobj.getUserData("elementBhashcode") == this.toHashCode())
                 {
                   arrwins.push(winobj);
                 }
@@ -321,7 +321,7 @@ qx.Class.define("wax.demo.Application",
             allnetdiawins.forEach(function(winobj) {
               if (winobj.getUserData("elementtype")=="connectline") 
               {
-                if (winobj.getVisibility() == "visible" && (winobj.getUserData("elementAhashcode") == this.toHashCode() || winobj.getUserData("elementBhashcode") == this.toHashCode()))
+                if (winobj.getUserData("elementAhashcode") == this.toHashCode() || winobj.getUserData("elementBhashcode") == this.toHashCode())
                 {
                   arrwins.push(winobj);
                 }
@@ -430,7 +430,7 @@ qx.Class.define("wax.demo.Application",
             allwins.forEach(function(winobj) {
               if (winobj.getUserData("elementtype")=="connectline") 
               {
-                if (winobj.getVisibility() == "visible" && (winobj.getUserData("elementAhashcode") == this.toHashCode() || winobj.getUserData("elementBhashcode") == this.toHashCode()))
+                if (winobj.getUserData("elementAhashcode") == this.toHashCode() || winobj.getUserData("elementBhashcode") == this.toHashCode())
                 {
                   arrwins.push(winobj);
                 }
@@ -445,7 +445,7 @@ qx.Class.define("wax.demo.Application",
             allwins.forEach(function(winobj) {
               if (winobj.getUserData("elementtype")=="connectline") 
               {
-                if (winobj.getVisibility() == "visible" && (winobj.getUserData("elementAhashcode") == this.toHashCode() || winobj.getUserData("elementBhashcode") == this.toHashCode()))
+                if (winobj.getUserData("elementAhashcode") == this.toHashCode() || winobj.getUserData("elementBhashcode") == this.toHashCode())
                 {
                   arrwins.push(winobj);
                 }
@@ -547,8 +547,7 @@ qx.Class.define("wax.demo.Application",
             anchorAoffsetLeft: 10,
             anchorBoffsetTop: 10,
             anchorBoffsetLeft: 10,
-            strokeWidth: 8,
-            direction : "AtoB"
+            strokeWidth: 8
           }
         },
         {
@@ -561,7 +560,6 @@ qx.Class.define("wax.demo.Application",
           options : {
             anchorA: "point",
             anchorB : "point",
-            direction : "AtoB",
             strokeWidth: 12
           }
         },
@@ -574,21 +572,18 @@ qx.Class.define("wax.demo.Application",
           },
           options : {
             anchorA: "point",
-            anchorB : "point",
-            direction : "AtoB"
+            anchorB : "point"
           }
         },
         {
           elementA : w3,
           elementB : w4,
           properties : {
-            appearance : "connector",
-            backgroundColor : "transparent"
+            appearance : "connector"
           },
           options : {
-            anchorA: "point", 
-            anchorB : "point",
-            direction : "AtoB"
+            anchorA: "horizontal", 
+            anchorB : "vertical"
           }
         }
       ];

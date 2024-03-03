@@ -221,38 +221,39 @@ qx.Class.define("wax.demo.DiagramData",
                   elementA : 1,
                   elementB : 2,
                   properties : {
-                    backgroundColor : "gray",
-                    decorator : "roundedcorners-light"
+                    appearance : "connector"
                   },
                   options : {
                     anchorA: "vertical", 
                     anchorB : "horizontal",
                     anchorAposition: "center-bottom",
-                    anchorBposition: "left-middle"
+                    anchorBposition: "left-middle",
+                    strokeWidth: 0
                   }
                 },
                 {
                   elementA : 3,
                   elementB : 2,
                   properties : {
-                    backgroundColor : "gray",
-                    decorator : "roundedcorners-light"
+                    appearance : "connector"
                   },
                   options : {
                     anchorA: "horizontal", 
                     anchorB : "vertical",
-                    anchorAposition: "left-middle"
+                    anchorAposition: "left-middle",
+                    strokeWidth: 8
                   }
                 },
                 {
                   elementA : 3,
                   elementB : 4,
-                  properties : {backgroundColor : "gray"},
+                  properties : {appearance : "connector"},
                   options : {
                     anchorA: "horizontal", 
                     anchorB : "horizontal",
                     anchorAposition: "right-middle",
-                    anchorBposition: "left-middle"
+                    anchorBposition: "left-middle",
+                    endArrow: "default-medium"
                   }
                 },
                 {

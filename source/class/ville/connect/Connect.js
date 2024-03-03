@@ -52,6 +52,8 @@ qx.Class.define("ville.connect.Connect",
 
     _wline3 : null,
 
+    _wstartarrow : null,
+
     _wendarrow : null,
 
      /**
@@ -98,6 +100,7 @@ qx.Class.define("ville.connect.Connect",
         wline1.setUserData("elementA", elementA);
         wline1.setUserData("elementB", elementB);
         wline1.setUserData("options", options);
+        wline1.setUserData("properties", properties);
         // wline2
         wline2.setUserData("elementtype", "connectline");
         wline2.setUserData("connectid", connection.id);
@@ -107,6 +110,7 @@ qx.Class.define("ville.connect.Connect",
         wline2.setUserData("elementA", elementA);
         wline2.setUserData("elementB", elementB);
         wline2.setUserData("options", options);
+        wline2.setUserData("properties", properties);
         // wline3
         wline3.setUserData("elementtype", "connectline");
         wline3.setUserData("connectid", connection.id);
@@ -116,6 +120,7 @@ qx.Class.define("ville.connect.Connect",
         wline3.setUserData("elementA", elementA);
         wline3.setUserData("elementB", elementB);
         wline3.setUserData("options", options);
+        wline3.setUserData("properties", properties);
 
         wline1.setUserData("wline2", wline2);
         wline1.setUserData("wline3", wline3);
@@ -203,8 +208,8 @@ qx.Class.define("ville.connect.Connect",
         });
         
         menu.addSeparator();
-        menu.add(directionmenubutton);
-        menu.addSeparator();
+        //menu.add(directionmenubutton);
+        //menu.addSeparator();
         menu.add(anchorApositionbutton);
         menu.add(anchorBpositionbutton);
         menu.add(ordermenubuttonback);
@@ -263,16 +268,15 @@ qx.Class.define("ville.connect.Connect",
         appobj.add(wline2);
         appobj.add(wline3); 
 
-        if (options != null && options.endShape != null && options.endShape != "none") {
+        if (options.endArrow) {
           // Create line end shape and add it to the diagram
           //var wendarrow = this._wendarrow = new qx.ui.popup.Popup(new qx.ui.layout.Grow).set({backgroundColor: options.color, anonymous: true, width: 8, height: 8, placementModeX: "direct", placementModeY: "direct"});
-          var wendarrow = this._wendarrow = new qx.ui.popup.Popup(new qx.ui.layout.Grow).set({backgroundColor: properties.backgroundColor, anonymous: true, width: 8, height: 8, placementModeX: "direct", placementModeY: "direct"});
+          //var wendarrow = this._wendarrow = new qx.ui.popup.Popup(new qx.ui.layout.Grow).set({backgroundColor: properties.backgroundColor, anonymous: true, width: 8, height: 8, placementModeX: "direct", placementModeY: "direct"});
+          var wendarrow = this._wendarrow = new qx.ui.core.Widget();
           wendarrow.setUserData("elementtype", "connectline-endarrow");
           wendarrow.setUserData("connectid", connection.id);
           wendarrow.setUserData("elementB", elementB);
-          wendarrow.setAutoHide(false);
-          wendarrow.placeToWidget(elementB, true);
-          wendarrow.show();
+          appobj.add(wendarrow);
         }
         
         // Position connection.
@@ -314,6 +318,9 @@ _positionConnection : function(connection)
   right-top, right-middle, right-bottom
   offsetLeft, offsetTop
   */
+  this._wline1.setVisibility("visible");
+  this._wline2.setVisibility("visible");
+  this._wline3.setVisibility("visible");
 
   var posA = this._posA = connection.elementA.getBounds();
   var posB = this._posB = connection.elementB.getBounds();
@@ -460,6 +467,17 @@ _positionConnection : function(connection)
       }
       this._wline2.setUserBounds(pBleft, pBtop, 2, 2);
       this._wline3.setUserBounds(pBleft, pBtop, 2, 2);
+      this._wline2.setVisibility("hidden");
+      this._wline3.setVisibility("hidden");
+      if (connection.endArrow) {
+        this._wendarrow.setUserBounds(pBleft, pBtop, 2, 2);
+        // set left or right decorator arrow
+        if (pAleft < pBleft)
+          this._wendarrow.setDecorator("dark-arrow-right");
+        else
+          this._wendarrow.setDecorator("dark-arrow-left");
+      }
+
   } else {
     // Verify point to point (diagonal line)
     if (connection.anchorA == "point" || connection.anchorB == "point") {
@@ -740,7 +758,7 @@ _positionConnection : function(connection)
         this._wline3 = arrlines[i];
 
         //set up connection
-        var conn = this._createConnectionObject(arrlines[i].getUserData("elementA"), arrlines[i].getUserData("elementB"), null, arrlines[i].getUserData("options"));
+        var conn = this._createConnectionObject(arrlines[i].getUserData("elementA"), arrlines[i].getUserData("elementB"), arrlines[i].getUserData("properties"), arrlines[i].getUserData("options"));
         
         // Position connection.
         this._positionConnection(conn);
@@ -766,7 +784,7 @@ _positionConnection : function(connection)
       connection.anchorAoffsetLeft = 0;
       connection.anchorBoffsetTop = 0;
       connection.anchorBoffsetLeft = 0;
-      connection.direction = "none";
+      //connection.direction = "none";
       if (options.strokeWidth)
         connection.radius = options.strokeWidth;      
       if (options.anchorAposition)
@@ -783,10 +801,13 @@ _positionConnection : function(connection)
         connection.anchorBoffsetLeft = options.anchorBoffsetLeft;
       if (options.direction)
         connection.direction = options.direction;
+      if (options.endArrow)
+        connection.endArrow = options.endArrow;
         
       connection.anchorA = options.anchorA;
       connection.anchorB = options.anchorB;
       connection.options = options;
+      connection.properties = properties;
       connection.roundedCorners = true;
       return connection;
     },

@@ -25,6 +25,17 @@ qx.Theme.define("ville.connect.Decoration",
         radius : 50
       }
     },
+
+    "connector-dashed" :
+    {      
+      style :
+      {
+        radius : 50,
+        color : "blue",
+        width : 6,
+        style : "dashed"
+      }
+    },
     
     "chevron-down" :
     {      
