@@ -567,12 +567,13 @@ qx.Class.define("wax.demo.Application",
           elementA : w3,
           elementB : w1,
           properties : {
-            appearance : "connector",
-            backgroundColor : "transparent"
+            appearance : "connector"
           },
           options : {
             anchorA: "point",
-            anchorB : "point"
+            anchorB : "point",
+            anchorBposition: "center-bottom",
+            endArrow: "dark-arrow"
           }
         },
         {

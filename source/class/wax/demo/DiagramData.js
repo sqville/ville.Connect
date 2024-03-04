@@ -159,7 +159,7 @@ qx.Class.define("wax.demo.DiagramData",
               {
                 id : 4,
                 left : 500,
-                top : 50,
+                top : 150,
                 properties : {},
                 options : {
                   content : "ISP",
@@ -249,11 +249,11 @@ qx.Class.define("wax.demo.DiagramData",
                   elementB : 4,
                   properties : {appearance : "connector"},
                   options : {
-                    anchorA: "horizontal", 
-                    anchorB : "horizontal",
+                    anchorA: "point", 
+                    anchorB : "point",
                     anchorAposition: "right-middle",
                     anchorBposition: "left-middle",
-                    endArrow: "default-medium"
+                    endArrow: "dark-arrow"
                   }
                 },
                 {

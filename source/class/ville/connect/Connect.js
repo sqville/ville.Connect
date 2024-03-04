@@ -444,25 +444,7 @@ _positionConnection : function(connection)
 
         //direction arrow (LEFT or RIGHT)
         if (connection.direction) {
-          /*var directionarrow = new qx.ui.popup.Popup(new qx.ui.layout.Grow()).set({anonymous: true, width: 8, height: 8, placementModeX: "direct", placementModeY: "direct"});
-          if (pAleft < pBleft && direction == "AtoB")
-            directionarrow.setDecorator("dark-arrow-right");
-          else if (pAleft < pBleft && direction == "BtoA")
-            directionarrow.setDecorator("dark-arrow-left");
-          else if (pAleft > pBleft && direction == "AtoB")
-            directionarrow.setDecorator("dark-arrow-left");
-          else if (pAleft > pBleft && direction == "BtoA")
-            directionarrow.setDecorator("dark-arrow-right");
-          */
-
           this._paintarrowline (this._wline1, "horizontal", pAleft, pBleft, connection.direction);
-
-          //directionarrow.resetOffset();
-          //directionarrow.setOffsetTop(-12);
-          //directionarrow.setPosition("bottom-center");
-          //directionarrow.setAutoHide(false);
-          //directionarrow.placeToWidget(this._wline1, true);
-          //directionarrow.show();
         }
       }
       this._wline2.setUserBounds(pBleft, pBtop, 2, 2);
@@ -473,16 +455,16 @@ _positionConnection : function(connection)
         this._wendarrow.setUserBounds(pBleft, pBtop, 2, 2);
         // set left or right decorator arrow
         if (pAleft < pBleft)
-          this._wendarrow.setDecorator("dark-arrow-right");
+          this._wendarrow.setDecorator(connection.endArrow + "-right");
         else
-          this._wendarrow.setDecorator("dark-arrow-left");
+          this._wendarrow.setDecorator(connection.endArrow + "-left");
       }
 
   } else {
     // Verify point to point (diagonal line)
     if (connection.anchorA == "point" || connection.anchorB == "point") {
       //this._positionHorizontalLine(this._wline1, pAleft, pAtop, pBleft, pBtop, connection.radius, connection.roundedCorners);
-      this._positionDiagonalLine(this._wline1, pAleft, pAtop, pBleft, pBtop, connection.radius, connection.roundedCorners);
+      var transval = this._positionDiagonalLine(this._wline1, pAleft, pAtop, pBleft, pBtop, connection.radius, connection.roundedCorners);
 
       if (connection.direction) {
         this._paintarrowline (this._wline1, "horizontal", pAleft, pBleft, connection.direction);
@@ -490,6 +472,19 @@ _positionConnection : function(connection)
 
       this._wline2.setUserBounds(pAleft, pAtop, 2, 2);
       this._wline3.setUserBounds(pBleft, pBtop, 2, 2);
+
+      this._wline2.setVisibility("hidden");
+      this._wline3.setVisibility("hidden");
+      if (connection.endArrow) {
+        this._wendarrow.setUserBounds(pBleft, pBtop, 2, 2);
+        // set left or right decorator arrow
+        if (pAleft < pBleft)
+          this._wendarrow.setDecorator(connection.endArrow + "-right");
+        else
+          this._wendarrow.setDecorator(connection.endArrow + "-left");
+        
+          this._wendarrow.getContentElement().setStyles(transval);
+      }
     }
     // Verify if must use two lines or three.
     else if(connection.anchorA != connection.anchorB) {
@@ -647,12 +642,14 @@ _positionConnection : function(connection)
       
       qxElement.setUserBounds(posL, posT, linewidth, radius);
 
-      //console.log('rotate: ' + degs);
-
-      qxElement.getContentElement().setStyles({
+      var transvals = {
         "transform": "rotate(" + degs + "deg)",
         "transform-origin": transformorg
-      });
+      };
+
+      qxElement.getContentElement().setStyles(transvals);
+
+      return transvals;
     },
 
     _positionEndPoint : function()
