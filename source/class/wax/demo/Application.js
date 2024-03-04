@@ -71,6 +71,9 @@ qx.Class.define("wax.demo.Application",
         // support additional cross-browser console. Press F7 to toggle visibility
         qx.log.appender.Console;
       }
+
+      // *** Add this for connect arrows
+      qx.Class.include(qx.ui.decoration.Decorator, ville.connect.MClipPath);
       
       // >>> START of Base Scaffolding >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
       // >>> Base Scaffolding are objects common to all Wax - Franklin based apps  >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
@@ -573,7 +576,7 @@ qx.Class.define("wax.demo.Application",
             anchorA: "point",
             anchorB : "point",
             anchorBposition: "center-bottom",
-            endArrow: "dark-arrow"
+            endArrow: "clippy-arrow"
           }
         },
         {

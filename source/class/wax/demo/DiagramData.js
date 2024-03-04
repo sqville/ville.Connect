@@ -253,7 +253,7 @@ qx.Class.define("wax.demo.DiagramData",
                     anchorB : "point",
                     anchorAposition: "right-middle",
                     anchorBposition: "left-middle",
-                    endArrow: "dark-arrow"
+                    endArrow: "clippy-arrow"
                   }
                 },
                 {

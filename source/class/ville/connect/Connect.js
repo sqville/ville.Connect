@@ -452,7 +452,7 @@ _positionConnection : function(connection)
       this._wline2.setVisibility("hidden");
       this._wline3.setVisibility("hidden");
       if (connection.endArrow) {
-        this._wendarrow.setUserBounds(pBleft, pBtop, 2, 2);
+        this._wendarrow.setUserBounds(pBleft, pBtop, 10, 10);
         // set left or right decorator arrow
         if (pAleft < pBleft)
           this._wendarrow.setDecorator(connection.endArrow + "-right");
@@ -476,14 +476,14 @@ _positionConnection : function(connection)
       this._wline2.setVisibility("hidden");
       this._wline3.setVisibility("hidden");
       if (connection.endArrow) {
-        this._wendarrow.setUserBounds(pBleft, pBtop, 2, 2);
+        this._wendarrow.setUserBounds(pBleft, pBtop, 42, 42);
         // set left or right decorator arrow
         if (pAleft < pBleft)
           this._wendarrow.setDecorator(connection.endArrow + "-right");
         else
           this._wendarrow.setDecorator(connection.endArrow + "-left");
         
-          this._wendarrow.getContentElement().setStyles(transval);
+        this._wendarrow.getContentElement().setStyles(transval);
       }
     }
     // Verify if must use two lines or three.

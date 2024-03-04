@@ -106,6 +106,24 @@ qx.Theme.define("ville.connect.Decoration",
         style : ["solid","solid","solid",null],
         width : [10.5,24,10.5,0]
       }
+    },
+
+    "clippy-arrow-left" :
+    {
+      style :
+      {
+        backgroundColor : "blue",
+        clipPath: "polygon(60% 0, 20% 50%, 60% 100%, 40% 100%, 0% 50%, 40% 0)"
+      }
+    },
+
+    "clippy-arrow-right" :
+    {
+      style :
+      {
+        backgroundColor : "blue",
+        clipPath: "polygon(60% 0, 100% 50%, 60% 100%, 40% 100%, 80% 50%, 40% 0)"
+      }
     }
     
   }
