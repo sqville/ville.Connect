@@ -227,21 +227,21 @@ qx.Class.define("wax.demo.DiagramData",
                     anchorA: "vertical", 
                     anchorB : "horizontal",
                     anchorAposition: "center-bottom",
-                    anchorBposition: "left-middle",
-                    strokeWidth: 0
+                    anchorBposition: "left-middle"
                   }
                 },
                 {
-                  elementA : 3,
-                  elementB : 2,
+                  elementA : 2,
+                  elementB : 3,
                   properties : {
                     appearance : "connector"
                   },
                   options : {
-                    anchorA: "horizontal", 
-                    anchorB : "vertical",
-                    anchorAposition: "left-middle",
-                    strokeWidth: 8
+                    anchorA: "vertical", 
+                    anchorB : "horizontal",
+                    anchorAposition: "center",
+                    anchorBposition: "left-middle",
+                    endArrow: "clippy-arrow"
                   }
                 },
                 {

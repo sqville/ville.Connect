@@ -122,12 +122,14 @@ qx.Class.define("ville.connect.Connect",
         wline3.setUserData("options", options);
         wline3.setUserData("properties", properties);
 
+        
         wline1.setUserData("wline2", wline2);
         wline1.setUserData("wline3", wline3);
         wline2.setUserData("wline1", wline1);
         wline2.setUserData("wline3", wline3);
         wline3.setUserData("wline1", wline1);
         wline3.setUserData("wline2", wline2);
+        
 
         
         var linestyles = ["horizontal-horizontal", "horizontal-vertical", "vertical-horizontal", "vertical-vertical", "point-point"];
@@ -276,6 +278,7 @@ qx.Class.define("ville.connect.Connect",
           wendarrow.setUserData("elementtype", "connectline-endarrow");
           wendarrow.setUserData("connectid", connection.id);
           wendarrow.setUserData("elementB", elementB);
+          wline3.setUserData("endArrow", wendarrow);
           appobj.add(wendarrow);
         }
         
@@ -304,14 +307,6 @@ qx.Class.define("ville.connect.Connect",
  */
 _positionConnection : function(connection) 
 {
-  //console.log(connection.elementB.getBounds());
-  
-  // Calculate the positions of the element's center. 
-  /*** REMOVE LATER 
-   * 30 offset for the window captionbar height (+30)
-   * hard coded thickness of lines
-  */
-
   /* default - center
   center-top, center-bottom, 
   left-top, left-middle, left-bottom, 
@@ -452,7 +447,7 @@ _positionConnection : function(connection)
       this._wline2.setVisibility("hidden");
       this._wline3.setVisibility("hidden");
       if (connection.endArrow) {
-        this._wendarrow.setUserBounds(pBleft, pBtop, 10, 10);
+        this._wendarrow.setUserBounds(pBleft, pBtop, 42, 42);
         // set left or right decorator arrow
         if (pAleft < pBleft)
           this._wendarrow.setDecorator(connection.endArrow + "-right");
@@ -517,7 +512,18 @@ _positionConnection : function(connection)
         }
       }
 
-      this._wline3.setUserBounds(pBleft, pBtop, 2, 2);
+      //this._wline3.setUserBounds(pBleft, pBtop, 2, 2);
+      this._wline3.setVisibility("hidden");
+      if (connection.endArrow) {
+        this._wendarrow.setUserBounds(pBleft, pBtop, 42, 42);
+        // set left or right decorator arrow
+        if (pAleft < pBleft)
+          this._wendarrow.setDecorator(connection.endArrow + "-right");
+        else
+          this._wendarrow.setDecorator(connection.endArrow + "-left");
+        
+        this._wendarrow.getContentElement().setStyles(transval);
+      }
 
       } else {          
           // Declare connection points.
@@ -753,6 +759,8 @@ _positionConnection : function(connection)
         this._wline1 = arrlines[i]; i++;
         this._wline2 = arrlines[i]; i++;
         this._wline3 = arrlines[i];
+        if (this._wline3.getUserData("endArrow"))
+          this._wendarrow = this._wline3.getUserData("endArrow");
 
         //set up connection
         var conn = this._createConnectionObject(arrlines[i].getUserData("elementA"), arrlines[i].getUserData("elementB"), arrlines[i].getUserData("properties"), arrlines[i].getUserData("options"));

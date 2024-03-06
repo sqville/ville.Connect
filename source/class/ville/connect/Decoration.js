@@ -31,9 +31,9 @@ qx.Theme.define("ville.connect.Decoration",
       style :
       {
         radius : 50,
-        color : "blue",
+        color : "#FF00FF",
         width : 6,
-        style : "dashed"
+        style : "solid"
       }
     },
     
@@ -112,7 +112,7 @@ qx.Theme.define("ville.connect.Decoration",
     {
       style :
       {
-        backgroundColor : "blue",
+        backgroundColor : "#FF00FF",
         clipPath: "polygon(60% 0, 20% 50%, 60% 100%, 40% 100%, 0% 50%, 40% 0)"
       }
     },
@@ -121,7 +121,7 @@ qx.Theme.define("ville.connect.Decoration",
     {
       style :
       {
-        backgroundColor : "blue",
+        backgroundColor : "#FF00FF",
         clipPath: "polygon(60% 0, 100% 50%, 60% 100%, 40% 100%, 80% 50%, 40% 0)"
       }
     }
