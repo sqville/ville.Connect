@@ -113,7 +113,7 @@ qx.Theme.define("ville.connect.Decoration",
       style :
       {
         backgroundColor : "#FF00FF",
-        clipPath: "polygon(60% 0, 20% 50%, 60% 100%, 40% 100%, 0% 50%, 40% 0)"
+        clipPath: "polygon(50% 100%, 70% 100%, 40% 50%, 70% 0, 50% 0, 20% 50%)"
       }
     },
 
@@ -122,9 +122,28 @@ qx.Theme.define("ville.connect.Decoration",
       style :
       {
         backgroundColor : "#FF00FF",
-        clipPath: "polygon(60% 0, 100% 50%, 60% 100%, 40% 100%, 80% 50%, 40% 0)"
+        clipPath: "polygon(50% 100%, 30% 100%, 60% 50%, 30% 0, 50% 0, 80% 50%)"
+      }
+    },
+
+    "clippy-arrow-up" :
+    {
+      style :
+      {
+        backgroundColor : "#FF00FF",
+        clipPath: "polygon(100% 60%, 100% 80%, 50% 40%, 0 80%, 0 60%, 50% 20%)"
+      }
+    },
+
+    "clippy-arrow-down" :
+    {
+      style :
+      {
+        backgroundColor : "#FF00FF",
+        clipPath: "polygon(100% 40%, 100% 20%, 50% 60%, 0 20%, 0 40%, 50% 80%)"
       }
     }
+
     
   }
 });

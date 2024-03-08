@@ -575,8 +575,7 @@ qx.Class.define("wax.demo.Application",
           options : {
             anchorA: "point",
             anchorB : "point",
-            anchorBposition: "center-bottom",
-            endArrow: "clippy-arrow"
+            anchorBposition: "center-bottom"
           }
         },
         {
@@ -600,6 +599,7 @@ qx.Class.define("wax.demo.Application",
           villeconnect.connect(defc.elementA, defc.elementB, defc.properties, defc.options, container);
         }
       });
+
       
       /** 
        * This is for widgets with UserBounds set at design time 

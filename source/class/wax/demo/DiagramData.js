@@ -237,11 +237,12 @@ qx.Class.define("wax.demo.DiagramData",
                     appearance : "connector"
                   },
                   options : {
-                    anchorA: "vertical", 
+                    anchorA : "vertical", 
                     anchorB : "horizontal",
-                    anchorAposition: "center",
-                    anchorBposition: "left-middle",
-                    endArrow: "clippy-arrow"
+                    anchorAposition : "center",
+                    anchorBposition : "left-middle",
+                    endArrow : "clippy-arrow",
+                    endArrowsize : 42
                   }
                 },
                 {
@@ -249,22 +250,25 @@ qx.Class.define("wax.demo.DiagramData",
                   elementB : 4,
                   properties : {appearance : "connector"},
                   options : {
-                    anchorA: "point", 
+                    anchorA : "point", 
                     anchorB : "point",
-                    anchorAposition: "right-middle",
-                    anchorBposition: "left-middle",
-                    endArrow: "clippy-arrow"
+                    anchorAposition : "right-top",
+                    anchorBposition : "left-middle",
+                    endArrow : "clippy-arrow",
+                    endArrowsize : 42
                   }
                 },
                 {
                   elementA : 4,
                   elementB : 5,
-                  properties : {backgroundColor : "gray"},
+                  properties : {appearance : "connector"},
                   options : {
                     anchorA: "horizontal", 
                     anchorB : "horizontal",
                     anchorAposition: "right-middle",
-                    anchorBposition: "left-middle"
+                    anchorBposition: "left-middle",
+                    endArrow : "clippy-arrow",
+                    endArrowsize : 42
                   }
                 },
                 {
