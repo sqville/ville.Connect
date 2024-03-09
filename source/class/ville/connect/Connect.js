@@ -489,6 +489,7 @@ _positionConnection : function(connection)
           pBtop = pBtop - parseInt((endAsize)/2, 10);
         }
         this._wendarrow.setUserBounds(pBleft, pBtop, endAsize, endAsize);
+        transval["transform-origin"] = "center";
         this._wendarrow.getContentElement().setStyles(transval);
       }
     }
@@ -672,7 +673,7 @@ _positionConnection : function(connection)
       var halfRadius = parseInt(radius/2, 10);
       var posL = (point1left > point2left)? (point2left - halfRadius) : (point1left - halfRadius);
       var posT = point1top - halfRadius;
-      var linewidth = Math.abs(point1left - point2left + radius); //(point1left > point2left)? (point1left - point2left + radius) : (point2left - point1left + radius);
+      var linewidth = Math.abs(point1left - point2left + radius); 
 
       // rotate line
       var wid = Math.abs(point1left-point2left);
