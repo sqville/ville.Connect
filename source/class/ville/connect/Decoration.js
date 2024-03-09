@@ -18,22 +18,33 @@ qx.Theme.define("ville.connect.Decoration",
 {
   decorations :
   {
-    "connector-blank" :
-    {      
-      style :
-      {
-        radius : 50
-      }
-    },
-
-    "connector-dashed" :
+    "connector-start" :
     {      
       style :
       {
         radius : 50,
         color : "#FF00FF",
-        width : 6,
+        width : 6
+      }
+    },
+
+    "connector-solid" :
+    {      
+      include : "connector-start",
+      
+      style :
+      {
         style : "solid"
+      }
+    },
+
+    "connector-dashed" :
+    {      
+      include : "connector-start",
+      
+      style :
+      {
+        style : "dashed"
       }
     },
     

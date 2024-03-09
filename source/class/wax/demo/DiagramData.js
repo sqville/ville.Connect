@@ -149,7 +149,7 @@ qx.Class.define("wax.demo.DiagramData",
               {
                 id : 3,
                 left : 300,
-                top : 50,
+                top : 30,
                 properties : {},
                 options : {
                   content : "Router",
@@ -159,7 +159,7 @@ qx.Class.define("wax.demo.DiagramData",
               {
                 id : 4,
                 left : 500,
-                top : 150,
+                top : 170,
                 properties : {},
                 options : {
                   content : "ISP",
@@ -168,7 +168,7 @@ qx.Class.define("wax.demo.DiagramData",
               },
               {
                 id : 5,
-                left : 700,
+                left : 750,
                 top : 70,
                 properties : {},
                 options : {
@@ -221,26 +221,34 @@ qx.Class.define("wax.demo.DiagramData",
                   elementA : 1,
                   elementB : 2,
                   properties : {
-                    appearance : "connector"
+                    appearance : "connector",
+                    decorator : "connector-solid"
                   },
                   options : {
                     anchorA: "vertical", 
                     anchorB : "horizontal",
                     anchorAposition: "center-bottom",
-                    anchorBposition: "left-middle"
+                    anchorBposition: "left-middle",
+                    startArrow : "clippy-arrow",
+                    startArrowsize : 42,
+                    endArrow : "clippy-arrow",
+                    endArrowsize : 42
                   }
                 },
                 {
                   elementA : 2,
                   elementB : 3,
                   properties : {
-                    appearance : "connector"
+                    appearance : "connector",
+                    decorator : "connector-solid"
                   },
                   options : {
                     anchorA : "vertical", 
                     anchorB : "horizontal",
-                    anchorAposition : "center",
+                    anchorAposition : "center-top",
                     anchorBposition : "left-middle",
+                    startArrow : "clippy-arrow",
+                    startArrowsize : 42,
                     endArrow : "clippy-arrow",
                     endArrowsize : 42
                   }
@@ -248,12 +256,17 @@ qx.Class.define("wax.demo.DiagramData",
                 {
                   elementA : 3,
                   elementB : 4,
-                  properties : {appearance : "connector"},
+                  properties : {
+                    appearance : "connector",
+                    decorator : "connector-dashed"
+                  },
                   options : {
-                    anchorA : "point", 
-                    anchorB : "point",
-                    anchorAposition : "right-top",
-                    anchorBposition : "left-middle",
+                    anchorA : "horizontal", 
+                    anchorB : "vertical",
+                    anchorAposition : "right-middle",
+                    anchorBposition : "center-top",
+                    startArrow : "clippy-arrow",
+                    startArrowsize : 42,
                     endArrow : "clippy-arrow",
                     endArrowsize : 42
                   }
@@ -261,12 +274,17 @@ qx.Class.define("wax.demo.DiagramData",
                 {
                   elementA : 4,
                   elementB : 5,
-                  properties : {appearance : "connector"},
+                  properties : {
+                    appearance : "connector",
+                    decorator : "connector-dashed"
+                  },
                   options : {
                     anchorA: "horizontal", 
                     anchorB : "horizontal",
                     anchorAposition: "right-middle",
                     anchorBposition: "left-middle",
+                    startArrow : "clippy-arrow",
+                    startArrowsize : 42,
                     endArrow : "clippy-arrow",
                     endArrowsize : 42
                   }

@@ -279,6 +279,16 @@ qx.Class.define("ville.connect.Connect",
           wline3.setUserData("endArrow", wendarrow);
           appobj.add(wendarrow);
         }
+
+        if (options.startArrow) {
+          // Create line end shape and add it to the diagram
+          var wstartarrow = this._wstartarrow = new qx.ui.core.Widget();
+          wstartarrow.setUserData("elementtype", "connectline-endarrow");
+          wstartarrow.setUserData("connectid", connection.id);
+          wstartarrow.setUserData("elementA", elementA);
+          wline1.setUserData("startArrow", wstartarrow);
+          appobj.add(wstartarrow);
+        }
         
         // Position connection.
         this._positionConnection(connection);
@@ -316,6 +326,7 @@ _positionConnection : function(connection)
   this._wline3.setVisibility("visible");
 
   var endAsize = parseInt(connection.endArrowsize, 10);
+  var startAsize = parseInt(connection.startArrowsize, 10);
 
   var posA = this._posA = connection.elementA.getBounds();
   var posB = this._posB = connection.elementB.getBounds();
@@ -524,6 +535,22 @@ _positionConnection : function(connection)
           }
           this._wendarrow.setUserBounds(pBleft, pBtop, endAsize, endAsize);
         }
+
+        if (connection.startArrow) {
+          // set left or right decorator arrow
+          if (pAtop < pBtop) {
+            this._wstartarrow.setDecorator(connection.startArrow + "-up");
+            pAleft = pAleft - parseInt((startAsize)/2, 10);
+            pAtop = pAtop - parseInt((startAsize)/2, 10);
+          }
+          else {
+            this._wstartarrow.setDecorator(connection.startArrow + "-down");
+            pAleft = pAleft - parseInt((startAsize)/2, 10);
+            pAtop = pAtop - parseInt((startAsize)/2, 10);
+          }
+          this._wstartarrow.setUserBounds(pAleft, pAtop, startAsize, startAsize);
+        }
+
       } else {
         // Find the corner's position.
         corner.left = pBleft;
@@ -552,6 +579,22 @@ _positionConnection : function(connection)
           }
           this._wendarrow.setUserBounds(pBleft, pBtop, endAsize, endAsize);
         }
+
+        if (connection.startArrow) {
+          // set left or right decorator arrow
+          if (pAleft < pBleft) {
+            this._wstartarrow.setDecorator(connection.startArrow + "-left");
+            pAleft = pAleft - parseInt((startAsize)/2, 10);
+            pAtop = pAtop - parseInt((startAsize)/2, 10);
+          }
+          else {
+            this._wstartarrow.setDecorator(connection.startArrow + "-right");
+            pAleft = pAleft - parseInt((startAsize)/2, 10);
+            pAtop = pAtop - parseInt((startAsize)/2, 10);
+          }
+          this._wstartarrow.setUserBounds(pAleft, pAtop, startAsize, startAsize);
+        }
+
       }
 
       //this._wline3.setUserBounds(pBleft, pBtop, 2, 2);
@@ -596,6 +639,22 @@ _positionConnection : function(connection)
                 }
                 this._wendarrow.setUserBounds(pBleft, pBtop, endAsize, endAsize);
               }
+
+              if (connection.startArrow) {
+                // set left or right decorator arrow
+                if (pAtop < pBtop) {
+                  this._wstartarrow.setDecorator(connection.startArrow + "-up");
+                  pAleft = pAleft - parseInt((startAsize)/2, 10);
+                  pAtop = pAtop - parseInt((startAsize)/2, 10);
+                }
+                else {
+                  this._wstartarrow.setDecorator(connection.startArrow + "-down");
+                  pAleft = pAleft - parseInt((startAsize)/2, 10);
+                  pAtop = pAtop - parseInt((startAsize)/2, 10);
+                }
+                this._wstartarrow.setUserBounds(pAleft, pAtop, startAsize, startAsize);
+              }
+
           } else {
               // Middle's line must be vertical.
               corner1.left = parseInt((pAleft + pBleft)/2, 10);
@@ -629,6 +688,22 @@ _positionConnection : function(connection)
                 }
                 this._wendarrow.setUserBounds(pBleft, pBtop, endAsize, endAsize);
               }
+
+              if (connection.startArrow) {
+                // set left or right decorator arrow
+                if (pAleft < pBleft) {
+                  this._wstartarrow.setDecorator(connection.startArrow + "-left");
+                  pAleft = pAleft - parseInt((startAsize)/2, 10);
+                  pAtop = pAtop - parseInt((startAsize)/2, 10);
+                }
+                else {
+                  this._wstartarrow.setDecorator(connection.startArrow + "-right");
+                  pAleft = pAleft - parseInt((startAsize)/2, 10);
+                  pAtop = pAtop - parseInt((startAsize)/2, 10);
+                }
+                this._wstartarrow.setUserBounds(pAleft, pAtop, startAsize, startAsize);
+              }
+
           }
       }
       //console.log(connection.anchorA);
@@ -824,6 +899,8 @@ _positionConnection : function(connection)
         this._wline3 = arrlines[i];
         if (this._wline3.getUserData("endArrow"))
           this._wendarrow = this._wline3.getUserData("endArrow");
+        if (this._wline1.getUserData("startArrow"))
+          this._wstartarrow = this._wline1.getUserData("startArrow");
 
         //set up connection
         var conn = this._createConnectionObject(arrlines[i].getUserData("elementA"), arrlines[i].getUserData("elementB"), arrlines[i].getUserData("properties"), arrlines[i].getUserData("options"));
@@ -854,6 +931,7 @@ _positionConnection : function(connection)
       connection.anchorBoffsetLeft = 0;
       //connection.direction = "none";
       connection.endArrowsize = 20;
+      connection.startArrowsize = 20;
 
       if (options.strokeWidth)
         connection.radius = options.strokeWidth;      
@@ -875,6 +953,10 @@ _positionConnection : function(connection)
         connection.endArrow = options.endArrow;
       if (options.endArrowsize)
         connection.endArrowsize = options.endArrowsize;
+      if (options.startArrow)
+        connection.startArrow = options.startArrow;
+      if (options.startArrowsize)
+        connection.startArrowsize = options.startArrowsize;
         
       connection.anchorA = options.anchorA;
       connection.anchorB = options.anchorB;
