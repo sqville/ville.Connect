@@ -557,8 +557,7 @@ qx.Class.define("wax.demo.Application",
           elementA : w2,
           elementB : w3,
           properties : {
-            appearance : "connector",
-            backgroundColor : "transparent"
+            appearance : "connector"
           },
           options : {
             anchorA: "point",

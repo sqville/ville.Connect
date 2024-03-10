@@ -439,9 +439,26 @@ _positionConnection : function(connection)
           pBtop = pBtop - parseInt((endAsize)/2, 10);
         }
         this._wendarrow.setUserBounds(pBleft, pBtop, endAsize, endAsize);
+        this._wendarrow.getContentElement().removeStyle("transform");
+      }
+
+      if (connection.startArrow) {
+        // set left or right decorator arrow
+        if (pAtop < pBtop) {
+          this._wstartarrow.setDecorator(connection.startArrow + "-down");
+          pAleft = pAleft - parseInt((startAsize)/2, 10);
+          pAtop = pAtop - parseInt((startAsize)/2, 10);
+        }
+        else {
+          this._wstartarrow.setDecorator(connection.startArrow + "-up");
+          pAleft = pAleft - parseInt((startAsize)/2, 10);
+          pAtop = pAtop - parseInt((startAsize)/2, 10);
+        }
+        this._wstartarrow.setUserBounds(pAleft, pAtop, startAsize, startAsize);
+        this._wstartarrow.getContentElement().removeStyle("transform");
       }
         
-      } else {
+    } else {
         // HORIZONTAL LINE
         // Draw the line
         this._positionHorizontalLine(this._wline1, pAleft, pAtop, pBleft, pBtop, connection.radius, connection.roundedCorners);
@@ -464,6 +481,23 @@ _positionConnection : function(connection)
             pBtop = pBtop - parseInt((endAsize)/2, 10);
           }
           this._wendarrow.setUserBounds(pBleft, pBtop, endAsize, endAsize);
+          this._wendarrow.getContentElement().removeStyle("transform");
+        }
+
+        if (connection.startArrow) {
+          // set left or right decorator arrow
+          if (pAleft < pBleft) {
+            this._wstartarrow.setDecorator(connection.startArrow + "-left");
+            pAleft = pAleft - parseInt((startAsize)/2, 10);
+            pAtop = pAtop - parseInt((startAsize)/2, 10);
+          }
+          else {
+            this._wstartarrow.setDecorator(connection.startArrow + "-right");
+            pAleft = pAleft - parseInt((startAsize)/2, 10);
+            pAtop = pAtop - parseInt((startAsize)/2, 10);
+          }
+          this._wstartarrow.setUserBounds(pAleft, pAtop, startAsize, startAsize);
+          this._wstartarrow.getContentElement().removeStyle("transform");
         }
       }
       this._wline2.setUserBounds(pBleft, pBtop, 2, 2);
@@ -471,7 +505,6 @@ _positionConnection : function(connection)
       this._wline2.setVisibility("hidden");
       this._wline3.setVisibility("hidden");
       
-
   } else {
     // Verify point to point (diagonal line)
     if (connection.anchorA == "point" || connection.anchorB == "point") {
@@ -502,6 +535,23 @@ _positionConnection : function(connection)
         this._wendarrow.setUserBounds(pBleft, pBtop, endAsize, endAsize);
         transval["transform-origin"] = "center";
         this._wendarrow.getContentElement().setStyles(transval);
+      }
+
+      if (connection.startArrow) {
+        // set left or right decorator arrow
+        if (pAleft < pBleft) {
+          this._wstartarrow.setDecorator(connection.startArrow + "-left");
+          pAleft = pAleft - parseInt((startAsize)/2, 10);
+          pAtop = pAtop - parseInt((startAsize)/2, 10);
+        }
+        else {
+          this._wstartarrow.setDecorator(connection.startArrow + "-right");
+          pAleft = pAleft - parseInt((startAsize)/2, 10);
+          pAtop = pAtop - parseInt((startAsize)/2, 10);
+        }
+        this._wstartarrow.setUserBounds(pAleft, pAtop, startAsize, startAsize);
+        transval["transform-origin"] = "center";
+        this._wstartarrow.getContentElement().setStyles(transval);
       }
     }
     // Verify if must use two lines or three.
@@ -534,6 +584,7 @@ _positionConnection : function(connection)
             pBtop = pBtop - parseInt((endAsize)/2, 10);
           }
           this._wendarrow.setUserBounds(pBleft, pBtop, endAsize, endAsize);
+          this._wendarrow.getContentElement().removeStyle("transform");
         }
 
         if (connection.startArrow) {
@@ -549,6 +600,7 @@ _positionConnection : function(connection)
             pAtop = pAtop - parseInt((startAsize)/2, 10);
           }
           this._wstartarrow.setUserBounds(pAleft, pAtop, startAsize, startAsize);
+          this._wstartarrow.getContentElement().removeStyle("transform");
         }
 
       } else {
@@ -578,6 +630,7 @@ _positionConnection : function(connection)
             pBtop = pBtop - parseInt((endAsize)/2, 10);
           }
           this._wendarrow.setUserBounds(pBleft, pBtop, endAsize, endAsize);
+          this._wendarrow.getContentElement().removeStyle("transform");
         }
 
         if (connection.startArrow) {
@@ -593,6 +646,7 @@ _positionConnection : function(connection)
             pAtop = pAtop - parseInt((startAsize)/2, 10);
           }
           this._wstartarrow.setUserBounds(pAleft, pAtop, startAsize, startAsize);
+          this._wstartarrow.getContentElement().removeStyle("transform");
         }
 
       }
@@ -638,6 +692,7 @@ _positionConnection : function(connection)
                   pBtop = pBtop - parseInt((endAsize)/2, 10);
                 }
                 this._wendarrow.setUserBounds(pBleft, pBtop, endAsize, endAsize);
+                this._wendarrow.getContentElement().removeStyle("transform");
               }
 
               if (connection.startArrow) {
@@ -653,6 +708,7 @@ _positionConnection : function(connection)
                   pAtop = pAtop - parseInt((startAsize)/2, 10);
                 }
                 this._wstartarrow.setUserBounds(pAleft, pAtop, startAsize, startAsize);
+                this._wstartarrow.getContentElement().removeStyle("transform");
               }
 
           } else {
@@ -687,6 +743,7 @@ _positionConnection : function(connection)
                   pBtop = pBtop - parseInt((endAsize)/2, 10);
                 }
                 this._wendarrow.setUserBounds(pBleft, pBtop, endAsize, endAsize);
+                this._wendarrow.getContentElement().removeStyle("transform");
               }
 
               if (connection.startArrow) {
@@ -702,6 +759,7 @@ _positionConnection : function(connection)
                   pAtop = pAtop - parseInt((startAsize)/2, 10);
                 }
                 this._wstartarrow.setUserBounds(pAleft, pAtop, startAsize, startAsize);
+                this._wstartarrow.getContentElement().removeStyle("transform");
               }
 
           }
