@@ -133,7 +133,7 @@ qx.Class.define("wax.demo.DiagramData",
                 properties : {backgroundColor: "transparent"},
                 options : {
                   content : 'Server',
-                  image : "wax/demo/server_01.png"
+                  image : "wax/demo/server_02.png"
                 }
               },            
               {
@@ -143,7 +143,7 @@ qx.Class.define("wax.demo.DiagramData",
                 properties : {},
                 options : {
                   content : "6 Port Switch",
-                  image : "wax/demo/switch_01.png"
+                  image : "wax/demo/switch_02.png"
                 }
               },
               {
@@ -183,7 +183,7 @@ qx.Class.define("wax.demo.DiagramData",
                 properties : {},
                 options : {
                   content : "Printer",
-                  image : "wax/demo/printer_01.png"
+                  image : "wax/demo/printer_02.png"
                 }
               },
               {
@@ -193,7 +193,7 @@ qx.Class.define("wax.demo.DiagramData",
                 properties : {},
                 options : {
                   content : "Workstation",
-                  image : "wax/demo/computer_01.png"
+                  image : "wax/demo/computer_02.png"
                 }
               },
               {
@@ -203,7 +203,7 @@ qx.Class.define("wax.demo.DiagramData",
                 properties : {},
                 options : {
                   content : "Workstation",
-                  image : "wax/demo/computer_01.png"
+                  image : "wax/demo/computer_02.png"
                 }
               },
               {
@@ -229,10 +229,11 @@ qx.Class.define("wax.demo.DiagramData",
                     anchorB : "horizontal",
                     anchorAposition: "center-bottom",
                     anchorBposition: "left-middle",
+                    strokeWidth : 6,
                     startArrow : "clippy-arrow",
-                    startArrowsize : 42,
+                    startArrowsize : 22,
                     endArrow : "clippy-arrow",
-                    endArrowsize : 42
+                    endArrowsize : 22
                   }
                 },
                 {
@@ -258,7 +259,7 @@ qx.Class.define("wax.demo.DiagramData",
                   elementB : 4,
                   properties : {
                     appearance : "connector",
-                    decorator : "connector-dashed"
+                    decorator : "connector-dashed-large"
                   },
                   options : {
                     anchorA : "horizontal", 
@@ -276,7 +277,7 @@ qx.Class.define("wax.demo.DiagramData",
                   elementB : 5,
                   properties : {
                     appearance : "connector",
-                    decorator : "connector-dashed"
+                    decorator : "connector-dashed-small"
                   },
                   options : {
                     anchorA: "horizontal", 
@@ -284,9 +285,10 @@ qx.Class.define("wax.demo.DiagramData",
                     anchorAposition: "right-middle",
                     anchorBposition: "left-middle",
                     startArrow : "clippy-arrow",
-                    startArrowsize : 42,
+                    startArrowsize : 22,
                     endArrow : "clippy-arrow",
-                    endArrowsize : 42
+                    endArrowsize : 22,
+                    strokeWidth : 4
                   }
                 },
                 {
@@ -295,7 +297,9 @@ qx.Class.define("wax.demo.DiagramData",
                   properties : {backgroundColor : "gray"},
                   options : {
                     anchorA: "vertical", 
-                    anchorB : "vertical"
+                    anchorB : "vertical",
+                    anchorAposition: "center-bottom",
+                    strokeWidth : 6
                   }
                 },
                 {
@@ -304,7 +308,9 @@ qx.Class.define("wax.demo.DiagramData",
                   properties : {backgroundColor : "gray"},
                   options : {
                     anchorA: "vertical", 
-                    anchorB : "vertical"
+                    anchorB : "vertical",
+                    anchorAposition: "center-bottom",
+                    strokeWidth : 6
                   }
                 },
                 {
@@ -313,7 +319,9 @@ qx.Class.define("wax.demo.DiagramData",
                   properties : {backgroundColor : "gray"},
                   options : {
                     anchorA: "vertical", 
-                    anchorB : "vertical"
+                    anchorB : "vertical",
+                    anchorAposition: "center-bottom",
+                    strokeWidth : 6
                   }
                 }
             ]

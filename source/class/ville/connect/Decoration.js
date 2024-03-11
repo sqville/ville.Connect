@@ -34,17 +34,30 @@ qx.Theme.define("ville.connect.Decoration",
       
       style :
       {
+        width : 3,
         style : "solid"
       }
     },
 
-    "connector-dashed" :
+    "connector-dashed-large" :
     {      
       include : "connector-start",
       
       style :
       {
-        style : "dashed"
+        style : "dashed",
+        width : 6
+      }
+    },
+
+    "connector-dashed-small" :
+    {      
+      include : "connector-start",
+      
+      style :
+      {
+        style : "dashed",
+        width : 3
       }
     },
     

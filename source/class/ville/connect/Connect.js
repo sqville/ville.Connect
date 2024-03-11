@@ -414,6 +414,8 @@ _positionConnection : function(connection)
   pBleft = pBleft + parseInt(connection.anchorBoffsetLeft, 10);
   pBtop = pBtop + parseInt(connection.anchorBoffsetTop, 10);
 
+  console.log(connection.radius);
+
   // Verify if the elements are aligned in a horizontal or vertical line.
   if(pAleft == pBleft || pAtop == pBtop) {
     // Verify if the line must be vertical or horizonal
