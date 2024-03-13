@@ -23,8 +23,8 @@ Example of two ui objects connected by a single connector:
     elementA : widget1,
     elementB : widget2,
     properties : {
-      backgroundColor : "gray",
-      decorator : "corners-rounded"
+      appearance : "connector",
+      decorator : "connector-solid"
     },
     options : {
       anchorA: "horizontal",  
@@ -36,7 +36,10 @@ Example of two ui objects connected by a single connector:
       anchorBoffsetTop: 10,
       anchorBoffsetLeft: 10,
       strokeWidth: 8,
-      direction : "AtoB"
+      startArrow: "dark-arrow",
+      startArrowsize: 32,
+      endArrow: "dark-arrow",
+      endArrowsize: 32
     }
   }
 ]
@@ -45,9 +48,10 @@ Example of two ui objects connected by a single connector:
 <!-- ROADMAP -->
 ## Roadmap
 
-* Create and modify simple scenarios and connection types with the ability to export changes to a single json object (In progress)
-* Add shapes and connections using UI (i.e. drag and drop) (In progress)
-* Read from and export to, Excalidraw and Mermaidjs file formats (Not started)
+* Create simple scenarios and connection types. (Completed)
+* Create and modify simple scenarios and connection types with the ability to export changes to a single json object. (In progress)
+* Add shapes and connections using a UI - i.e. drag and drop. (Not started)
+* Interop with other formats/tools - i.e. Excalidraw, draw.io, Lucidcharts. (Not started)
 
 <!-- LICENSE -->
 ## License
