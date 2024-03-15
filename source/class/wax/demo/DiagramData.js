@@ -72,54 +72,64 @@ qx.Class.define("wax.demo.DiagramData",
           {
             elementA : 1,
             elementB : 2,
-            properties : {backgroundColor : "transparent"},
+            properties : {
+              appearance : "connector",
+              decorator : "connector-solid"
+            },
             options : {
               anchorA: "vertical", 
               anchorB : "vertical", 
               anchorAposition: "center-bottom",
               anchorBposition: "center",
-              anchorBoffsetTop: 10,
-              direction : "AtoB"
+              anchorBoffsetTop: 10
             }
           },
           {
             elementA : 2,
             elementB : 3,
-            properties : {backgroundColor : "transparent"},
+            properties : {
+              appearance : "connector",
+              decorator : "connector-solid"
+            },
             options : {
               anchorA: "vertical", 
-              anchorB : "vertical",
-              direction : "AtoB"
+              anchorB : "vertical"
             }
           },
           {
             elementA : 3,
             elementB : 4,
-            properties : {backgroundColor : "gray"},
+            properties : {
+              appearance : "connector",
+              decorator : "connector-solid"
+            },
             options : {
               anchorA: "horizontal", 
-              anchorB : "horizontal",
-              direction : "AtoB"
+              anchorB : "horizontal"
             }
           },
           {
             elementA : 4,
             elementB : 2,
-            properties : {backgroundColor : "transparent"},
+            properties : {
+              appearance : "connector",
+              decorator : "connector-solid"
+            },
             options : {
               anchorA: "vertical", 
-              anchorB : "horizontal",
-              direction : "AtoB"
+              anchorB : "horizontal"
             }
           },
           {
             elementA : 3,
             elementB : 5,
-            properties : {backgroundColor : "transparent"},
+            properties : {
+              appearance : "connector",
+              decorator : "connector-solid"
+            },
             options : {
               anchorA: "vertical", 
-              anchorB : "vertical",
-              direction : "AtoB"
+              anchorB : "vertical"
             }
           }
         ]

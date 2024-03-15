@@ -11,7 +11,7 @@ Create a diagram/workflow/mindmap, tool/widget/capability using 100% Qooxdoo cod
 
 [Demo](https://sqville.github.io/ville.Connect/published/)
 * Right click any connector to edit it's properties
-* Move or resize connected widgets to see the connection dyanmically adjust (only enabled for first two examples. The third example are static ui widgets.)
+* Move or resize connected widgets to see the connection dyanmically adjust. Only enabled for first two examples. The third example are static ui widgets.
 
 <!-- Defining a connection -->
 ## Define a connection object

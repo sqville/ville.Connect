@@ -8,10 +8,7 @@
 
 ************************************************************************ */
 
-/**
- * @external(ville/connect/villeconnectlines.css)
- * @asset(ville/connect/*)
- */
+
 qx.Class.define("ville.connect.Connect",
 {
   extend : qx.core.Object,
@@ -42,10 +39,6 @@ qx.Class.define("ville.connect.Connect",
   {
     _idgenerator : 0,
 
-    _posA : null,
-
-    _posB : null,
-
     _wline1 : null,
 
     _wline2 : null,
@@ -59,16 +52,16 @@ qx.Class.define("ville.connect.Connect",
      /**
      * Draws a connection between two elements.
      *
-     * @param {object} elementA A Qooxdoo Window object for the first element.
-     * @param {object} elementB A Qooxdoo Window object for the second element.
-     * @param {object} options An associative array with the properties 'color' (which defines the color of the connection), 'radius' (the width of the
-     * connection), 'roundedCorners' (a boolean indicating if the corners must be round), 'anchorA' (the anchor type of the first element, which can be 
-     * 'horizontal' or 'vertical') and 'anchorB' (the anchor type of second element).
+     * @param {object} elementA A Qooxdoo Widget object for the first element.
+     * @param {object} elementB A Qooxdoo Widget object for the second element.
+     * @param {object} properties An object with connector (Qooxdoo Widget object) properties.
+     * @param {object} options An object with connector specific properties.
+     * @param {object} containerobj A Qooxdoo container object with a canvas layout.
      * @returns {string} The connection identifier or 'null' if the connection could not be draw.
      */
-    connect: function (elementA, elementB, properties, options, appobj) {
+    connect: function (elementA, elementB, properties, options, containerobj) {
         // Verify if the element's selector are ok.
-        if(elementA == null || elementB == null || appobj == null) {
+        if(elementA == null || elementB == null || containerobj == null) {
           return null;
         }
 
@@ -79,7 +72,7 @@ qx.Class.define("ville.connect.Connect",
         var wline3;
         
         // Create line Widgets and add them to the Root
-        if (appobj.getUserData("diagramtype") == "windows") {
+        if (containerobj.getUserData("diagramtype") == "windows") {
           wline1 = this._wline1 = new qx.ui.window.Window().set(properties);
           wline1.getChildControl("captionbar").setVisibility("hidden");
           wline2 = this._wline2 = new qx.ui.window.Window().set(properties);
@@ -97,8 +90,8 @@ qx.Class.define("ville.connect.Connect",
         wline1.setUserData("segmentid", 1);
         wline1.setUserData("elementAhashcode", elementA.toHashCode());
         wline1.setUserData("elementBhashcode", elementB.toHashCode());
-        wline1.setUserData("elementA", elementA);
-        wline1.setUserData("elementB", elementB);
+        //wline1.setUserData("elementA", elementA);
+        //wline1.setUserData("elementB", elementB);
         wline1.setUserData("options", options);
         wline1.setUserData("properties", properties);
         // wline2
@@ -107,8 +100,8 @@ qx.Class.define("ville.connect.Connect",
         wline2.setUserData("segmentid", 2);
         wline2.setUserData("elementAhashcode", elementA.toHashCode());
         wline2.setUserData("elementBhashcode", elementB.toHashCode());
-        wline2.setUserData("elementA", elementA);
-        wline2.setUserData("elementB", elementB);
+        //wline2.setUserData("elementA", elementA);
+        //wline2.setUserData("elementB", elementB);
         wline2.setUserData("options", options);
         wline2.setUserData("properties", properties);
         // wline3
@@ -123,10 +116,10 @@ qx.Class.define("ville.connect.Connect",
         wline3.setUserData("properties", properties);
 
         
-        wline1.setUserData("wline2", wline2);
-        wline1.setUserData("wline3", wline3);
-        wline2.setUserData("wline1", wline1);
-        wline2.setUserData("wline3", wline3);
+        //wline1.setUserData("wline2", wline2);
+        //wline1.setUserData("wline3", wline3);
+        //wline2.setUserData("wline1", wline1);
+        //wline2.setUserData("wline3", wline3);
         wline3.setUserData("wline1", wline1);
         wline3.setUserData("wline2", wline2);
         
@@ -173,6 +166,7 @@ qx.Class.define("ville.connect.Connect",
         }
         var anchorBpositionbutton = new qx.ui.menu.Button("anchor B position", null, null, anchorBpositionmenu);
 
+        /*
         var directions = ["none", "AtoB", "BtoA", "both"];
         var directionnmenu = new qx.ui.menu.Menu;
         var directiongroup = new qx.ui.form.RadioGroup();
@@ -185,6 +179,7 @@ qx.Class.define("ville.connect.Connect",
           directiongroup.add(direct);
         }
         var directionmenubutton = new qx.ui.menu.Button("direction", null, null, directionnmenu);
+        */
 
         var ordermenubuttonback = new qx.ui.menu.Button("send back", null, null);
         ordermenubuttonback.addListener("click", function (){
@@ -236,6 +231,7 @@ qx.Class.define("ville.connect.Connect",
           this.repositionConnections(arrlines);
         }, this);
 
+        /*
         directiongroup.addListener("changeSelection", function (e){
           var wlined = e.getData()[0].getLayoutParent().getOpener().getLayoutParent().getOpener();
           var newdirection = e.getData()[0].getLabel();
@@ -245,6 +241,7 @@ qx.Class.define("ville.connect.Connect",
           var arrlinesd = [wlined.getUserData("wline1"), wlined.getUserData("wline2"), wlined];
           this.repositionConnections(arrlinesd);
         }, this);
+        */
 
         anchorApositiongroup.addListener("changeSelection", function (e){
           var wlined = e.getData()[0].getLayoutParent().getOpener().getLayoutParent().getOpener();
@@ -266,18 +263,18 @@ qx.Class.define("ville.connect.Connect",
           this.repositionConnections(arrlinesd);
         }, this);  
 
-        appobj.add(wline1);
-        appobj.add(wline2);
-        appobj.add(wline3); 
+        containerobj.add(wline1);
+        containerobj.add(wline2);
+        containerobj.add(wline3); 
 
         if (options.endArrow) {
           // Create line end shape and add it to the diagram
           var wendarrow = this._wendarrow = new qx.ui.core.Widget();
           wendarrow.setUserData("elementtype", "connectline-endarrow");
           wendarrow.setUserData("connectid", connection.id);
-          wendarrow.setUserData("elementB", elementB);
+          //wendarrow.setUserData("elementB", elementB);
           wline3.setUserData("endArrow", wendarrow);
-          appobj.add(wendarrow);
+          containerobj.add(wendarrow);
         }
 
         if (options.startArrow) {
@@ -285,18 +282,15 @@ qx.Class.define("ville.connect.Connect",
           var wstartarrow = this._wstartarrow = new qx.ui.core.Widget();
           wstartarrow.setUserData("elementtype", "connectline-endarrow");
           wstartarrow.setUserData("connectid", connection.id);
-          wstartarrow.setUserData("elementA", elementA);
+          //wstartarrow.setUserData("elementA", elementA);
           wline1.setUserData("startArrow", wstartarrow);
-          appobj.add(wstartarrow);
+          containerobj.add(wstartarrow);
         }
         
         // Position connection.
         this._positionConnection(connection);
 
-        // Position end point
-        //this._positionEndPoint();
-
-        if (appobj.getUserData("diagramtype") == "windows") {
+        if (containerobj.getUserData("diagramtype") == "windows") {
           elementA.setAlwaysOnTop(true);
           elementB.setAlwaysOnTop(true);
           wline1.maximize();
@@ -328,8 +322,9 @@ _positionConnection : function(connection)
   var endAsize = parseInt(connection.endArrowsize, 10);
   var startAsize = parseInt(connection.startArrowsize, 10);
 
-  var posA = this._posA = connection.elementA.getBounds();
-  var posB = this._posB = connection.elementB.getBounds();
+  //var posA = this._posA = connection.elementA.getBounds();
+  var posA = connection.elementA.getBounds();
+  var posB = connection.elementB.getBounds();
   var pAleft, pBleft, pAtop, pBtop;
 
   switch (connection.anchorAposition) {
@@ -414,8 +409,6 @@ _positionConnection : function(connection)
   pBleft = pBleft + parseInt(connection.anchorBoffsetLeft, 10);
   pBtop = pBtop + parseInt(connection.anchorBoffsetTop, 10);
 
-  console.log(connection.radius);
-
   // Verify if the elements are aligned in a horizontal or vertical line.
   if(pAleft == pBleft || pAtop == pBtop) {
     // Verify if the line must be vertical or horizonal
@@ -423,10 +416,11 @@ _positionConnection : function(connection)
       // VERTICAL LINE
       this._positionVerticalLine(this._wline1, pAleft, pAtop, pBleft, pBtop, connection.radius, connection.roundedCorners);
 
-      //direction arrow (UP or DOWN)
+      /*direction arrow (UP or DOWN)
       if (connection.direction) {
         this._paintarrowline (this._wline1, "vertical", pAtop, pBtop, connection.direction);
       }
+      */
 
       if (connection.endArrow) {
         // set left or right decorator arrow
@@ -465,10 +459,11 @@ _positionConnection : function(connection)
         // Draw the line
         this._positionHorizontalLine(this._wline1, pAleft, pAtop, pBleft, pBtop, connection.radius, connection.roundedCorners);
 
-        //direction arrow (LEFT or RIGHT)
+        /*direction arrow (LEFT or RIGHT)
         if (connection.direction) {
           this._paintarrowline (this._wline1, "horizontal", pAleft, pBleft, connection.direction);
         }
+        */
 
         if (connection.endArrow) {
           // set left or right decorator arrow
@@ -513,9 +508,11 @@ _positionConnection : function(connection)
       //this._positionHorizontalLine(this._wline1, pAleft, pAtop, pBleft, pBtop, connection.radius, connection.roundedCorners);
       var transval = this._positionDiagonalLine(this._wline1, pAleft, pAtop, pBleft, pBtop, connection.radius, connection.roundedCorners);
 
+      /*
       if (connection.direction) {
         this._paintarrowline (this._wline1, "horizontal", pAleft, pBleft, connection.direction);
       }
+      */
 
       this._wline2.setUserBounds(pAleft, pAtop, 2, 2);
       this._wline3.setUserBounds(pBleft, pBtop, 2, 2);
@@ -568,10 +565,12 @@ _positionConnection : function(connection)
         // Draw lines.
         this._positionVerticalLine(this._wline1, pAleft, pAtop, corner.left, corner.top, connection.radius, connection.roundedCorners);
         this._positionHorizontalLine(this._wline2, pBleft, pBtop, corner.left, corner.top, connection.radius, connection.roundedCorners);
+        /*
         if (connection.direction) {
           this._paintarrowline (this._wline1, "vertical", pAtop, pBtop, connection.direction);
           this._paintarrowline (this._wline2, "horizontal", pAleft, pBleft, connection.direction);
         }
+        */
 
         if (connection.endArrow) {
           // set left or right decorator arrow
@@ -614,10 +613,12 @@ _positionConnection : function(connection)
         this._positionVerticalLine(this._wline1, pBleft, pBtop, corner.left, corner.top, connection.radius, connection.roundedCorners);
         this._positionHorizontalLine(this._wline2, pAleft, pAtop, corner.left, corner.top, connection.radius, connection.roundedCorners);
 
+       /*
         if (connection.direction) {
           this._paintarrowline (this._wline1, "vertical", pAtop, pBtop, connection.direction);
           this._paintarrowline (this._wline2, "horizontal", pAleft, pBleft, connection.direction);
         }
+        */
 
         if (connection.endArrow) {
           // set left or right decorator arrow
@@ -675,11 +676,13 @@ _positionConnection : function(connection)
               this._positionVerticalLine(this._wline2, pBleft, pBtop, corner2.left, corner2.top, connection.radius, connection.roundedCorners);
               this._positionHorizontalLine(this._wline3, corner1.left, corner1.top, corner2.left, corner2.top, connection.radius, connection.roundedCorners);
               
+              /*
               if (connection.direction) {
                 this._paintarrowline (this._wline1, "vertical", pAtop, pBtop, connection.direction);
                 this._paintarrowline (this._wline2, "vertical", pAtop, pBtop, connection.direction);
                 this._paintarrowline (this._wline3, "horizontal", pAleft, pBleft, connection.direction);
               }
+              */
 
               if (connection.endArrow) {
                 // set left or right decorator arrow
@@ -725,12 +728,13 @@ _positionConnection : function(connection)
               this._positionHorizontalLine(this._wline2, pBleft, pBtop, corner2.left, corner2.top, connection.radius, connection.roundedCorners);
               this._positionVerticalLine(this._wline3, corner1.left, corner1.top, corner2.left, corner2.top, connection.radius, connection.roundedCorners);
 
+              /*
               if (connection.direction) {
-                console.log(connection.direction);
                 this._paintarrowline (this._wline1, "horizontal", pAleft, pBleft, connection.direction);
                 this._paintarrowline (this._wline2, "horizontal", pAleft, pBleft, connection.direction);
                 this._paintarrowline (this._wline3, "vertical", pAtop, pBtop, connection.direction);
               }
+              */
 
               if (connection.endArrow) {
                 // set left or right decorator arrow
@@ -766,7 +770,6 @@ _positionConnection : function(connection)
 
           }
       }
-      //console.log(connection.anchorA);
   }
 },
 
@@ -856,6 +859,7 @@ _positionConnection : function(connection)
       return transvals;
     },
 
+    /*
     _positionEndPoint : function()
     {
       var postion = "left-middle";
@@ -940,6 +944,7 @@ _positionConnection : function(connection)
       this._wline3.setUserData("endarrow", this._wendarrow);
 
     },
+    */
 
     /**
      * Repostion existing connections.
@@ -967,8 +972,6 @@ _positionConnection : function(connection)
         
         // Position connection.
         this._positionConnection(conn);
-        //this._wendarrow = this._wline3.getUserData("endarrow");
-        //this._positionEndPoint();
       }
     },
 
@@ -1007,8 +1010,8 @@ _positionConnection : function(connection)
         connection.anchorBoffsetTop = options.anchorBoffsetTop;
       if (options.anchorBoffsetLeft)
         connection.anchorBoffsetLeft = options.anchorBoffsetLeft;
-      if (options.direction)
-        connection.direction = options.direction;
+      //if (options.direction)
+      //  connection.direction = options.direction;
       if (options.endArrow)
         connection.endArrow = options.endArrow;
       if (options.endArrowsize)
@@ -1026,6 +1029,7 @@ _positionConnection : function(connection)
       return connection;
     },
 
+    /*
     _paintarrowline : function(element, position, pA, pB, direction)
     {
       element.getContentElement().removeAllClasses();
@@ -1054,6 +1058,7 @@ _positionConnection : function(connection)
       }
       
     },
+    */
 
     _roundcorners : function(qxElement, radius)
     {
