@@ -48,10 +48,9 @@ Example of two ui objects connected by a single connector:
 <!-- ROADMAP -->
 ## Roadmap
 
-* Create simple scenarios and connection types. (Completed)
-* Create and modify simple scenarios and connection types with the ability to export changes to a single json object. (In progress)
-* Add shapes and connections using a UI - i.e. drag and drop. (Not started)
-* Interop with other formats/tools - i.e. Excalidraw, draw.io, Lucidcharts. (Not started)
+* Create simple scenarios and common connection types - Completed
+* Edit all connector properties in the demo (ville.Diagram) application - In progress
+* Extend connections using an extender object - Not started
 
 <!-- LICENSE -->
 ## License
