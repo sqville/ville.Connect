@@ -189,7 +189,7 @@ qx.Class.define("ville.connect.Connect",
         if (connection.endArrow)
           eaval = connection.endArrow;
         morecontainer.add(new qx.ui.basic.Label("appearance:"));
-        morecontainer.add(new qx.ui.form.TextField(properties.appearance));
+        morecontainer.add(new qx.ui.form.TextField(properties.appearance).set({enabled: false}));
         morecontainer.add(new qx.ui.basic.Label("decorator:"));
         morecontainer.add(new qx.ui.form.TextField(properties.decorator));
         morecontainer.add(new qx.ui.basic.Label("anchorAoffsetTop:"));
