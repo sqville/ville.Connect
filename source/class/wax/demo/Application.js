@@ -257,12 +257,13 @@ qx.Class.define("wax.demo.Application",
       //Be sure to include ville.Connet's Appearance and Decoration entries
       qx.Theme.include(qx.theme.manager.Appearance.getInstance().getTheme(), ville.connect.Appearance);
       qx.Theme.include(qx.theme.manager.Decoration.getInstance().getTheme(), ville.connect.Decoration);
+      qx.Theme.include(qx.theme.manager.Color.getInstance().getTheme(), ville.connect.Color);
       
 
       // STACK - PAGE #1 - Network Diagram
       var wmNetworkdiagram = new qx.ui.window.Manager();
       var desktop_Networkdiagram = new qx.ui.window.Desktop(wmNetworkdiagram);
-      desktop_Networkdiagram.setUserData("diagramtype", "widgets");
+      //desktop_Networkdiagram.setUserData("diagramtype", "widgets");
       var data_Networkdiagram = wax.demo.DiagramData.DIAGRAMS["NetworkDiagram"];
 
       //elements for Network Diagram
@@ -369,8 +370,6 @@ qx.Class.define("wax.demo.Application",
       // STACK - PAGE #2 - Basic Flowchart
       var wmBasicflowchart = new qx.ui.window.Manager();
       var desktop_Basicflowchart = new qx.ui.window.Desktop(wmBasicflowchart);
-      //desktop_Basicflowchart.setUserData("diagramtype", "windows");
-      desktop_Basicflowchart.setUserData("diagramtype", "widgets");
       var data_Basicflowchart = wax.demo.DiagramData.DIAGRAMS["BasicFlowchart"];
 
       //elements
@@ -411,7 +410,7 @@ qx.Class.define("wax.demo.Application",
             //winsh.add(iconlabel);
             winsh.setLayout(new qx.ui.layout.Canvas());
             winsh.set({width: 120, height: 146});
-            element.getContentElement().setStyles({"transform" : "rotate(45deg)"});
+            qx.bom.element.Transform.rotate(element.getContentElement().getDomElement(true), "45deg");
             winsh.add(element, {top: "15%", left: "15%", bottom: "15%", right: "15%"});
             winsh.add(lblatom, {width: "100%", height: "100%"});
             winsh.setUserData("shape", "diamond");
@@ -527,7 +526,6 @@ qx.Class.define("wax.demo.Application",
       //w4.setUserBounds(680, 200, 130, 151);
 
       var container = new qx.ui.container.Composite(new qx.ui.layout.Canvas());
-      container.setUserData("diagramtype", "widgets");
 
       container.add(w1, { left: 100, top: 100 });
       container.add(w2, { left: 460, top: 100 });

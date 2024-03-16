@@ -29,6 +29,15 @@ qx.Class.define("ville.connect.Connect",
     
   },
 
+  properties :
+  {
+    highlightSize: {
+      check: "String",
+      init: "6px",
+      nullable: false
+    }
+  },
+
   /*
   *****************************************************************************
      MEMBERS
@@ -67,66 +76,48 @@ qx.Class.define("ville.connect.Connect",
 
         var connection = this._createConnectionObject(elementA, elementB, properties, options);
 
-        var wline1;
-        var wline2;
-        var wline3;
+        var wline1 = this._wline1 = new qx.ui.core.Widget().set(properties);
+        var wline2 = this._wline2 = new qx.ui.core.Widget().set(properties);
+        var wline3 = this._wline3 = new qx.ui.core.Widget().set(properties);
+
+        var eleAhc = elementA.toHashCode();
+        var eleBhc = elementB.toHashCode();
         
-        // Create line Widgets and add them to the Root
-        if (containerobj.getUserData("diagramtype") == "windows") {
-          wline1 = this._wline1 = new qx.ui.window.Window().set(properties);
-          wline1.getChildControl("captionbar").setVisibility("hidden");
-          wline2 = this._wline2 = new qx.ui.window.Window().set(properties);
-          wline2.getChildControl("captionbar").setVisibility("hidden");
-          wline3 = this._wline3 = new qx.ui.window.Window().set(properties);
-          wline3.getChildControl("captionbar").setVisibility("hidden");
-        } else {
-          wline1 = this._wline1 = new qx.ui.core.Widget().set(properties);
-          wline2 = this._wline2 = new qx.ui.core.Widget().set(properties);
-          wline3 = this._wline3 = new qx.ui.core.Widget().set(properties);
-        }
         // wline1
         wline1.setUserData("elementtype", "connectline");
         wline1.setUserData("connectid", connection.id);
         wline1.setUserData("segmentid", 1);
-        wline1.setUserData("elementAhashcode", elementA.toHashCode());
-        wline1.setUserData("elementBhashcode", elementB.toHashCode());
-        //wline1.setUserData("elementA", elementA);
-        //wline1.setUserData("elementB", elementB);
-        wline1.setUserData("options", options);
-        wline1.setUserData("properties", properties);
+        wline1.setUserData("elementAhashcode", eleAhc);
+        wline1.setUserData("elementBhashcode", eleBhc);
         // wline2
         wline2.setUserData("elementtype", "connectline");
         wline2.setUserData("connectid", connection.id);
         wline2.setUserData("segmentid", 2);
-        wline2.setUserData("elementAhashcode", elementA.toHashCode());
-        wline2.setUserData("elementBhashcode", elementB.toHashCode());
-        //wline2.setUserData("elementA", elementA);
-        //wline2.setUserData("elementB", elementB);
-        wline2.setUserData("options", options);
-        wline2.setUserData("properties", properties);
+        wline2.setUserData("elementAhashcode", eleAhc);
+        wline2.setUserData("elementBhashcode", eleBhc);
         // wline3
         wline3.setUserData("elementtype", "connectline");
         wline3.setUserData("connectid", connection.id);
         wline3.setUserData("segmentid", 3);
-        wline3.setUserData("elementAhashcode", elementA.toHashCode());
-        wline3.setUserData("elementBhashcode", elementB.toHashCode());
+        wline3.setUserData("elementAhashcode", eleAhc);
+        wline3.setUserData("elementBhashcode", eleBhc);
         wline3.setUserData("elementA", elementA);
         wline3.setUserData("elementB", elementB);
         wline3.setUserData("options", options);
         wline3.setUserData("properties", properties);
 
-        
-        //wline1.setUserData("wline2", wline2);
-        //wline1.setUserData("wline3", wline3);
-        //wline2.setUserData("wline1", wline1);
-        //wline2.setUserData("wline3", wline3);
+        // last line segment needs to know the other 2 segments
         wline3.setUserData("wline1", wline1);
         wline3.setUserData("wline2", wline2);
         
-
-        
+        /** Connector Quick Edit
+         * If editable, add context menu with all quick edit options
+         *  */ 
         var linestyles = ["horizontal-horizontal", "horizontal-vertical", "vertical-horizontal", "vertical-vertical", "point-point"];
         var menu = new qx.ui.menu.Menu;
+        //var menuheader = new qx.ui.menu.Button("Edit Connector").set({anonymous: true, padding : [ 2, 1 ] });
+        //menu.add(menuheader);
+        //menu.addSeparator();
         var conntypegroup = new qx.ui.form.RadioGroup();
         for (var j=0; j<linestyles.length; j++)
         {
@@ -166,21 +157,6 @@ qx.Class.define("ville.connect.Connect",
         }
         var anchorBpositionbutton = new qx.ui.menu.Button("anchor B position", null, null, anchorBpositionmenu);
 
-        /*
-        var directions = ["none", "AtoB", "BtoA", "both"];
-        var directionnmenu = new qx.ui.menu.Menu;
-        var directiongroup = new qx.ui.form.RadioGroup();
-        for (var j=0; j<directions.length; j++)
-        {
-          var direct = new qx.ui.menu.RadioButton(directions[j]);
-          if (directions[j] == connection.direction)
-            direct.setValue(true);
-          directionnmenu.add(direct);
-          directiongroup.add(direct);
-        }
-        var directionmenubutton = new qx.ui.menu.Button("direction", null, null, directionnmenu);
-        */
-
         var ordermenubuttonback = new qx.ui.menu.Button("send back", null, null);
         ordermenubuttonback.addListener("click", function (){
           var wlined = this.getLayoutParent().getOpener();
@@ -199,14 +175,70 @@ qx.Class.define("ville.connect.Connect",
           wlined.setZIndex(newzi);
         });
 
+        var morewindow = new qx.ui.window.Window("Edit Connector - more").set({contentPadding: 0, showMinimize: false, showMaximize: false});
+        morewindow.setModal(true);
+        morewindow.setMovable(true);
+        morewindow.setLayout(new qx.ui.layout.VBox(2));
+        containerobj.getApplicationRoot().add(morewindow);
+        var morewinscroll = new qx.ui.container.Scroll().set({width: 300, height: 400, allowStretchY: true, padding: 0, margin: 0, contentPadding: [0,4,0,4]});
+        var morecontainer = new qx.ui.container.Composite(new qx.ui.layout.VBox(2));
+        var saval = "none";
+        var eaval = "none";
+        if (connection.startArrow)
+          saval = connection.startArrow;
+        if (connection.endArrow)
+          eaval = connection.endArrow;
+        morecontainer.add(new qx.ui.basic.Label("appearance:"));
+        morecontainer.add(new qx.ui.form.TextField(properties.appearance));
+        morecontainer.add(new qx.ui.basic.Label("decorator:"));
+        morecontainer.add(new qx.ui.form.TextField(properties.decorator));
+        morecontainer.add(new qx.ui.basic.Label("anchorAoffsetTop:"));
+        morecontainer.add(new qx.ui.form.Spinner(0, connection.anchorAoffsetTop, 80));
+        morecontainer.add(new qx.ui.basic.Label("anchorAoffsetLeft:"));
+        morecontainer.add(new qx.ui.form.Spinner(0, connection.anchorAoffsetLeft, 80));
+        morecontainer.add(new qx.ui.basic.Label("anchorBoffsetTop:"));
+        morecontainer.add(new qx.ui.form.Spinner(0, connection.anchorBoffsetTop, 80));
+        morecontainer.add(new qx.ui.basic.Label("anchorBoffsetLeft:"));
+        morecontainer.add(new qx.ui.form.Spinner(0, connection.anchorBoffsetLeft, 80));
+        morecontainer.add(new qx.ui.basic.Label("strokeWidth:"));
+        morecontainer.add(new qx.ui.form.Spinner(2, connection.radius, 40));
+        morecontainer.add(new qx.ui.basic.Label("startArrow:"));
+        morecontainer.add(new qx.ui.form.TextField(saval));
+        morecontainer.add(new qx.ui.basic.Label("startArrowsize:"));
+        morecontainer.add(new qx.ui.form.Spinner(20, connection.startArrowsize, 80));
+        morecontainer.add(new qx.ui.basic.Label("endArrow:"));
+        morecontainer.add(new qx.ui.form.TextField(eaval));
+        morecontainer.add(new qx.ui.basic.Label("endArrowsize:"));
+        morecontainer.add(new qx.ui.form.Spinner(20, connection.endArrowsize, 80));
+        morewinscroll.add(morecontainer);
+
+        morewindow.add(morewinscroll, {flex : 1});
+        morewindow.add(new qx.ui.form.Button("Apply").set({enabled: false}));
+
+        var highlightsize = this.getHighlightSize();
+        var scolor = qx.theme.manager.Color.getInstance();
+        var colr = scolor.resolve("connection-more-highlight");
+
         var moremenubutton = new qx.ui.menu.Button("more", null, null);
         moremenubutton.addListener("click", function (){
-          console.log("more button clicked");
+          var wlined = this.getLayoutParent().getOpener();
+          wlined.getUserData("wline1").getContentElement().setStyle("outline", colr + " solid " + highlightsize);
+          wlined.getUserData("wline2").getContentElement().setStyle("outline", colr + " solid " + highlightsize);
+          wlined.getContentElement().setStyle("outline", colr + " solid " + highlightsize);
+          morewindow.setUserData("wline1", wlined.getUserData("wline1"));
+          morewindow.setUserData("wline2", wlined.getUserData("wline2"));
+          morewindow.setUserData("wline3", wlined);
+          morewindow.center();
+          morewindow.show();
+        });
+
+        morewindow.addListener("close", function () {
+          this.getUserData("wline1").getContentElement().removeStyle("outline");
+          this.getUserData("wline2").getContentElement().removeStyle("outline");
+          this.getUserData("wline3").getContentElement().removeStyle("outline");
         });
         
         menu.addSeparator();
-        //menu.add(directionmenubutton);
-        //menu.addSeparator();
         menu.add(anchorApositionbutton);
         menu.add(anchorBpositionbutton);
         menu.add(ordermenubuttonback);
@@ -230,18 +262,6 @@ qx.Class.define("ville.connect.Connect",
           var arrlines = [wline.getUserData("wline1"), wline.getUserData("wline2"), wline];
           this.repositionConnections(arrlines);
         }, this);
-
-        /*
-        directiongroup.addListener("changeSelection", function (e){
-          var wlined = e.getData()[0].getLayoutParent().getOpener().getLayoutParent().getOpener();
-          var newdirection = e.getData()[0].getLabel();
-          var newoptionsd = options;
-          newoptionsd.direction = newdirection;
-          wlined.setUserData("options", newoptionsd);
-          var arrlinesd = [wlined.getUserData("wline1"), wlined.getUserData("wline2"), wlined];
-          this.repositionConnections(arrlinesd);
-        }, this);
-        */
 
         anchorApositiongroup.addListener("changeSelection", function (e){
           var wlined = e.getData()[0].getLayoutParent().getOpener().getLayoutParent().getOpener();
@@ -272,7 +292,6 @@ qx.Class.define("ville.connect.Connect",
           var wendarrow = this._wendarrow = new qx.ui.core.Widget();
           wendarrow.setUserData("elementtype", "connectline-endarrow");
           wendarrow.setUserData("connectid", connection.id);
-          //wendarrow.setUserData("elementB", elementB);
           wline3.setUserData("endArrow", wendarrow);
           containerobj.add(wendarrow);
         }
@@ -282,21 +301,12 @@ qx.Class.define("ville.connect.Connect",
           var wstartarrow = this._wstartarrow = new qx.ui.core.Widget();
           wstartarrow.setUserData("elementtype", "connectline-endarrow");
           wstartarrow.setUserData("connectid", connection.id);
-          //wstartarrow.setUserData("elementA", elementA);
           wline1.setUserData("startArrow", wstartarrow);
           containerobj.add(wstartarrow);
         }
         
         // Position connection.
         this._positionConnection(connection);
-
-        if (containerobj.getUserData("diagramtype") == "windows") {
-          elementA.setAlwaysOnTop(true);
-          elementB.setAlwaysOnTop(true);
-          wline1.maximize();
-          wline2.maximize();
-          wline3.maximize();
-        }
 
         // Return result.
         return connection.id;
@@ -855,6 +865,9 @@ _positionConnection : function(connection)
       };
 
       qxElement.getContentElement().setStyles(transvals);
+      //var linedom = qxElement.getContentElement().getDomElement(true);
+      //qx.bom.element.Transform.setOrigin(linedom, transformorg);
+      //qx.bom.element.Transform.rotate(linedom, degs + "deg");
 
       return transvals;
     },
