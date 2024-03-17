@@ -181,7 +181,7 @@ qx.Class.define("ville.connect.Connect",
         morewindow.setLayout(new qx.ui.layout.VBox(2));
         containerobj.getApplicationRoot().add(morewindow);
         var morewinscroll = new qx.ui.container.Scroll().set({width: 300, height: 400, allowStretchY: true, padding: 0, margin: 0, contentPadding: [0,4,0,4]});
-        var morecontainer = new qx.ui.container.Composite(new qx.ui.layout.VBox(2));
+        var morecontainer = new qx.ui.container.Composite(new qx.ui.layout.VBox(4)).set({padding: 10});
         var saval = "none";
         var eaval = "none";
         if (connection.startArrow)
@@ -191,29 +191,43 @@ qx.Class.define("ville.connect.Connect",
         morecontainer.add(new qx.ui.basic.Label("appearance:"));
         morecontainer.add(new qx.ui.form.TextField(properties.appearance).set({enabled: false}));
         morecontainer.add(new qx.ui.basic.Label("decorator:"));
-        morecontainer.add(new qx.ui.form.TextField(properties.decorator));
+        morecontainer.add(new qx.ui.form.TextField(properties.decorator).set({enabled: false}));
         morecontainer.add(new qx.ui.basic.Label("anchorAoffsetTop:"));
-        morecontainer.add(new qx.ui.form.Spinner(0, connection.anchorAoffsetTop, 80));
+        var spinanchorAoffsetTop = new qx.ui.form.Spinner(-80, connection.anchorAoffsetTop, 80).set({maxWidth: 100});
+        morecontainer.add(spinanchorAoffsetTop);
         morecontainer.add(new qx.ui.basic.Label("anchorAoffsetLeft:"));
-        morecontainer.add(new qx.ui.form.Spinner(0, connection.anchorAoffsetLeft, 80));
+        var spinanchorAoffsetLeft = new qx.ui.form.Spinner(-80, connection.anchorAoffsetLeft, 80).set({maxWidth: 100});
+        morecontainer.add(spinanchorAoffsetLeft);
         morecontainer.add(new qx.ui.basic.Label("anchorBoffsetTop:"));
-        morecontainer.add(new qx.ui.form.Spinner(0, connection.anchorBoffsetTop, 80));
+        var spinanchorBoffsetTop = new qx.ui.form.Spinner(-80, connection.anchorBoffsetTop, 80).set({maxWidth: 100});
+        morecontainer.add(spinanchorBoffsetTop);
         morecontainer.add(new qx.ui.basic.Label("anchorBoffsetLeft:"));
-        morecontainer.add(new qx.ui.form.Spinner(0, connection.anchorBoffsetLeft, 80));
+        var spinanchorBoffsetLeft = new qx.ui.form.Spinner(-80, connection.anchorBoffsetLeft, 80).set({maxWidth: 100});
+        morecontainer.add(spinanchorBoffsetLeft);
         morecontainer.add(new qx.ui.basic.Label("strokeWidth:"));
-        morecontainer.add(new qx.ui.form.Spinner(2, connection.radius, 40));
-        morecontainer.add(new qx.ui.basic.Label("startArrow:"));
-        morecontainer.add(new qx.ui.form.TextField(saval));
+        var spinstrokeWidth = new qx.ui.form.Spinner(2, connection.radius, 40).set({maxWidth: 100});
+        morecontainer.add(spinstrokeWidth);
+
+        morecontainer.add(new qx.ui.basic.Label('startArrow (options "clippy-arrow", "dark-arrow", "none"):').set({rich: true, wrap: true}));
+        var tfstartArrow = new qx.ui.form.TextField(saval);
+        morecontainer.add(tfstartArrow);
+
         morecontainer.add(new qx.ui.basic.Label("startArrowsize:"));
-        morecontainer.add(new qx.ui.form.Spinner(20, connection.startArrowsize, 80));
-        morecontainer.add(new qx.ui.basic.Label("endArrow:"));
-        morecontainer.add(new qx.ui.form.TextField(eaval));
+        var spinstartArrowsize = new qx.ui.form.Spinner(20, connection.startArrowsize, 80).set({maxWidth: 100});
+        morecontainer.add(spinstartArrowsize);
+
+        morecontainer.add(new qx.ui.basic.Label('endArrow (options "clippy-arrow", "dark-arrow", "none"):').set({rich: true, wrap: true}));
+        var tfendArrow = new qx.ui.form.TextField(eaval);
+        morecontainer.add(tfendArrow);
+
         morecontainer.add(new qx.ui.basic.Label("endArrowsize:"));
-        morecontainer.add(new qx.ui.form.Spinner(20, connection.endArrowsize, 80));
+        var spinendArrowsize = new qx.ui.form.Spinner(20, connection.endArrowsize, 80).set({maxWidth: 100});
+        morecontainer.add(spinendArrowsize);
         morewinscroll.add(morecontainer);
 
         morewindow.add(morewinscroll, {flex : 1});
-        morewindow.add(new qx.ui.form.Button("Apply").set({enabled: false}));
+        var morewindowapplybtn = new qx.ui.form.Button("Apply"); 
+        morewindow.add(morewindowapplybtn);
 
         var highlightsize = this.getHighlightSize();
         var scolor = qx.theme.manager.Color.getInstance();
@@ -237,6 +251,66 @@ qx.Class.define("ville.connect.Connect",
           this.getUserData("wline2").getContentElement().removeStyle("outline");
           this.getUserData("wline3").getContentElement().removeStyle("outline");
         });
+
+        // create a model
+        var modelSkeleton = { 
+          anchorAoffsetTop: connection.anchorAoffsetTop, 
+          anchorAoffsetLeft: connection.anchorAoffsetLeft, 
+          anchorBoffsetTop: connection.anchorBoffsetTop, 
+          anchorBoffsetLeft: connection.anchorBoffsetLeft,
+          strokeWidth: connection.radius,
+          startArrow: saval,
+          startArrowsize: connection.startArrowsize,
+          endArrow: eaval,
+          endArrowsize: connection.endArrowsize
+        };
+        var model = qx.data.marshal.Json.createModel(modelSkeleton);
+
+        // create the controller
+        var controller = new qx.data.controller.Object(model);
+
+        // connect the name
+        controller.addTarget(spinanchorAoffsetTop, "value", "anchorAoffsetTop", true);
+        controller.addTarget(spinanchorAoffsetLeft, "value", "anchorAoffsetLeft", true);
+        controller.addTarget(spinanchorBoffsetTop, "value", "anchorBoffsetTop", true);
+        controller.addTarget(spinanchorBoffsetLeft, "value", "anchorBoffsetLeft", true);
+        controller.addTarget(spinstrokeWidth, "value", "strokeWidth", true);
+        controller.addTarget(tfstartArrow, "value", "startArrow", true);
+        controller.addTarget(spinstartArrowsize, "value", "startArrowsize", true);
+        controller.addTarget(tfendArrow, "value", "endArrow", true);
+        controller.addTarget(spinendArrowsize, "value", "endArrowsize", true);
+
+        morewindowapplybtn.addListener("click", function (){
+          //console.log(model);
+          var newoptions = options;
+          newoptions.anchorAoffsetTop = model.getAnchorAoffsetTop();
+          newoptions.anchorAoffsetLeft = model.getAnchorAoffsetLeft();
+          newoptions.anchorBoffsetTop = model.getAnchorBoffsetTop();
+          newoptions.anchorBoffsetLeft = model.getAnchorBoffsetLeft();
+          newoptions.strokeWidth = model.getStrokeWidth();
+          newoptions.startArrowsize = model.getStartArrowsize();
+          newoptions.endArrowsize = model.getEndArrowsize();
+
+          if (model.getStartArrow() == "none" || model.getStartArrow() == "" || model.getStartArrow() == null) {
+            delete newoptions.startArrow;
+            morewindow.getUserData("wline1").getUserData("startArrow").setVisibility("excluded");
+          }
+          else {
+            newoptions.startArrow = model.getStartArrow();
+          }
+            
+          if (model.getEndArrow() == "none" || model.getEndArrow() == "" || model.getEndArrow() == null){
+            delete newoptions.endArrow;
+            morewindow.getUserData("wline3").getUserData("endArrow").setVisibility("excluded");
+          }
+          else {
+            newoptions.endArrow = model.getEndArrow();
+          }
+            
+          morewindow.getUserData("wline3").setUserData("options", newoptions);
+          var arrlinesd = [morewindow.getUserData("wline1"), morewindow.getUserData("wline2"), morewindow.getUserData("wline3")];
+          this.repositionConnections(arrlinesd);
+        }, this);
         
         menu.addSeparator();
         menu.add(anchorApositionbutton);
@@ -446,6 +520,7 @@ _positionConnection : function(connection)
         }
         this._wendarrow.setUserBounds(pBleft, pBtop, endAsize, endAsize);
         this._wendarrow.getContentElement().removeStyle("transform");
+        this._wendarrow.setVisibility("visible");
       }
 
       if (connection.startArrow) {
@@ -462,6 +537,7 @@ _positionConnection : function(connection)
         }
         this._wstartarrow.setUserBounds(pAleft, pAtop, startAsize, startAsize);
         this._wstartarrow.getContentElement().removeStyle("transform");
+        this._wstartarrow.setVisibility("visible");
       }
         
     } else {
@@ -489,6 +565,7 @@ _positionConnection : function(connection)
           }
           this._wendarrow.setUserBounds(pBleft, pBtop, endAsize, endAsize);
           this._wendarrow.getContentElement().removeStyle("transform");
+          this._wendarrow.setVisibility("visible");
         }
 
         if (connection.startArrow) {
@@ -505,6 +582,7 @@ _positionConnection : function(connection)
           }
           this._wstartarrow.setUserBounds(pAleft, pAtop, startAsize, startAsize);
           this._wstartarrow.getContentElement().removeStyle("transform");
+          this._wstartarrow.setVisibility("visible");
         }
       }
       this._wline2.setUserBounds(pBleft, pBtop, 2, 2);
@@ -544,6 +622,7 @@ _positionConnection : function(connection)
         this._wendarrow.setUserBounds(pBleft, pBtop, endAsize, endAsize);
         transval["transform-origin"] = "center";
         this._wendarrow.getContentElement().setStyles(transval);
+        this._wendarrow.setVisibility("visible");
       }
 
       if (connection.startArrow) {
@@ -561,6 +640,7 @@ _positionConnection : function(connection)
         this._wstartarrow.setUserBounds(pAleft, pAtop, startAsize, startAsize);
         transval["transform-origin"] = "center";
         this._wstartarrow.getContentElement().setStyles(transval);
+        this._wstartarrow.setVisibility("visible");
       }
     }
     // Verify if must use two lines or three.
@@ -596,6 +676,7 @@ _positionConnection : function(connection)
           }
           this._wendarrow.setUserBounds(pBleft, pBtop, endAsize, endAsize);
           this._wendarrow.getContentElement().removeStyle("transform");
+          this._wendarrow.setVisibility("visible");
         }
 
         if (connection.startArrow) {
@@ -612,6 +693,7 @@ _positionConnection : function(connection)
           }
           this._wstartarrow.setUserBounds(pAleft, pAtop, startAsize, startAsize);
           this._wstartarrow.getContentElement().removeStyle("transform");
+          this._wstartarrow.setVisibility("visible");
         }
 
       } else {
@@ -644,6 +726,7 @@ _positionConnection : function(connection)
           }
           this._wendarrow.setUserBounds(pBleft, pBtop, endAsize, endAsize);
           this._wendarrow.getContentElement().removeStyle("transform");
+          this._wendarrow.setVisibility("visible");
         }
 
         if (connection.startArrow) {
@@ -660,6 +743,7 @@ _positionConnection : function(connection)
           }
           this._wstartarrow.setUserBounds(pAleft, pAtop, startAsize, startAsize);
           this._wstartarrow.getContentElement().removeStyle("transform");
+          this._wstartarrow.setVisibility("visible");
         }
 
       }
@@ -708,6 +792,7 @@ _positionConnection : function(connection)
                 }
                 this._wendarrow.setUserBounds(pBleft, pBtop, endAsize, endAsize);
                 this._wendarrow.getContentElement().removeStyle("transform");
+                this._wendarrow.setVisibility("visible");
               }
 
               if (connection.startArrow) {
@@ -724,6 +809,7 @@ _positionConnection : function(connection)
                 }
                 this._wstartarrow.setUserBounds(pAleft, pAtop, startAsize, startAsize);
                 this._wstartarrow.getContentElement().removeStyle("transform");
+                this._wstartarrow.setVisibility("visible");
               }
 
           } else {
@@ -760,6 +846,7 @@ _positionConnection : function(connection)
                 }
                 this._wendarrow.setUserBounds(pBleft, pBtop, endAsize, endAsize);
                 this._wendarrow.getContentElement().removeStyle("transform");
+                this._wendarrow.setVisibility("visible");
               }
 
               if (connection.startArrow) {
@@ -776,6 +863,7 @@ _positionConnection : function(connection)
                 }
                 this._wstartarrow.setUserBounds(pAleft, pAtop, startAsize, startAsize);
                 this._wstartarrow.getContentElement().removeStyle("transform");
+                this._wstartarrow.setVisibility("visible");
               }
 
           }
@@ -1009,8 +1097,8 @@ _positionConnection : function(connection)
       connection.endArrowsize = 20;
       connection.startArrowsize = 20;
 
-      if (options.strokeWidth)
-        connection.radius = options.strokeWidth;      
+      if (options.strokeWidth) 
+        connection.radius = options.strokeWidth;
       if (options.anchorAposition)
         connection.anchorAposition = options.anchorAposition;
       if (options.anchorBposition)

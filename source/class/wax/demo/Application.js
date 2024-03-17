@@ -496,6 +496,22 @@ qx.Class.define("wax.demo.Application",
         color: "black",
       });
 
+      var piedec = new qx.ui.decoration.Decorator().set({
+        radius : 100
+      });
+      var piedecpink = new qx.ui.decoration.Decorator().set({
+        widthLeft : 21,
+        colorLeft : "red"
+      });
+      var piedeclightblue = new qx.ui.decoration.Decorator().set({
+        widthLeft : 21,
+        colorLeft : "green"
+      });
+      var piedecorange = new qx.ui.decoration.Decorator().set({
+        widthLeft : 21,
+        colorLeft : "orange"
+      });
+
       /*var w1 = new qx.ui.core.Widget().set({
         backgroundColor: "transparent",
         decorator: wborder
@@ -518,19 +534,42 @@ qx.Class.define("wax.demo.Application",
       w3.setUserData("elementid", 3);
       //w3.setUserBounds(380, 350, 100, 100);
 
-      var w4 = new qx.ui.core.Widget().set({
+      var w4 = new qx.ui.container.Composite(new qx.ui.layout.Flow().set({alignX: "center", alignY: "middle", spacingX: 20, spacingY: 10})).set({
         backgroundColor: "transparent",
+        padding: 10,
         decorator: wborder
       });
       w4.setUserData("elementid", 4);
       //w4.setUserBounds(680, 200, 130, 151);
 
+      // Piechart widget
+      var piechartheader = new qx.ui.basic.Label("Favorite Food").set({allowGrowX: true});
+      var piechart = new qx.ui.core.Widget().set({
+        width: 200,
+        height: 200,
+        decorator: piedec
+      });
+      piechart.addListenerOnce("appear", function() {
+        this.getContentElement().setStyle("background-image", "conic-gradient(red 70deg, green 0 235deg, orange 0");
+      });
+      var piestyles = {
+        "background-image" : "conic-gradient(pink 70deg, lightblue 0 235deg, orange 0"
+      };
+      var piechartkey = new qx.ui.container.Composite(new qx.ui.layout.VBox(2));
+      piechartkey.add(new qx.ui.basic.Label("Tacos").set({decorator: piedecpink, paddingLeft: 4}));
+      piechartkey.add(new qx.ui.basic.Label("Pizza").set({decorator: piedeclightblue, paddingLeft: 4}));
+      piechartkey.add(new qx.ui.basic.Label("Steak").set({decorator: piedecorange, paddingLeft: 4}));
+
+      w4.add(piechartheader, {lineBreak: true});
+      w4.add(piechart);
+      w4.add(piechartkey);
+
       var container = new qx.ui.container.Composite(new qx.ui.layout.Canvas());
 
-      container.add(w1, { left: 100, top: 100 });
-      container.add(w2, { left: 460, top: 100 });
-      container.add(w3, { left: 380, top: 350 });
-      container.add(w4, { left: 680, top: 200 });
+      container.add(w1, { left: 80, top: 100 });
+      container.add(w2, { left: 300, top: 100 });
+      container.add(w3, { left: 200, top: 350 });
+      container.add(w4, { left: 500, top: 100 });
 
       var wconns = [
         {
@@ -583,7 +622,8 @@ qx.Class.define("wax.demo.Application",
           },
           options : {
             anchorA: "horizontal", 
-            anchorB : "vertical"
+            anchorB : "vertical",
+            anchorBposition: "center-bottom"
           }
         }
       ];
