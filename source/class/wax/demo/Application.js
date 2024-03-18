@@ -266,11 +266,20 @@ qx.Class.define("wax.demo.Application",
       //desktop_Networkdiagram.setUserData("diagramtype", "widgets");
       var data_Networkdiagram = wax.demo.DiagramData.DIAGRAMS["NetworkDiagram"];
 
+      // create a model
+      //var modelSkeleton = { anchorAoffsetTop: connection.anchorAoffsetTop};
+      //var model = qx.data.marshal.Json.createModel(modelSkeleton);
+      // create the controller
+      //var controller = new qx.data.controller.Object(model);
+      // connect the name
+      //controller.addTarget(spinanchorAoffsetTop, "value", "anchorAoffsetTop", true);
+
       //elements for Network Diagram
       if (data_Networkdiagram.elements != undefined) {
         for (var j=0; j<data_Networkdiagram.elements.length; j++)
         {
           var defsh = data_Networkdiagram.elements[j];
+          //var elementmodel = qx.data.marshal.Json.createModel(defsh);
           var winsh = new qx.ui.window.Window();
           winsh.set({
             showMaximize : false,
@@ -284,6 +293,10 @@ qx.Class.define("wax.demo.Application",
           winsh.setLayout(new qx.ui.layout.Grow());
           var winshcb = winsh.getChildControl("captionbar");
           winshcb.set({cursor:"move", minHeight: 30});
+
+          // set element model data
+          winsh.setUserData("model", defsh);
+
           winsh.setAppearance("element");
 
           winsh.addListener("activate", function(){
@@ -298,7 +311,7 @@ qx.Class.define("wax.demo.Application",
           lblatom.getChildControl('label').set({textAlign:"center"});
           
           winsh.add(lblatom);
-          winsh.setUserData("elementid", defsh.id);
+          //winsh.setUserData("elementid", defsh.id);
           winsh.moveTo(defsh.left, defsh.top);
 
           // get all windows for window listners to leverage
@@ -306,6 +319,11 @@ qx.Class.define("wax.demo.Application",
 
           // add move listner to each element
           winsh.addListener("move", function(e) {
+            var wmodel = this.getUserData("model");
+            var wbounds = this.getBounds();
+            wmodel.left = wbounds.left;
+            wmodel.top = wbounds.top;
+            
             var arrwins = [];
             allnetdiawins.forEach(function(winobj) {
               if (winobj.getUserData("elementtype")=="connectline") 
@@ -317,6 +335,7 @@ qx.Class.define("wax.demo.Application",
               }
             }, this);
             villeconnect.repositionConnections(arrwins);
+
           });
 
           // add resize listner to each element.
@@ -354,15 +373,56 @@ qx.Class.define("wax.demo.Application",
           {
             var defc = data_Networkdiagram.connections[k];
             var eleA = alldsktpwins.find(function(elA) { 
-              return elA.getUserData("elementid") == defc.elementA;
+              return elA.getUserData("model").id == defc.elementA;
             });
             var eleB = alldsktpwins.find(function(elB) {
-              return elB.getUserData("elementid") == defc.elementB;
+              return elB.getUserData("model").id == defc.elementB;
             });
             villeconnect.connect(eleA, eleB, defc.properties, defc.options, desktop_Networkdiagram);
           }
         }
       });
+
+      //generate changes
+      var networkdiagrammenu = new qx.ui.menu.Menu;
+      var ndgeneratebutton = new qx.ui.menu.Button("generate", null, null);
+      networkdiagrammenu.add(ndgeneratebutton);
+      ndgeneratebutton.addListener("click", function (){
+        var arrelements = [];
+        var arrconns = [];
+        var allitems = desktop_Networkdiagram.getChildren();
+        allitems.forEach(function(item) {
+          var itemtype = item.getUserData("elementtype");
+          if (itemtype == "connectline") {
+            if (item.getUserData("segmentid") == 3)
+            {
+              var itemobj = {
+                elementA : item.getUserData("elementAid"),
+                elementB : item.getUserData("elementBid"),
+                properties : item.getUserData("properties"),
+                options : item.getUserData("options")
+              }
+              arrconns.push(itemobj);
+            }
+          }
+          else {
+            if (itemtype != "connectline-startarrow" && itemtype != "connectline-endarrow") {
+              var itemobj = {
+                id : item.getUserData("model").id,
+                left : item.getUserData("model").left,
+                top : item.getUserData("model").top,
+                properties : item.getUserData("model").properties,
+                options : item.getUserData("model").options 
+              }
+              arrelements.push(itemobj);
+            }
+          }
+        }, this);
+        console.log(arrelements);
+        console.log(arrconns);
+      });
+
+      desktop_Networkdiagram.setContextMenu(networkdiagrammenu);
 
       dashboardpage.add(desktop_Networkdiagram);
 
@@ -419,8 +479,11 @@ qx.Class.define("wax.demo.Application",
             winsh.add(lblatom);
           }
               
-          winsh.setUserData("elementid", defsh.id);
+          //winsh.setUserData("elementid", defsh.id);
           winsh.moveTo(defsh.left, defsh.top);
+
+          // set element model data
+          winsh.setUserData("model", defsh);
 
           // get all windows for window listners to leverage
           //var allwins = desktop_Basicflowchart.getWindows();
@@ -474,10 +537,10 @@ qx.Class.define("wax.demo.Application",
           {
             var defc = data_Basicflowchart.connections[k];
             var eleA = alldsktpwins.find(function(elA) { 
-              return elA.getUserData("elementid") == defc.elementA;
+              return elA.getUserData("model").id == defc.elementA;
             });
             var eleB = alldsktpwins.find(function(elB) {
-              return elB.getUserData("elementid") == defc.elementB;
+              return elB.getUserData("model").id == defc.elementB;
             });
             villeconnect.connect(eleA, eleB, defc.properties, defc.options, desktop_Basicflowchart);
           }
@@ -526,6 +589,7 @@ qx.Class.define("wax.demo.Application",
         decorator: wborder
       });
       //w2.setUserBounds(460, 100, 100, 100);
+      w2.setUserData("elementid", 2);
 
       var w3 = new qx.ui.core.Widget().set({
         backgroundColor: "transparent",
@@ -636,6 +700,32 @@ qx.Class.define("wax.demo.Application",
           villeconnect.connect(defc.elementA, defc.elementB, defc.properties, defc.options, container);
         }
       });
+
+      var containermenu = new qx.ui.menu.Menu;
+      var generatebutton = new qx.ui.menu.Button("generate", null, null);
+      containermenu.add(generatebutton);
+      generatebutton.addListener("click", function (){
+        var arrelements = [];
+        var arrconns = [];
+        var allitems = container.getChildren();
+        allitems.forEach(function(item) {
+          if (item.getUserData("elementtype")=="connectline") {
+            if (item.getUserData("segmentid") == 3)
+            {
+              var itemobj = {
+                elementA : item.getUserData("elementAid"),
+                elementB : item.getUserData("elementBid"),
+                properties : item.getUserData("properties"),
+                options : item.getUserData("options")
+              }
+              arrconns.push(itemobj);
+            }
+          }
+        }, this);
+        console.log(arrconns);
+      });
+
+      container.setContextMenu(containermenu);
 
       
       /** 

@@ -49,8 +49,7 @@ Example of two ui objects connected by a single connector:
 ## Roadmap
 
 * Create simple scenarios and common connection types - Completed
-* Edit all connector properties in the demo (ville.Diagram) application - In progress
-* Extend connections using an extender object - Not started
+* Edit connector properties in the ville.Diagram, demo application - Completed (with limitations)
 
 <!-- LICENSE -->
 ## License

@@ -101,10 +101,13 @@ qx.Class.define("ville.connect.Connect",
         wline3.setUserData("segmentid", 3);
         wline3.setUserData("elementAhashcode", eleAhc);
         wline3.setUserData("elementBhashcode", eleBhc);
+        wline3.setUserData("elementAid", elementA.getUserData("elementid"));
+        wline3.setUserData("elementBid", elementB.getUserData("elementid"));
         wline3.setUserData("elementA", elementA);
         wline3.setUserData("elementB", elementB);
-        wline3.setUserData("options", options);
         wline3.setUserData("properties", properties);
+        wline3.setUserData("options", options);
+        
 
         // last line segment needs to know the other 2 segments
         wline3.setUserData("wline1", wline1);
@@ -164,6 +167,7 @@ qx.Class.define("ville.connect.Connect",
           wlined.getUserData("wline1").setZIndex(newzi);
           wlined.getUserData("wline2").setZIndex(newzi);
           wlined.setZIndex(newzi);
+          wlined.getUserData("properties").zIndex = newzi;
         });
 
         var ordermenubuttonforward = new qx.ui.menu.Button("send forward", null, null);
@@ -173,6 +177,7 @@ qx.Class.define("ville.connect.Connect",
           wlined.getUserData("wline1").setZIndex(newzi);
           wlined.getUserData("wline2").setZIndex(newzi);
           wlined.setZIndex(newzi);
+          wlined.getUserData("properties").zIndex = newzi;
         });
 
         var morewindow = new qx.ui.window.Window("Edit Connector - more").set({contentPadding: 0, showMinimize: false, showMaximize: false});

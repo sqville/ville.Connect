@@ -60,19 +60,6 @@ qx.Theme.define("ville.connect.Decoration",
         width : 3
       }
     },
-    
-    "chevron-down" :
-    {      
-      include : "connector-blank",
-      
-      style :
-      {
-        backgroundImage: "wax/demo/info-24px.svg",
-        backgroundRepeat: "repeat",
-        backgroundPositionX: "middle",
-        backgroundPositionY: "center"
-      }
-    },
 
     "roundedcorners-light" :
     {      
