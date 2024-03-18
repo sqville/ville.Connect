@@ -383,6 +383,21 @@ qx.Class.define("wax.demo.Application",
         }
       });
 
+      //create About Wax popup window
+      var winGenerateResults = this.__createDetailWindow();
+      winGenerateResults.getLayout().set({spacing: 20});
+      winGenerateResults.set({ showMaximize: true, width: 430, height: 460, contentPadding: 0});
+      var genscroll = new qx.ui.container.Scroll().set({ allowStretchY: true, padding: 0, margin: 0, contentPadding: [0,24,0,24]});
+      var txtareagenresults = new qx.ui.form.TextArea().set({wrap : true});
+      genscroll.add(txtareagenresults);
+
+      winGenerateResults.add(genscroll, {flex:1});
+      var btnClosewinGen = new qx.ui.form.Button("Close Window").set({marginBottom: 18, maxWidth: 300, alignX: "center", alignY: "middle"});
+      winGenerateResults.add(btnClosewinGen);
+      btnClosewinGen.addListener("click", function(e) {
+        winGenerateResults.close();
+      });
+
       //generate changes
       var networkdiagrammenu = new qx.ui.menu.Menu;
       var ndgeneratebutton = new qx.ui.menu.Button("generate", null, null);
@@ -390,6 +405,7 @@ qx.Class.define("wax.demo.Application",
       ndgeneratebutton.addListener("click", function (){
         var arrelements = [];
         var arrconns = [];
+        var strresults = "";
         var allitems = desktop_Networkdiagram.getChildren();
         allitems.forEach(function(item) {
           var itemtype = item.getUserData("elementtype");
@@ -403,6 +419,7 @@ qx.Class.define("wax.demo.Application",
                 options : item.getUserData("options")
               }
               arrconns.push(itemobj);
+              
             }
           }
           else {
@@ -415,11 +432,25 @@ qx.Class.define("wax.demo.Application",
                 options : item.getUserData("model").options 
               }
               arrelements.push(itemobj);
+              /*strresults += '"{';
+              strresults += 'id : ' + itemobj.id + ', ';
+              strresults += 'left : ' + itemobj.left + ', ';
+              strresults += 'top : ' + itemobj.top + ', ';
+              strresults += 'properties : ' + itemobj.properties + ', ';
+              strresults += 'options : ' + itemobj.options + '}, ';*/
+              //strresults += JSON.stringify(itemobj);
             }
           }
+          
         }, this);
-        console.log(arrelements);
-        console.log(arrconns);
+
+        strresults += " --- ELEMENTS --- ";
+        strresults += JSON.stringify(arrelements);
+        strresults += " --- CONNECTIONS --- ";
+        strresults += JSON.stringify(arrconns);
+        txtareagenresults.setValue(strresults);
+        winGenerateResults.center();
+        winGenerateResults.show();
       });
 
       desktop_Networkdiagram.setContextMenu(networkdiagrammenu);
