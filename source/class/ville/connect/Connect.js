@@ -208,21 +208,29 @@ qx.Class.define("ville.connect.Connect",
         var spinstrokeWidth = new qx.ui.form.Spinner(2, connection.radius, 40).set({maxWidth: 100});
         morecontainer.add(spinstrokeWidth);
 
-        morecontainer.add(new qx.ui.basic.Label('startArrow (options "clippy-arrow", "dark-arrow", "none"):').set({rich: true, wrap: true}));
+        morecontainer.add(new qx.ui.basic.Label('startArrow (options "clippy-arrow" or "dark-arrow"):').set({rich: true, wrap: true}));
         var tfstartArrow = new qx.ui.form.TextField(saval);
         morecontainer.add(tfstartArrow);
 
         morecontainer.add(new qx.ui.basic.Label("startArrowsize:"));
         var spinstartArrowsize = new qx.ui.form.Spinner(20, connection.startArrowsize, 80).set({maxWidth: 100});
         morecontainer.add(spinstartArrowsize);
+        if (saval == "none") {
+          tfstartArrow.setEnabled(false);
+          spinstartArrowsize.setEnabled(false);
+        }
 
-        morecontainer.add(new qx.ui.basic.Label('endArrow (options "clippy-arrow", "dark-arrow", "none"):').set({rich: true, wrap: true}));
+        morecontainer.add(new qx.ui.basic.Label('endArrow (options "clippy-arrow" or "dark-arrow"):').set({rich: true, wrap: true}));
         var tfendArrow = new qx.ui.form.TextField(eaval);
         morecontainer.add(tfendArrow);
 
         morecontainer.add(new qx.ui.basic.Label("endArrowsize:"));
         var spinendArrowsize = new qx.ui.form.Spinner(20, connection.endArrowsize, 80).set({maxWidth: 100});
         morecontainer.add(spinendArrowsize);
+        if (eaval == "none") {
+          tfendArrow.setEnabled(false);
+          spinendArrowsize.setEnabled(false);
+        }
         morewinscroll.add(morecontainer);
 
         morewindow.add(morewinscroll, {flex : 1});
@@ -281,7 +289,6 @@ qx.Class.define("ville.connect.Connect",
         controller.addTarget(spinendArrowsize, "value", "endArrowsize", true);
 
         morewindowapplybtn.addListener("click", function (){
-          //console.log(model);
           var newoptions = options;
           newoptions.anchorAoffsetTop = model.getAnchorAoffsetTop();
           newoptions.anchorAoffsetLeft = model.getAnchorAoffsetLeft();
@@ -291,19 +298,11 @@ qx.Class.define("ville.connect.Connect",
           newoptions.startArrowsize = model.getStartArrowsize();
           newoptions.endArrowsize = model.getEndArrowsize();
 
-          if (model.getStartArrow() == "none" || model.getStartArrow() == "" || model.getStartArrow() == null) {
-            delete newoptions.startArrow;
-            morewindow.getUserData("wline1").getUserData("startArrow").setVisibility("excluded");
-          }
-          else {
+          if (model.getStartArrow() != "none") {
             newoptions.startArrow = model.getStartArrow();
           }
             
-          if (model.getEndArrow() == "none" || model.getEndArrow() == "" || model.getEndArrow() == null){
-            delete newoptions.endArrow;
-            morewindow.getUserData("wline3").getUserData("endArrow").setVisibility("excluded");
-          }
-          else {
+          if (model.getEndArrow() != "none"){
             newoptions.endArrow = model.getEndArrow();
           }
             
