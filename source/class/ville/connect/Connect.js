@@ -101,8 +101,8 @@ qx.Class.define("ville.connect.Connect",
         wline3.setUserData("segmentid", 3);
         wline3.setUserData("elementAhashcode", eleAhc);
         wline3.setUserData("elementBhashcode", eleBhc);
-        wline3.setUserData("elementAid", elementA.getUserData("elementid"));
-        wline3.setUserData("elementBid", elementB.getUserData("elementid"));
+        wline3.setUserData("elementAid", elementA.getUserData("model").id);
+        wline3.setUserData("elementBid", elementB.getUserData("model").id);
         wline3.setUserData("elementA", elementA);
         wline3.setUserData("elementB", elementB);
         wline3.setUserData("properties", properties);

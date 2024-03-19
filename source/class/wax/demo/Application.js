@@ -432,22 +432,16 @@ qx.Class.define("wax.demo.Application",
                 options : item.getUserData("model").options 
               }
               arrelements.push(itemobj);
-              /*strresults += '"{';
-              strresults += 'id : ' + itemobj.id + ', ';
-              strresults += 'left : ' + itemobj.left + ', ';
-              strresults += 'top : ' + itemobj.top + ', ';
-              strresults += 'properties : ' + itemobj.properties + ', ';
-              strresults += 'options : ' + itemobj.options + '}, ';*/
-              //strresults += JSON.stringify(itemobj);
             }
           }
           
         }, this);
-
-        strresults += " --- ELEMENTS --- ";
+        strresults += 'NetworkDiagram : {\r\n';
+        strresults += '"elements" : \r\n';
         strresults += JSON.stringify(arrelements);
-        strresults += " --- CONNECTIONS --- ";
+        strresults += '\r\n"connections" : \r\n';
         strresults += JSON.stringify(arrconns);
+        strresults += '\r\n}';
         txtareagenresults.setValue(strresults);
         winGenerateResults.center();
         winGenerateResults.show();
@@ -578,6 +572,57 @@ qx.Class.define("wax.demo.Application",
         }
       });
 
+      //generate changes
+      var basicflowchartmenu = new qx.ui.menu.Menu;
+      var bfcgeneratebutton = new qx.ui.menu.Button("generate", null, null);
+      basicflowchartmenu.add(bfcgeneratebutton);
+      bfcgeneratebutton.addListener("click", function (){
+        var arrelements = [];
+        var arrconns = [];
+        var strresults = "";
+        var allitems = desktop_Basicflowchart.getChildren();
+        allitems.forEach(function(item) {
+          var itemtype = item.getUserData("elementtype");
+          if (itemtype == "connectline") {
+            if (item.getUserData("segmentid") == 3)
+            {
+              var itemobj = {
+                elementA : item.getUserData("elementAid"),
+                elementB : item.getUserData("elementBid"),
+                properties : item.getUserData("properties"),
+                options : item.getUserData("options")
+              }
+              arrconns.push(itemobj);
+              
+            }
+          }
+          else {
+            if (itemtype != "connectline-startarrow" && itemtype != "connectline-endarrow") {
+              var itemobj = {
+                id : item.getUserData("model").id,
+                left : item.getUserData("model").left,
+                top : item.getUserData("model").top,
+                properties : item.getUserData("model").properties,
+                options : item.getUserData("model").options 
+              }
+              arrelements.push(itemobj);
+            }
+          }
+          
+        }, this);
+        strresults += 'Basic Flowchart : {\r\n';
+        strresults += '"elements" : \r\n';
+        strresults += JSON.stringify(arrelements);
+        strresults += '\r\n"connections" : \r\n';
+        strresults += JSON.stringify(arrconns);
+        strresults += '\r\n}';
+        txtareagenresults.setValue(strresults);
+        winGenerateResults.center();
+        winGenerateResults.show();
+      });
+
+      desktop_Basicflowchart.setContextMenu(basicflowchartmenu);
+
       overviewpage.add(desktop_Basicflowchart);
 
       // Widget Connect Page
@@ -612,7 +657,7 @@ qx.Class.define("wax.demo.Application",
       });*/
       var w1 = new qx.ui.form.Button("This is a Button");
 
-      w1.setUserData("elementid", 1);
+      w1.setUserData("model", {id:1});
       //w1.setUserBounds(100, 100, 100, 100);
 
       var w2 = new qx.ui.core.Widget().set({
@@ -620,13 +665,13 @@ qx.Class.define("wax.demo.Application",
         decorator: wborder
       });
       //w2.setUserBounds(460, 100, 100, 100);
-      w2.setUserData("elementid", 2);
+      w2.setUserData("model", {id:2});
 
       var w3 = new qx.ui.core.Widget().set({
         backgroundColor: "transparent",
         decorator: wborder
       });
-      w3.setUserData("elementid", 3);
+      w3.setUserData("model", {id:3});
       //w3.setUserBounds(380, 350, 100, 100);
 
       var w4 = new qx.ui.container.Composite(new qx.ui.layout.Flow().set({alignX: "center", alignY: "middle", spacingX: 20, spacingY: 10})).set({
@@ -634,10 +679,30 @@ qx.Class.define("wax.demo.Application",
         padding: 10,
         decorator: wborder
       });
-      w4.setUserData("elementid", 4);
+      w4.setUserData("model", {id:4});
       //w4.setUserBounds(680, 200, 130, 151);
 
-      // Piechart widget
+      /**
+       * Piechart widget
+       * Data: item, value
+       *  */ 
+      var chartdata = new qx.data.Array(
+        [
+          {
+            "item" : "Tacos",
+            "value" : 150
+          }, 
+          {
+            "item" : "Pizza",
+            "value" : 112
+          }, 
+          {
+            "item" : "Steak",
+            "value" : 75
+          }
+        ]);
+      
+
       var piechartheader = new qx.ui.basic.Label("Favorite Food").set({allowGrowX: true});
       var piechart = new qx.ui.core.Widget().set({
         width: 200,
@@ -645,11 +710,9 @@ qx.Class.define("wax.demo.Application",
         decorator: piedec
       });
       piechart.addListenerOnce("appear", function() {
+        
         this.getContentElement().setStyle("background-image", "conic-gradient(red 70deg, green 0 235deg, orange 0");
       });
-      var piestyles = {
-        "background-image" : "conic-gradient(pink 70deg, lightblue 0 235deg, orange 0"
-      };
       var piechartkey = new qx.ui.container.Composite(new qx.ui.layout.VBox(2));
       piechartkey.add(new qx.ui.basic.Label("Tacos").set({decorator: piedecpink, paddingLeft: 4}));
       piechartkey.add(new qx.ui.basic.Label("Pizza").set({decorator: piedeclightblue, paddingLeft: 4}));
@@ -738,9 +801,11 @@ qx.Class.define("wax.demo.Application",
       generatebutton.addListener("click", function (){
         var arrelements = [];
         var arrconns = [];
+        var strresults = "";
         var allitems = container.getChildren();
         allitems.forEach(function(item) {
-          if (item.getUserData("elementtype")=="connectline") {
+          var itemtype = item.getUserData("elementtype");
+          if (itemtype == "connectline") {
             if (item.getUserData("segmentid") == 3)
             {
               var itemobj = {
@@ -752,8 +817,28 @@ qx.Class.define("wax.demo.Application",
               arrconns.push(itemobj);
             }
           }
+          else {
+            if (itemtype != "connectline-startarrow" && itemtype != "connectline-endarrow") {
+              var itemobj = {
+                id : item.getUserData("model").id,
+                left : item.getUserData("model").left,
+                top : item.getUserData("model").top,
+                properties : item.getUserData("model").properties,
+                options : item.getUserData("model").options 
+              }
+              arrelements.push(itemobj);
+            }
+          }
         }, this);
-        console.log(arrconns);
+        strresults += '--- Only element id values are captured since elements are created at design time --- \r\n';
+        strresults += '"elements" : \r\n';
+        strresults += JSON.stringify(arrelements);
+        strresults += '\r\nconnections = [ \r\n';
+        strresults += JSON.stringify(arrconns);
+        strresults += '\r\n]; \r\n';
+        txtareagenresults.setValue(strresults);
+        winGenerateResults.center();
+        winGenerateResults.show();
       });
 
       container.setContextMenu(containermenu);
