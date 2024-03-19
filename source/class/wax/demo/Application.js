@@ -517,6 +517,10 @@ qx.Class.define("wax.demo.Application",
           // add move listner to each element
           winsh.addListener("move", function(e) {
             var arrwins = [];
+            var wmodel = this.getUserData("model");
+            var wbounds = this.getBounds();
+            wmodel.left = wbounds.left;
+            wmodel.top = wbounds.top;
             allwins.forEach(function(winobj) {
               if (winobj.getUserData("elementtype")=="connectline") 
               {
