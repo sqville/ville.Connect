@@ -49,7 +49,10 @@ Example of two ui objects connected by a single connector:
 ## Roadmap
 
 * Create simple scenarios and common connection types - Completed
-* Edit connector properties in the ville.Diagram, demo application - Completed (with limitations)
+* Edit connector properties in the ville.Diagram, demo application - Completed (with limitations, see note below)
+* Export changes by right clicking anywhere on the diagram and selecting "generate" (the only option) - Completed (with limitations, see note below)
+
+Note: Limitations are due to object creation (elements, connections and arrows) only occuring during the initial loading of the diagrams. The demo application tool can only edit what has been initially created.
 
 <!-- LICENSE -->
 ## License
