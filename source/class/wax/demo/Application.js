@@ -492,7 +492,6 @@ qx.Class.define("wax.demo.Application",
             decorator: defsh.options.shape
           });
           if (defsh.options.shape == "diamond"){
-            //winsh.add(iconlabel);
             winsh.setLayout(new qx.ui.layout.Canvas());
             winsh.set({width: 120, height: 146});
             qx.bom.element.Transform.rotate(element.getContentElement().getDomElement(true), "45deg");
@@ -722,9 +721,61 @@ qx.Class.define("wax.demo.Application",
       piechartkey.add(new qx.ui.basic.Label("Pizza").set({decorator: piedeclightblue, paddingLeft: 4}));
       piechartkey.add(new qx.ui.basic.Label("Steak").set({decorator: piedecorange, paddingLeft: 4}));
 
-      w4.add(piechartheader, {lineBreak: true});
-      w4.add(piechart);
-      w4.add(piechartkey);
+     //w4.add(piechartheader, {lineBreak: true});
+      //w4.add(piechart);
+     // w4.add(piechartkey);
+
+     var donutdec = new qx.ui.decoration.Decorator().set({
+      radius : 100
+      //width: 20,
+      //color: "green"
+    });
+
+      // Donut Chart - Boolean
+      //var piechartheader = new qx.ui.basic.Label("Favorite Food").set({allowGrowX: true});
+      var donutcontainer = new qx.ui.container.Composite(new qx.ui.layout.Canvas()).set({width: 200, height: 200});
+      
+      var DonutChartBoolean = new qx.ui.core.Widget().set({
+        backgroundColor: "blue",
+        decorator: donutdec
+      });
+
+      var internalwidget = new qx.ui.core.Widget().set({
+        backgroundColor: "white",
+        decorator: donutdec
+      });
+
+      var valuelabel = new qx.ui.basic.Label("<span style='font-size: 3em; font-weight: 300;'>68%</span><br><span style='font-size: 1.2em; font-weight: 800;'>Completion rate</span>").set({ rich: true, alignX: "center", alignY: "middle", textAlign: "center" });
+
+      DonutChartBoolean.addListenerOnce("appear", function() {
+        this.getContentElement().setStyle("background-image", "conic-gradient(white 0 1deg, green 1deg 200deg, white 200deg 201deg, gray 0)");
+        //this.getContentElement().setStyle("border-image", "repeating-linear-gradient(45deg, #f33, #3bf, #f33 30px) 60");
+      });
+
+      donutcontainer.add(DonutChartBoolean, {
+        left: "2%",
+        top: "2%",
+        right: "2%",
+        bottom: "2%",
+        width: "20%",
+        height: "20%",
+      });
+      donutcontainer.add(internalwidget, {
+        left: "10%",
+        top: "10%",
+        right: "10%",
+        bottom: "10%",
+        width: "20%",
+        height: "20%",
+      });
+
+      donutcontainer.add(valuelabel);
+
+      //w4.add(piechartheader, {lineBreak: true});
+      w4.add(donutcontainer);
+      //w4.add(piechartkey);
+
+      // End of Donut Chart - Boolean
 
       var container = new qx.ui.container.Composite(new qx.ui.layout.Canvas());
 
@@ -871,7 +922,7 @@ qx.Class.define("wax.demo.Application",
       centerbox.add(widgetconnectpage);
 
       // Show the default page
-      centerbox.setSelection([dashboardpage]);
+      centerbox.setSelection([widgetconnectpage]);
 
  
 
