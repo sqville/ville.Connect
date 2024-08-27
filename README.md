@@ -1,15 +1,17 @@
 <!-- ABOUT THE PROJECT -->
-## ville.Connect
+# ville.Connect
 
 **ville.Connect** is a [Qooxdoo](https://qooxdoo.org/) control designed to visually connect widgets on a canvas type layout.
 
 ## The Big Idea
+
 Create a diagram/workflow/mindmap, tool/widget/capability using 100% Qooxdoo code and objects. No SVG or Canvas HTML tags, if at all possible.
 
 <!-- DEMOS -->
 ## Demos
 
 [Demo](https://sqville.github.io/ville.Connect/published/)
+
 * Right click any connector to edit it's properties
 * Move or resize connected widgets to see the connection dyanmically adjust. Only enabled for first two examples. The third example are static ui widgets.
 
@@ -17,6 +19,7 @@ Create a diagram/workflow/mindmap, tool/widget/capability using 100% Qooxdoo cod
 ## Define a connection object
 
 Example of two ui objects connected by a single connector:
+
 ```javascript
 "connections" : [
   {
@@ -59,10 +62,6 @@ Note: Limitations are due to object creation (elements, connections and arrows) 
 
 Distributed under the MIT License. See `LICENSE` for more information.
 
-<!-- CONTACT -->
-## Contact
-
-Chris Eskew - email: sqville@gmail.com
-
 ## Attribution
+
 Inspired by and learned from this project: [jqSimpleConnect](https://github.com/jfmdev/jqSimpleConnect)
